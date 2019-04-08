@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>小程序的反编译与漏洞挖掘</title>
+      <link href="/2019/04/08/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%8E%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
+      <url>/2019/04/08/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%8E%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x01-小程序的反编译"><a href="#0x01-小程序的反编译" class="headerlink" title="0x01 小程序的反编译"></a>0x01 小程序的反编译</h2><h3 id="获取小程序包"><a href="#获取小程序包" class="headerlink" title="获取小程序包"></a>获取小程序包</h3><p>在已经<code>Root</code>或者<code>越狱</code>的手机上进行小程序压缩包<code>.wxapkg</code>的获取。下面通过<code>Android</code>手机进行演示</p><h5 id="首先通过ADB调试连接手机"><a href="#首先通过ADB调试连接手机" class="headerlink" title="首先通过ADB调试连接手机"></a>首先通过ADB调试连接手机</h5><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g1vgi95wv2j30al028wei.jpg" alt="image-20190408193632713"></p><p>执行<code>su</code>获得root权限，进入<code>/data/data/com.tencent.mm/MicroMsg/xxxxxx（hash值）/appbrand/pkg</code></p><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1vgmo8tmpj3083090gm5.jpg" alt="image-20190408194047298"></p><p>这里可以看到许多<code>.wxapkg</code>包</p><h5 id="定位小程序"><a href="#定位小程序" class="headerlink" title="定位小程序"></a>定位小程序</h5><ol><li><p>打包所有<code>.wxapkg</code>文件</p></li><li><p>将<code>.wxapkg</code>拷贝到本地目录</p><p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g1vguzzfcmj306x0690tf.jpg" alt="image-20190408194847578"></p></li><li><p>利用文本搜索搜寻关键字</p><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1vgyhzvecj309y02l0sw.jpg" alt="image-20190408195209598"></p></li></ol><h3 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h3><p>这里我们不需要关心小程序包的具体格式，我们使用<code>wxappUnpacker</code>进行解包，解包之后我们使用<code>微信开发者工具</code>打开。</p><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1vh55bg3jj30z70u0dv3.jpg" alt="image-20190408195832618"></p><h2 id="0x02-代码审计寻找漏洞"><a href="#0x02-代码审计寻找漏洞" class="headerlink" title="0x02 代码审计寻找漏洞"></a>0x02 代码审计寻找漏洞</h2><p>由于微信小程序经过了代码混淆，但是我们可以大致了解其逻辑</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 小程序 </tag>
+            
+            <tag> 微信 </tag>
+            
+            <tag> 移动安全 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2019/04/08/hello-world/"/>
       <url>/2019/04/08/hello-world/</url>
