@@ -19,7 +19,8 @@
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1g1vguzzfcmj306x0690tf.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1vgyhzvecj309y02l0sw.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1vh55bg3jj30z70u0dv3.jpg">
-<meta property="og:updated_time" content="2019-04-08T12:02:24.218Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1w1er8t7ij30pw0mh40m.jpg">
+<meta property="og:updated_time" content="2019-04-09T00:22:42.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小程序的反编译与漏洞挖掘">
 <meta name="twitter:description" content="0x01 小程序的反编译获取小程序包在已经Root或者越狱的手机上进行小程序压缩包.wxapkg的获取。下面通过Android手机进行演示 首先通过ADB调试连接手机 执行su获得root权限，进入/data/data/com.tencent.mm/MicroMsg/xxxxxx（hash值）/appbrand/pkg  这里可以看到许多.wxapkg包 定位小程序 打包所有.wxapkg文件">
@@ -109,7 +110,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-小程序的反编译"><span class="toc-number">1.</span> <span class="toc-text">0x01 小程序的反编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取小程序包"><span class="toc-number">1.1.</span> <span class="toc-text">获取小程序包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先通过ADB调试连接手机"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先通过ADB调试连接手机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定位小程序"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">定位小程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解包"><span class="toc-number">1.2.</span> <span class="toc-text">解包</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-代码审计寻找漏洞"><span class="toc-number">2.</span> <span class="toc-text">0x02 代码审计寻找漏洞</span></a></li>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-小程序的反编译"><span class="toc-number">1.</span> <span class="toc-text">0x01 小程序的反编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取小程序包"><span class="toc-number">1.1.</span> <span class="toc-text">获取小程序包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先通过ADB调试连接手机"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先通过ADB调试连接手机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定位小程序"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">定位小程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解包"><span class="toc-number">1.2.</span> <span class="toc-text">解包</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-代码审计寻找漏洞"><span class="toc-number">2.</span> <span class="toc-text">0x02 代码审计寻找漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户验证过程"><span class="toc-number">2.1.</span> <span class="toc-text">用户验证过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">3.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#业务请求"><span class="toc-number">3.1.</span> <span class="toc-text">业务请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信息搜集"><span class="toc-number">3.2.</span> <span class="toc-text">信息搜集</span></a></li></ol></li>
     </div>
   </span>
 </div>
@@ -171,6 +172,18 @@
 <h3 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h3><p>这里我们不需要关心小程序包的具体格式，我们使用<code>wxappUnpacker</code>进行解包，解包之后我们使用<code>微信开发者工具</code>打开。</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1vh55bg3jj30z70u0dv3.jpg" alt="image-20190408195832618"></p>
 <h2 id="0x02-代码审计寻找漏洞"><a href="#0x02-代码审计寻找漏洞" class="headerlink" title="0x02 代码审计寻找漏洞"></a>0x02 代码审计寻找漏洞</h2><p>由于微信小程序经过了代码混淆，但是我们可以大致了解其逻辑</p>
+<h3 id="用户验证过程"><a href="#用户验证过程" class="headerlink" title="用户验证过程"></a>用户验证过程</h3><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1w1er8t7ij30pw0mh40m.jpg" alt="用户登录过程"></p>
+<p>我们可以看到，这里主要的用户判断发生在，微信提供的接口服务上。用户判断需要提供<code>appid</code>,<code>appsecret</code>,<code>code</code>，其中<code>appsecret</code>正常渠道无法获取。</p>
+<p>除了上述过程我们还有以下验证方法</p>
+<blockquote>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>通过wx.getUserInfo获取的微信用户信息，以openid标识一个用户应用到小程序</li>
+<li>通过公众平台appid+appsecret+code，换取session_key/openid，并生成小程序第三方session，在小程序的服务器维护第三方session和微信session_key/openid的关联；客户端使用第三方session进行请求</li>
+<li>通过小程序内部自实现的登录模块，如手机号+动态验证码登录</li>
+</ol>
+</blockquote>
+<h3 id="业务请求"><a href="#业务请求" class="headerlink" title="业务请求"></a>业务请求</h3><p>在大部分需要登录业务请求中，需要携带用户身份信息。而小程序大多通过API接口进行业务操作，因而在小程序反编译代码中很难找到具体的业务逻辑实现方式。 </p>
+<h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>笔者任务小程序在实践上的主要功能，大部分在于钓鱼小程序制作，以及信息搜集功能。我们可以通过微信小程序发现普通渠道无法发现的资产。</p>
 
   </div>
 </article>
@@ -198,7 +211,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-小程序的反编译"><span class="toc-number">1.</span> <span class="toc-text">0x01 小程序的反编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取小程序包"><span class="toc-number">1.1.</span> <span class="toc-text">获取小程序包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先通过ADB调试连接手机"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先通过ADB调试连接手机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定位小程序"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">定位小程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解包"><span class="toc-number">1.2.</span> <span class="toc-text">解包</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-代码审计寻找漏洞"><span class="toc-number">2.</span> <span class="toc-text">0x02 代码审计寻找漏洞</span></a></li>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-小程序的反编译"><span class="toc-number">1.</span> <span class="toc-text">0x01 小程序的反编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取小程序包"><span class="toc-number">1.1.</span> <span class="toc-text">获取小程序包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先通过ADB调试连接手机"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先通过ADB调试连接手机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定位小程序"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">定位小程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解包"><span class="toc-number">1.2.</span> <span class="toc-text">解包</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-代码审计寻找漏洞"><span class="toc-number">2.</span> <span class="toc-text">0x02 代码审计寻找漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户验证过程"><span class="toc-number">2.1.</span> <span class="toc-text">用户验证过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">3.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#业务请求"><span class="toc-number">3.1.</span> <span class="toc-text">业务请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信息搜集"><span class="toc-number">3.2.</span> <span class="toc-text">信息搜集</span></a></li></ol></li>
     </div>
 
     <div id="share-footer" style="display: none">
