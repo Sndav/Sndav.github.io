@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="0x01 源码分析我们可以下载下来服务端的源码，我们首先浏览下代码的逻辑  我们可以总结出来 123456789entry_point=&amp;gt;start: entry_pointphrase=&amp;gt;operation: 过滤，解析参数trigger_event=&amp;gt;operation: trigger_event:将任务入队execute_event_loop=&amp;gt;operation:">
+<meta name="keywords" content="CTF,DDCTF,Writeup,Flask,代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDCTF-2019-Writeup-homebrew-event-loop">
+<meta property="og:url" content="http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/index.html">
+<meta property="og:site_name" content="Sndav Blog">
+<meta property="og:description" content="0x01 源码分析我们可以下载下来服务端的源码，我们首先浏览下代码的逻辑  我们可以总结出来 123456789entry_point=&amp;gt;start: entry_pointphrase=&amp;gt;operation: 过滤，解析参数trigger_event=&amp;gt;operation: trigger_event:将任务入队execute_event_loop=&amp;gt;operation:">
+<meta property="og:locale" content="zh-Hasn">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g27o8uo1o7j30qo16gn1o.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27otp0pj7j30sk060dgy.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27oucwl0vj30za02kjrv.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27oxflsfxj30p40ya0w6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g27oyvib5bj30ou0b0762.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27ozs88s1j318g0c6whg.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27p5h7a20j30ji0vyae2.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27p7we8kij30f80sewhc.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g27pnxday7j30ls05a3z8.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1g27pm3svtcj30ya0a4q4c.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g27pqaon33j31lc06owhk.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1g27pr83mlrj30zk0qetba.jpg">
+<meta property="og:updated_time" content="2019-04-19T02:03:56.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DDCTF-2019-Writeup-homebrew-event-loop">
+<meta name="twitter:description" content="0x01 源码分析我们可以下载下来服务端的源码，我们首先浏览下代码的逻辑  我们可以总结出来 123456789entry_point=&amp;gt;start: entry_pointphrase=&amp;gt;operation: 过滤，解析参数trigger_event=&amp;gt;operation: trigger_event:将任务入队execute_event_loop=&amp;gt;operation:">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g27o8uo1o7j30qo16gn1o.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>DDCTF-2019-Writeup-homebrew-event-loop</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/04/08/小程序的反编译与漏洞挖掘/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&text=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&is_video=false&description=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DDCTF-2019-Writeup-homebrew-event-loop&body=Check out this article: http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&name=DDCTF-2019-Writeup-homebrew-event-loop&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-源码分析"><span class="toc-number">1.</span> <span class="toc-text">0x01 源码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-漏洞利用"><span class="toc-number">2.</span> <span class="toc-text">0x02 漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-控制任务流"><span class="toc-number">3.</span> <span class="toc-text">0x03 控制任务流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-获得flag"><span class="toc-number">4.</span> <span class="toc-text">0x04 获得flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-EXP"><span class="toc-number">5.</span> <span class="toc-text">0x05 EXP</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        DDCTF-2019-Writeup-homebrew-event-loop
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Sndav Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-19T02:03:56.000Z" itemprop="datePublished">2019-04-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/CTF/">CTF</a>, <a class="tag-link" href="/tags/DDCTF/">DDCTF</a>, <a class="tag-link" href="/tags/Flask/">Flask</a>, <a class="tag-link" href="/tags/Writeup/">Writeup</a>, <a class="tag-link" href="/tags/代码审计/">代码审计</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x01-源码分析"><a href="#0x01-源码分析" class="headerlink" title="0x01 源码分析"></a>0x01 源码分析</h2><p>我们可以下载下来服务端的源码，我们首先浏览下代码的逻辑</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27o8uo1o7j30qo16gn1o.jpg" alt="image-20190419091058684"></p>
+<p>我们可以总结出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">entry_point=&gt;start: entry_point</span><br><span class="line"></span><br><span class="line">phrase=&gt;operation: 过滤，解析参数</span><br><span class="line"></span><br><span class="line">trigger_event=&gt;operation: trigger_event:将任务入队</span><br><span class="line"></span><br><span class="line">execute_event_loop=&gt;operation: execute_event_loop:从队列中读取任务，并且执行</span><br><span class="line"></span><br><span class="line">entry_point-&gt;phrase-&gt;trigger_event-&gt;execute_event_loop</span><br></pre></td></tr></table></figure>
+<p>这里我们主要看一下<code>execute_event_loop</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: execute_event_loop</span><br><span class="line">get_event=&gt;operation: event = queue.pop()</span><br><span class="line">phrase_head=&gt;condition: event.startswith((&apos;action:&apos;, &apos;func:&apos;))</span><br><span class="line">filter=&gt;operation: 过滤</span><br><span class="line">get_arg1=&gt;operation: action = get_mid_str(event, &apos;:&apos;, &apos;;&apos;)</span><br><span class="line">get_arg2=&gt;operation: args = get_mid_str(event, action+&apos;;&apos;).split(&apos;#&apos;)</span><br><span class="line">eval=&gt;operation: eval</span><br><span class="line"></span><br><span class="line">st-&gt;get_event-&gt;phrase_head</span><br><span class="line">phrase_head(no)-&gt;get_event</span><br><span class="line">phrase_head(yes)-&gt;filter-&gt;get_arg1-&gt;get_arg2-&gt;eval</span><br></pre></td></tr></table></figure>
+<p>我们重点看一下这个解析函数<code>get_mid_str</code>以及<code>eval</code>。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27otp0pj7j30sk060dgy.jpg" alt="image-20190419093105310"></p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27oucwl0vj30za02kjrv.jpg" alt="image-20190419093144608"></p>
+<p>这里我们可以发现，<code>eval</code>中可以使用注释<code>#</code>将后面的<code>__handler</code> or <code>_function</code>注释掉。</p>
+<p>这里我们就可以进行利用</p>
+<h2 id="0x02-漏洞利用"><a href="#0x02-漏洞利用" class="headerlink" title="0x02 漏洞利用"></a>0x02 漏洞利用</h2><p>我们看看我们可以利用的函数</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27oxflsfxj30p40ya0w6.jpg" alt="image-20190419093441605"></p>
+<p>这里面我们可以通过调用<code>trigger_event</code>控制任务的执行流程。</p>
+<h2 id="0x03-控制任务流"><a href="#0x03-控制任务流" class="headerlink" title="0x03 控制任务流"></a>0x03 控制任务流</h2><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27oyvib5bj30ou0b0762.jpg" alt="image-20190419093605487"></p>
+<p>这里我们获取flag的一个前提条件就是<code>num_items&gt;=5</code>我们看看怎么获取。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27ozs88s1j318g0c6whg.jpg" alt="image-20190419093657369"></p>
+<p>这里我们发现，这里是先加入元素，在将检查合法的函数入队。这里因为队列的存在先后顺序。我们可以在这里操作一波。</p>
+<p>我们构造以下执行队列</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27p5h7a20j30ji0vyae2.jpg" alt="BA387C96-E5D6-47AC-BE6B-B9942F52E743"></p>
+<p>这里当我们执行Buy5时我们先增加数量，队列变为</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27p7we8kij30f80sewhc.jpg" alt="FA5EBDF1-A7F8-4FF0-82D3-7A7493A4A55F"></p>
+<p>然后我们就执行成功了get_flag</p>
+<h2 id="0x04-获得flag"><a href="#0x04-获得flag" class="headerlink" title="0x04 获得flag"></a>0x04 获得flag</h2><p>当我们执行了get_flag函数过后</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27pnxday7j30ls05a3z8.jpg" alt="image-20190419095619161"></p>
+<p>这个操作很优秀，这就意味着我们没有办法直接获取到flag。嗯嗯，那我们怎么操作？</p>
+<p>更优秀的地方是，我们用的是flask，而且程序为了回滚，session存在一个log</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1g27pm3svtcj30ya0a4q4c.jpg" alt="image-20190419095824459"></p>
+<p>然而，flask的session存在与cookie中。嘿嘿。一条完整的利用链就出来了。</p>
+<h2 id="0x05-EXP"><a href="#0x05-EXP" class="headerlink" title="0x05 EXP"></a>0x05 EXP</h2><p>首先我们构造URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">action:trigger_event%23;action:buy;1%23action:buy;1%23action:buy;1%23action:buy;1%23action:get_flag;1</span><br></pre></td></tr></table></figure>
+<p>然后我们得到cookie，利用解密工具将COOKIE解出来</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27pqaon33j31lc06owhk.jpg" alt="image-20190419100223978"></p>
+<p>看到base64，我们找到可能是Flag解密以下</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1g27pr83mlrj30zk0qetba.jpg" alt="image-20190419100318474"></p>
+<p><code>DDCTF{3v4l_3v3nt_100p_aNd_fLASK_cOOkle}</code></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-源码分析"><span class="toc-number">1.</span> <span class="toc-text">0x01 源码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-漏洞利用"><span class="toc-number">2.</span> <span class="toc-text">0x02 漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-控制任务流"><span class="toc-number">3.</span> <span class="toc-text">0x03 控制任务流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-获得flag"><span class="toc-number">4.</span> <span class="toc-text">0x04 获得flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-EXP"><span class="toc-number">5.</span> <span class="toc-text">0x05 EXP</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&text=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&is_video=false&description=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DDCTF-2019-Writeup-homebrew-event-loop&body=Check out this article: http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&title=DDCTF-2019-Writeup-homebrew-event-loop"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/&name=DDCTF-2019-Writeup-homebrew-event-loop&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Sndav
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

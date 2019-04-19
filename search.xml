@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>DDCTF-2019-Writeup-homebrew-event-loop</title>
+      <link href="/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/"/>
+      <url>/2019/04/19/DDCTF-2019-Writeup-homebrew-event-loop/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x01-源码分析"><a href="#0x01-源码分析" class="headerlink" title="0x01 源码分析"></a>0x01 源码分析</h2><p>我们可以下载下来服务端的源码，我们首先浏览下代码的逻辑</p><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27o8uo1o7j30qo16gn1o.jpg" alt="image-20190419091058684"></p><p>我们可以总结出来</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">entry_point=&gt;start: entry_point</span><br><span class="line"></span><br><span class="line">phrase=&gt;operation: 过滤，解析参数</span><br><span class="line"></span><br><span class="line">trigger_event=&gt;operation: trigger_event:将任务入队</span><br><span class="line"></span><br><span class="line">execute_event_loop=&gt;operation: execute_event_loop:从队列中读取任务，并且执行</span><br><span class="line"></span><br><span class="line">entry_point-&gt;phrase-&gt;trigger_event-&gt;execute_event_loop</span><br></pre></td></tr></table></figure><p>这里我们主要看一下<code>execute_event_loop</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: execute_event_loop</span><br><span class="line">get_event=&gt;operation: event = queue.pop()</span><br><span class="line">phrase_head=&gt;condition: event.startswith((&apos;action:&apos;, &apos;func:&apos;))</span><br><span class="line">filter=&gt;operation: 过滤</span><br><span class="line">get_arg1=&gt;operation: action = get_mid_str(event, &apos;:&apos;, &apos;;&apos;)</span><br><span class="line">get_arg2=&gt;operation: args = get_mid_str(event, action+&apos;;&apos;).split(&apos;#&apos;)</span><br><span class="line">eval=&gt;operation: eval</span><br><span class="line"></span><br><span class="line">st-&gt;get_event-&gt;phrase_head</span><br><span class="line">phrase_head(no)-&gt;get_event</span><br><span class="line">phrase_head(yes)-&gt;filter-&gt;get_arg1-&gt;get_arg2-&gt;eval</span><br></pre></td></tr></table></figure><p>我们重点看一下这个解析函数<code>get_mid_str</code>以及<code>eval</code>。</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27otp0pj7j30sk060dgy.jpg" alt="image-20190419093105310"></p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27oucwl0vj30za02kjrv.jpg" alt="image-20190419093144608"></p><p>这里我们可以发现，<code>eval</code>中可以使用注释<code>#</code>将后面的<code>__handler</code> or <code>_function</code>注释掉。</p><p>这里我们就可以进行利用</p><h2 id="0x02-漏洞利用"><a href="#0x02-漏洞利用" class="headerlink" title="0x02 漏洞利用"></a>0x02 漏洞利用</h2><p>我们看看我们可以利用的函数</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27oxflsfxj30p40ya0w6.jpg" alt="image-20190419093441605"></p><p>这里面我们可以通过调用<code>trigger_event</code>控制任务的执行流程。</p><h2 id="0x03-控制任务流"><a href="#0x03-控制任务流" class="headerlink" title="0x03 控制任务流"></a>0x03 控制任务流</h2><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27oyvib5bj30ou0b0762.jpg" alt="image-20190419093605487"></p><p>这里我们获取flag的一个前提条件就是<code>num_items&gt;=5</code>我们看看怎么获取。</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27ozs88s1j318g0c6whg.jpg" alt="image-20190419093657369"></p><p>这里我们发现，这里是先加入元素，在将检查合法的函数入队。这里因为队列的存在先后顺序。我们可以在这里操作一波。</p><p>我们构造以下执行队列</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27p5h7a20j30ji0vyae2.jpg" alt="BA387C96-E5D6-47AC-BE6B-B9942F52E743"></p><p>这里当我们执行Buy5时我们先增加数量，队列变为</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27p7we8kij30f80sewhc.jpg" alt="FA5EBDF1-A7F8-4FF0-82D3-7A7493A4A55F"></p><p>然后我们就执行成功了get_flag</p><h2 id="0x04-获得flag"><a href="#0x04-获得flag" class="headerlink" title="0x04 获得flag"></a>0x04 获得flag</h2><p>当我们执行了get_flag函数过后</p><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g27pnxday7j30ls05a3z8.jpg" alt="image-20190419095619161"></p><p>这个操作很优秀，这就意味着我们没有办法直接获取到flag。嗯嗯，那我们怎么操作？</p><p>更优秀的地方是，我们用的是flask，而且程序为了回滚，session存在一个log</p><p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1g27pm3svtcj30ya0a4q4c.jpg" alt="image-20190419095824459"></p><p>然而，flask的session存在与cookie中。嘿嘿。一条完整的利用链就出来了。</p><h2 id="0x05-EXP"><a href="#0x05-EXP" class="headerlink" title="0x05 EXP"></a>0x05 EXP</h2><p>首先我们构造URL</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">action:trigger_event%23;action:buy;1%23action:buy;1%23action:buy;1%23action:buy;1%23action:get_flag;1</span><br></pre></td></tr></table></figure><p>然后我们得到cookie，利用解密工具将COOKIE解出来</p><p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g27pqaon33j31lc06owhk.jpg" alt="image-20190419100223978"></p><p>看到base64，我们找到可能是Flag解密以下</p><p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1g27pr83mlrj30zk0qetba.jpg" alt="image-20190419100318474"></p><p><code>DDCTF{3v4l_3v3nt_100p_aNd_fLASK_cOOkle}</code></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CTF </tag>
+            
+            <tag> DDCTF </tag>
+            
+            <tag> Writeup </tag>
+            
+            <tag> Flask </tag>
+            
+            <tag> 代码审计 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>小程序的反编译与漏洞挖掘</title>
       <link href="/2019/04/08/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%8E%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
       <url>/2019/04/08/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%8E%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</url>
