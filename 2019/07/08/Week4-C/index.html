@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="Week4 C题目NCTF 2018 easy_audit 题解访问网站  第一次绕过这里过滤了几个问题一个$_REQUEST不能有字母，一个$_SERVER不能有关键字。 这是开始的两个绕过 针对第一个问题，不妨考虑变量覆盖，我们知道$_REQUEST可以接受COOKIE，POST的消息，我们不妨使用POST覆盖GET消息。 我们了解到$_SERVER不会对字符串解析，比如%27不会解析成‘我们">
-<meta name="keywords" content="Writeup,Note">
+<meta name="keywords" content="Note,Writeup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个人练习WP Week 4 C">
 <meta property="og:url" content="http:/blog.boyblog.club/2019/07/08/Week4-C/index.html">
@@ -79,10 +79,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/07/08/Week-8-A/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/07/08/Week5-B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/07/08/Week5-A/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/04/08/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
