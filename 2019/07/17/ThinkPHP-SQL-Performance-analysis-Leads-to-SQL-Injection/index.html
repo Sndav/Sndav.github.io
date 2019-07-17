@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="thinkphp SQL Performance analysis Leads to SQL InjectionVulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.php Line:1460">
+    <meta name="description" content="thinkphp SQL Performance analysis Leads to SQL InjectionCVE-2019-13185Vulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.p">
 <meta name="keywords" content="ThinkPHP,0day,Analysis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection">
 <meta property="og:url" content="http:/blog.boyblog.club/2019/07/17/ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/index.html">
 <meta property="og:site_name" content="Sndav&#39;s Blog">
-<meta property="og:description" content="thinkphp SQL Performance analysis Leads to SQL InjectionVulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.php Line:1460">
+<meta property="og:description" content="thinkphp SQL Performance analysis Leads to SQL InjectionCVE-2019-13185Vulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.p">
 <meta property="og:locale" content="zh-Hasn">
 <meta property="og:image" content="https://live.staticflickr.com/65535/48303295612_e00078abb9_o.png">
 <meta property="og:image" content="https://live.staticflickr.com/65535/48303180206_8e0b983db4_o.png">
@@ -29,10 +29,10 @@
 <meta property="og:image" content="https://live.staticflickr.com/65535/48303193936_fe3edaf645_o.png">
 <meta property="og:image" content="https://live.staticflickr.com/65535/48303310347_dc90acde88_o.png">
 <meta property="og:image" content="https://live.staticflickr.com/65535/48303311307_f89d0c6d1a_o.png">
-<meta property="og:updated_time" content="2019-07-17T00:31:09.771Z">
+<meta property="og:updated_time" content="2019-07-17T00:33:00.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection">
-<meta name="twitter:description" content="thinkphp SQL Performance analysis Leads to SQL InjectionVulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.php Line:1460">
+<meta name="twitter:description" content="thinkphp SQL Performance analysis Leads to SQL InjectionCVE-2019-13185Vulnerability rangeThinkPHP V5 ThinkPHP V6-dev Vulnerability analysisKey Vuln appears at tp/thinkphp/library/think/db/Connection.p">
 <meta name="twitter:image" content="https://live.staticflickr.com/65535/48303295612_e00078abb9_o.png">
     
     
@@ -119,7 +119,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><span class="toc-number">1.</span> <span class="toc-text">thinkphp SQL Performance analysis Leads to SQL Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-range"><span class="toc-number">1.1.</span> <span class="toc-text">Vulnerability range</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Vulnerability analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bypass-EXPLAIN"><span class="toc-number">1.2.1.</span> <span class="toc-text">Bypass EXPLAIN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-recurrence"><span class="toc-number">1.3.</span> <span class="toc-text">Vulnerability recurrence</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><span class="toc-number">1.</span> <span class="toc-text">thinkphp SQL Performance analysis Leads to SQL Injection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-2019-13185"><span class="toc-number">2.</span> <span class="toc-text">CVE-2019-13185</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-range"><span class="toc-number">2.1.</span> <span class="toc-text">Vulnerability range</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-analysis"><span class="toc-number">2.2.</span> <span class="toc-text">Vulnerability analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bypass-EXPLAIN"><span class="toc-number">2.2.1.</span> <span class="toc-text">Bypass EXPLAIN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-recurrence"><span class="toc-number">2.3.</span> <span class="toc-text">Vulnerability recurrence</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -163,7 +163,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><a href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection" class="headerlink" title="thinkphp SQL Performance analysis Leads to SQL Injection"></a>thinkphp SQL Performance analysis Leads to SQL Injection</h1><h2 id="Vulnerability-range"><a href="#Vulnerability-range" class="headerlink" title="Vulnerability range"></a>Vulnerability range</h2><p>ThinkPHP V5</p>
+    <h1 id="thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><a href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection" class="headerlink" title="thinkphp SQL Performance analysis Leads to SQL Injection"></a>thinkphp SQL Performance analysis Leads to SQL Injection</h1><h1 id="CVE-2019-13185"><a href="#CVE-2019-13185" class="headerlink" title="CVE-2019-13185"></a>CVE-2019-13185</h1><h2 id="Vulnerability-range"><a href="#Vulnerability-range" class="headerlink" title="Vulnerability range"></a>Vulnerability range</h2><p>ThinkPHP V5</p>
 <p>ThinkPHP V6-dev</p>
 <h2 id="Vulnerability-analysis"><a href="#Vulnerability-analysis" class="headerlink" title="Vulnerability analysis"></a>Vulnerability analysis</h2><p>Key Vuln appears at <code>tp/thinkphp/library/think/db/Connection.php Line:1460</code></p>
 <p><img src="https://live.staticflickr.com/65535/48303295612_e00078abb9_o.png" alt="image-20190703094745828"></p>
@@ -222,7 +222,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><span class="toc-number">1.</span> <span class="toc-text">thinkphp SQL Performance analysis Leads to SQL Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-range"><span class="toc-number">1.1.</span> <span class="toc-text">Vulnerability range</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Vulnerability analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bypass-EXPLAIN"><span class="toc-number">1.2.1.</span> <span class="toc-text">Bypass EXPLAIN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-recurrence"><span class="toc-number">1.3.</span> <span class="toc-text">Vulnerability recurrence</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#thinkphp-SQL-Performance-analysis-Leads-to-SQL-Injection"><span class="toc-number">1.</span> <span class="toc-text">thinkphp SQL Performance analysis Leads to SQL Injection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-2019-13185"><span class="toc-number">2.</span> <span class="toc-text">CVE-2019-13185</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-range"><span class="toc-number">2.1.</span> <span class="toc-text">Vulnerability range</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-analysis"><span class="toc-number">2.2.</span> <span class="toc-text">Vulnerability analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bypass-EXPLAIN"><span class="toc-number">2.2.1.</span> <span class="toc-text">Bypass EXPLAIN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-recurrence"><span class="toc-number">2.3.</span> <span class="toc-text">Vulnerability recurrence</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
