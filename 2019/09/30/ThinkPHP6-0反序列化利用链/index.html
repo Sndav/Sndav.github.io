@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="ThinkPHP6.0 反序列化利用链0x00 预先观察首先全局搜索__destruct，得到以下结果  分别进入类中观察。 ###AbstractCache 首先为AbstractCache，这是Cache的抽象类。  这个地方调用了继承类的save()方法。 AbstractFtpAdapter 这个地方调用了继承类的disconnect()方法。 SafeStorage Connection">
-<meta name="keywords" content="thinkphp,0day">
+<meta name="keywords" content="0day,thinkphp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThinkPHP6.0反序列化利用链">
 <meta property="og:url" content="http:/blog.boyblog.club/2019/09/30/ThinkPHP6-0反序列化利用链/index.html">
@@ -82,6 +82,8 @@
     <br>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2019/11/22/curl-SSRF-FPM造成RCE/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2019/09/01/Pwn堆学习-day1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
