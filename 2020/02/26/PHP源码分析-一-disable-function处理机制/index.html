@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"http:/blog.naive.codes","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Week 8 C __wakeup函数绕过1234567891011class xctf&amp;#123; 	public $flag = &apos;111&apos;;    public function __wakeup()&amp;#123;    	$flag=&apos;12345&apos;;    &amp;#125;    function __destruct()&amp;#123;        if(md5($this-&amp;gt;flag)">
-<meta name="keywords" content="Writeup,Note">
+  <meta name="description" content="入口函数入口函数在main/main.c的php_disable_functions()  12345678910111213141516171819202122232425262728293031323334static void php_disable_functions(void)&amp;#123;	char *s = NULL, *e;	if (!*(INI_STR(&quot;disable_funct">
+<meta name="keywords" content="php源码分析,php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人练习WP Week 8 C">
-<meta property="og:url" content="http:/blog.naive.codes/2019/07/08/Week-8-C/index.html">
+<meta property="og:title" content="PHP源码分析(一):disable_function处理机制">
+<meta property="og:url" content="http:/blog.naive.codes/2020/02/26/PHP源码分析-一-disable-function处理机制/index.html">
 <meta property="og:site_name" content="Sndav&#39;s Blog">
-<meta property="og:description" content="Week 8 C __wakeup函数绕过1234567891011class xctf&amp;#123; 	public $flag = &apos;111&apos;;    public function __wakeup()&amp;#123;    	$flag=&apos;12345&apos;;    &amp;#125;    function __destruct()&amp;#123;        if(md5($this-&amp;gt;flag)">
+<meta property="og:description" content="入口函数入口函数在main/main.c的php_disable_functions()  12345678910111213141516171819202122232425262728293031323334static void php_disable_functions(void)&amp;#123;	char *s = NULL, *e;	if (!*(INI_STR(&quot;disable_funct">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pic.c1imber.top/blog/181031/J0bm2IaaCc.png?imageslim">
-<meta property="og:updated_time" content="2019-07-09T06:02:26.637Z">
+<meta property="og:updated_time" content="2020-03-16T10:17:58.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="个人练习WP Week 8 C">
-<meta name="twitter:description" content="Week 8 C __wakeup函数绕过1234567891011class xctf&amp;#123; 	public $flag = &apos;111&apos;;    public function __wakeup()&amp;#123;    	$flag=&apos;12345&apos;;    &amp;#125;    function __destruct()&amp;#123;        if(md5($this-&amp;gt;flag)">
-<meta name="twitter:image" content="http://pic.c1imber.top/blog/181031/J0bm2IaaCc.png?imageslim">
+<meta name="twitter:title" content="PHP源码分析(一):disable_function处理机制">
+<meta name="twitter:description" content="入口函数入口函数在main/main.c的php_disable_functions()  12345678910111213141516171819202122232425262728293031323334static void php_disable_functions(void)&amp;#123;	char *s = NULL, *e;	if (!*(INI_STR(&quot;disable_funct">
 
-<link rel="canonical" href="http:/blog.naive.codes/2019/07/08/Week-8-C/">
+<link rel="canonical" href="http:/blog.naive.codes/2020/02/26/PHP源码分析-一-disable-function处理机制/">
 
 
 <script id="page-configurations">
@@ -47,7 +45,7 @@
   };
 </script>
 
-  <title>个人练习WP Week 8 C | Sndav's Blog</title>
+  <title>PHP源码分析(一):disable_function处理机制 | Sndav's Blog</title>
   
 
 
@@ -190,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-C/">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/02/26/PHP源码分析-一-disable-function处理机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -203,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          个人练习WP Week 8 C
+          PHP源码分析(一):disable_function处理机制
         </h1>
 
         <div class="post-meta">
@@ -213,14 +211,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+              <time title="创建时间：2020-02-26 10:20:31" itemprop="dateCreated datePublished" datetime="2020-02-26T10:20:31+08:00">2020-02-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:26" itemprop="dateModified" datetime="2019-07-09T14:02:26+08:00">2019-07-09</time>
+                <time title="修改时间：2020-03-16 18:17:58" itemprop="dateModified" datetime="2020-03-16T18:17:58+08:00">2020-03-16</time>
               </span>
 
           
@@ -234,19 +232,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Week-8-C-wakeup函数绕过"><a href="#Week-8-C-wakeup函数绕过" class="headerlink" title="Week 8 C __wakeup函数绕过"></a>Week 8 C __wakeup函数绕过</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123; </span><br><span class="line">	<span class="keyword">public</span> $flag = <span class="string">'111'</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	$flag=<span class="string">'12345'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(md5(<span class="keyword">$this</span>-&gt;flag) == <span class="keyword">$this</span>-&gt;flag[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"flag&#123;1231212&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$str = unserialize($_GET[<span class="string">'code'</span>]);</span><br></pre></td></tr></table></figure>
-<p>这里我们怎么绕过呢？</p>
-<h4 id="Puzzle-One"><a href="#Puzzle-One" class="headerlink" title="Puzzle One"></a>Puzzle One</h4><p>​    我们要绕过<code>__wakeup()</code>给flag赋值的问题</p>
-<h4 id="Puzzle-Two"><a href="#Puzzle-Two" class="headerlink" title="Puzzle Two"></a>Puzzle Two</h4><p>​    我们要绕过<code>md5(a) == a[0]</code>的问题</p>
-<p>这里我们对Puzzle One需要了解一个cve</p>
-<p><img src="http://pic.c1imber.top/blog/181031/J0bm2IaaCc.png?imageslim" alt="img"></p>
-<p>如果我们构造</p>
-<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code></p>
-<p>我们就可以绕过此函数</p>
-<p>第二我们随便找个md5是其首字母位0，md5为0e开头</p>
-<p><code>0ec92f8847011379ce0c1c95d3d52677 0aaaga</code></p>
-<p>Payload</p>
-<p><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;0aaaga&quot;;}</code></p>
+        <h2 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h2><p>入口函数在<code>main/main.c</code>的<code>php_disable_functions()</code></p>
+<a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> void php_disable_functions(void)</span><br><span class="line">&#123;</span><br><span class="line">	char *s = <span class="keyword">NULL</span>, *e;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!*(INI_STR(<span class="string">"disable_functions"</span>))) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	e = PG(disable_functions) = strdup(INI_STR(<span class="string">"disable_functions"</span>));</span><br><span class="line">	<span class="keyword">if</span> (e == <span class="keyword">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (*e) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (*e) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">' '</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="string">','</span>:</span><br><span class="line">				<span class="keyword">if</span> (s) &#123;</span><br><span class="line">					*e = <span class="string">'\0'</span>;</span><br><span class="line">					zend_disable_function(s, e-s);</span><br><span class="line">					s = <span class="keyword">NULL</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">if</span> (!s) &#123;</span><br><span class="line">					s = e;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		e++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (s) &#123;</span><br><span class="line">		zend_disable_function(s, e-s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先其使用<code>INI_STR</code>,并将其赋值到<code>PG(disable_function)</code>中<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e = PG(disable_functions) = strdup(INI_STR(<span class="string">"disable_functions"</span>));</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EG():这个宏可以用来访问符号表，函数，资源信息和常量</span><br><span class="line">CG():用来访问核心全局变量</span><br><span class="line">PG():PHP全局变量。我们知道php.ini会映射一个或者多个PHP全局结构。举几个使用这个宏的例子：PG(register_globals), PG(safe_mode), PG(memory_limit)</span><br><span class="line">FG():文件全局变量。大多数文件I/O或相关的全局变量的数据流都塞进标准扩展出口结构。</span><br></pre></td></tr></table></figure>
+<p>然后使用一个大while循环解析变量<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (*e) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (*e) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">' '</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">','</span>:</span><br><span class="line">            <span class="keyword">if</span> (s) &#123;</span><br><span class="line">                *e = <span class="string">'\0'</span>;</span><br><span class="line">                zend_disable_function(s, e-s);</span><br><span class="line">                s = <span class="keyword">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">if</span> (!s) &#123;</span><br><span class="line">                s = e;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    e++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后进入<code>zend_disable_function</code>注册<code>disable_function</code></p>
+<h2 id="zend-disable-function"><a href="#zend-disable-function" class="headerlink" title="zend_disable_function"></a>zend_disable_function</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ZEND_API int zend_disable_function(char *function_name, size_t function_name_length) <span class="comment">/* &#123;&#123;&#123; */</span></span><br><span class="line">&#123;</span><br><span class="line">	zend_internal_function *func;</span><br><span class="line">	<span class="keyword">if</span> ((func = zend_hash_str_find_ptr(CG(function_table), function_name, function_name_length))) &#123;</span><br><span class="line">		zend_free_internal_arg_info(func);</span><br><span class="line">	    func-&gt;fn_flags &amp;= ~(ZEND_ACC_VARIADIC | ZEND_ACC_HAS_TYPE_HINTS | ZEND_ACC_HAS_RETURN_TYPE);</span><br><span class="line">		func-&gt;num_args = <span class="number">0</span>;</span><br><span class="line">		func-&gt;arg_info = <span class="keyword">NULL</span>;</span><br><span class="line">		func-&gt;handler = ZEND_FN(display_disabled_function);</span><br><span class="line">		<span class="keyword">return</span> SUCCESS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> FAILURE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先在<code>CG(function_table)</code>查找func,如果找到了，则设置<code>func-&gt;handler</code>为<code>ZEND_FN(display_disabled_function)</code><br>这样做可以完全防止<code>disable_function</code>的执行</p>
 
     </div>
 
@@ -256,8 +250,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Writeup/" rel="tag"># Writeup</a>
-              <a href="/tags/Note/" rel="tag"># Note</a>
+              <a href="/tags/php源码分析/" rel="tag"># php源码分析</a>
+              <a href="/tags/php/" rel="tag"># php</a>
           </div>
 
         
@@ -266,13 +260,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/07/08/Week4-0/" rel="prev" title="个人练习WP Week 4 0">
-      <i class="fa fa-chevron-left"></i> 个人练习WP Week 4 0
+    <a href="/2020/01/17/PHP源码分析-零-调试环境搭建/" rel="prev" title="PHP源码分析(零):调试环境搭建">
+      <i class="fa fa-chevron-left"></i> PHP源码分析(零):调试环境搭建
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/07/08/个人的笔记/" rel="next" title="个人的笔记">
-      个人的笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -332,7 +323,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Week-8-C-wakeup函数绕过"><span class="nav-number">1.</span> <span class="nav-text">Week 8 C __wakeup函数绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Puzzle-One"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Puzzle One</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Puzzle-Two"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">Puzzle Two</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#入口函数"><span class="nav-number">1.</span> <span class="nav-text">入口函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zend-disable-function"><span class="nav-number">2.</span> <span class="nav-text">zend_disable_function</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
