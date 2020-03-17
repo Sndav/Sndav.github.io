@@ -20,22 +20,18 @@
     var CONFIG = {"hostname":"http:/blog.naive.codes","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="parse_str此函数不仅在php的自带函数之中，还用在$_POST,$_GET等变量的解析 函数处理机制下面我将通过几个具体的例子来展开说明parse_str的一些具体的机制 参数名处理PHP在接受参数名时，需要将怪异的字符串转换为一个有效的变量名，因此当进行解析时，它会做两件事：  删除空白符 将某些字符转换为下划线（包括空格）  123456789101112131415161718192">
-<meta name="keywords" content="post">
-<meta property="og:type" content="article">
-<meta property="og:title" content="parse_str存在的一些问题">
-<meta property="og:url" content="http:/blog.naive.codes/2019/07/09/parse-str存在的一些问题/index.html">
+  <meta name="description" content="A Dubhe CTFer lives harder and harder">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sndav&#39;s Blog">
+<meta property="og:url" content="http:/blog.naive.codes/archives/2020/03/index.html">
 <meta property="og:site_name" content="Sndav&#39;s Blog">
-<meta property="og:description" content="parse_str此函数不仅在php的自带函数之中，还用在$_POST,$_GET等变量的解析 函数处理机制下面我将通过几个具体的例子来展开说明parse_str的一些具体的机制 参数名处理PHP在接受参数名时，需要将怪异的字符串转换为一个有效的变量名，因此当进行解析时，它会做两件事：  删除空白符 将某些字符转换为下划线（包括空格）  123456789101112131415161718192">
+<meta property="og:description" content="A Dubhe CTFer lives harder and harder">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://live.staticflickr.com/65535/48239666381_78f5495912_o.png">
-<meta property="og:updated_time" content="2019-07-09T11:12:52.222Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="parse_str存在的一些问题">
-<meta name="twitter:description" content="parse_str此函数不仅在php的自带函数之中，还用在$_POST,$_GET等变量的解析 函数处理机制下面我将通过几个具体的例子来展开说明parse_str的一些具体的机制 参数名处理PHP在接受参数名时，需要将怪异的字符串转换为一个有效的变量名，因此当进行解析时，它会做两件事：  删除空白符 将某些字符转换为下划线（包括空格）  123456789101112131415161718192">
-<meta name="twitter:image" content="https://live.staticflickr.com/65535/48239666381_78f5495912_o.png">
+<meta name="twitter:title" content="Sndav&#39;s Blog">
+<meta name="twitter:description" content="A Dubhe CTFer lives harder and harder">
 
-<link rel="canonical" href="http:/blog.naive.codes/2019/07/09/parse-str存在的一些问题/">
+<link rel="canonical" href="http:/blog.naive.codes/archives/2020/03/">
 
 
 <script id="page-configurations">
@@ -43,11 +39,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true
+    isPost: false
   };
 </script>
 
-  <title>parse_str存在的一些问题 | Sndav's Blog</title>
+  <title>归档 | Sndav's Blog</title>
   
 
 
@@ -185,95 +181,50 @@
           <div class="content">
             
 
-  <div class="posts-expand">
-      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/09/parse-str存在的一些问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          parse_str存在的一些问题
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2019-07-09 18:12:06 / 修改时间：19:12:52" itemprop="dateCreated datePublished" datetime="2019-07-09T18:12:06+08:00">2019-07-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        
+        <span class="collection-header">还行! 目前共计 31 篇日志。 继续努力。</span>
+      </div>
 
       
-        <h1 id="parse-str"><a href="#parse-str" class="headerlink" title="parse_str"></a>parse_str</h1><p>此函数不仅在php的自带函数之中，还用在<code>$_POST,$_GET</code>等变量的解析</p>
-<h2 id="函数处理机制"><a href="#函数处理机制" class="headerlink" title="函数处理机制"></a>函数处理机制</h2><p>下面我将通过几个具体的例子来展开说明<code>parse_str</code>的一些具体的机制</p>
-<h3 id="参数名处理"><a href="#参数名处理" class="headerlink" title="参数名处理"></a>参数名处理</h3><p>PHP在接受参数名时，需要将怪异的字符串转换为一个有效的变量名，因此当进行解析时，它会做两件事：</p>
-<ul>
-<li>删除空白符</li>
-<li>将某些字符转换为下划线（包括空格）</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"&#123;chr&#125;foo_bar"</span>,</span><br><span class="line">        <span class="string">"foo&#123;chr&#125;bar"</span>,</span><br><span class="line">        <span class="string">"foo_bar&#123;chr&#125;"</span></span><br><span class="line">    ] <span class="keyword">as</span> $k =&gt; $arg) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=<span class="number">255</span>;$i++) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"\033[999D\033[K\r"</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"["</span>.$arg.<span class="string">"] check "</span>.bin2hex(chr($i)).<span class="string">""</span>;</span><br><span class="line">            parse_str(str_replace(<span class="string">"&#123;chr&#125;"</span>,chr($i),$arg).<span class="string">"=bla"</span>,$o);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>($o[<span class="string">"foo_bar"</span>])) &#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">"\033[999D\033[K\r"</span>;</span><br><span class="line">                <span class="keyword">echo</span> $arg.<span class="string">" -&gt; "</span>.bin2hex(chr($i)).<span class="string">" ("</span>.chr($i).<span class="string">")\n"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"\033[999D\033[K\r"</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>得到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;chr&#125;foo_bar -&gt; 20 ( )</span><br><span class="line">&#123;chr&#125;foo_bar -&gt; 26 (&amp;)</span><br><span class="line">&#123;chr&#125;foo_bar -&gt; 2b (+)</span><br><span class="line"></span><br><span class="line">foo&#123;chr&#125;bar -&gt; 20 ( )</span><br><span class="line">foo&#123;chr&#125;bar -&gt; 2b (+)</span><br><span class="line">foo&#123;chr&#125;bar -&gt; 2e (.)</span><br><span class="line">foo&#123;chr&#125;bar -&gt; 5b ([)</span><br><span class="line">foo&#123;chr&#125;bar -&gt; 5f (_)</span><br><span class="line"></span><br><span class="line">foo_bar&#123;chr&#125; -&gt; 00 ()</span><br><span class="line">foo_bar&#123;chr&#125; -&gt; 26 (&amp;)</span><br><span class="line">foo_bar&#123;chr&#125; -&gt; 3d (=)</span><br></pre></td></tr></table></figure>
-<p><img src="https://live.staticflickr.com/65535/48239666381_78f5495912_o.png" alt="img"></p>
-<p>通过此方法我们就可以得到一些相应的绕过方法。</p>
-<h2 id="PHP源码分析-待分析"><a href="#PHP源码分析-待分析" class="headerlink" title="PHP源码分析-待分析"></a>PHP源码分析-待分析</h2>
+    <div class="collection-year">
+      <h1 class="collection-header">2020</h1>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/post/" rel="tag"># post</a>
-          </div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2020-03-16T18:21:21+08:00"
+              content="2020-03-16">
+          03-16
+        </time>
+      </div>
 
-        
+      <h2 class="post-title">
+          <a class="post-title-link" href="/2020/03/16/PHP源码分析-二-通过PHP插件HOOK-PHP函数/" itemprop="url">
+            <span itemprop="name">PHP源码分析(二):通过PHP插件HOOK PHP函数</span>
+          </a>
+      </h2>
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2019/07/08/WCTF2019-Writeup/" rel="prev" title="WCTF2019-Writeup">
-      <i class="fa fa-chevron-left"></i> WCTF2019-Writeup
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/07/10/STools/" rel="next" title="STools">
-      STools <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+
+    </div>
+  </div>
   
   
   
 
-  </div>
+  
+
 
 
           </div>
@@ -324,7 +275,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#parse-str"><span class="nav-number">1.</span> <span class="nav-text">parse_str</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数处理机制"><span class="nav-number">1.1.</span> <span class="nav-text">函数处理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数名处理"><span class="nav-number">1.1.1.</span> <span class="nav-text">参数名处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP源码分析-待分析"><span class="nav-number">1.2.</span> <span class="nav-text">PHP源码分析-待分析</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
