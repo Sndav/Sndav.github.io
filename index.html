@@ -195,6 +195,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/07/15/暑假学习-Day2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/15/暑假学习-Day2/" class="post-title-link" itemprop="url">暑假学习-Day2</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-15 16:02:24 / 修改时间：16:03:02" itemprop="dateCreated datePublished" datetime="2020-07-15T16:02:24+08:00">2020-07-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="dl-runtime-resolve"><a href="#dl-runtime-resolve" class="headerlink" title="dl_runtime_resolve"></a>dl_runtime_resolve</h2><p>这里使用<code>XDCTF-Bof</code>题目进行演示<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */</span></span><br><span class="line"><span class="comment">/* WARNING: Could not reconcile some variable overlaps */</span></span><br><span class="line"></span><br><span class="line"><span class="function">undefined4 <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> __n;</span><br><span class="line">  <span class="keyword">int</span> iVar1;</span><br><span class="line">  undefined4 *puVar2;</span><br><span class="line">  <span class="keyword">char</span> local_84 [<span class="number">100</span>];</span><br><span class="line">  </span><br><span class="line">  local_84._0_4_ = <span class="number">0x636c6557</span>;</span><br><span class="line">  local_84._4_4_ = <span class="number">0x20656d6f</span>;</span><br><span class="line">  local_84._8_4_ = <span class="number">0x58206f74</span>;</span><br><span class="line">  local_84._12_4_ = <span class="number">0x46544344</span>;</span><br><span class="line">  local_84._16_4_ = <span class="number">0x35313032</span>;</span><br><span class="line">  local_84._20_4_ = <span class="number">0xa217e</span>;</span><br><span class="line">  iVar1 = <span class="number">0x13</span>;</span><br><span class="line">  puVar2 = (undefined4 *)(local_84 + <span class="number">0x18</span>);</span><br><span class="line">  <span class="keyword">while</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">    iVar1 = iVar1 + <span class="number">-1</span>;</span><br><span class="line">    *puVar2 = <span class="number">0</span>;</span><br><span class="line">    puVar2 = puVar2 + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>,local_84);</span><br><span class="line">  __n = <span class="built_in">strlen</span>(local_84);</span><br><span class="line">  write(<span class="number">1</span>,local_84,__n);</span><br><span class="line">  vuln();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">===</span><br><span class="line"></span><br><span class="line"><span class="comment">/* WARNING: Function: __x86.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> vuln(<span class="keyword">void</span>)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">char</span> local_70 [<span class="number">104</span>];</span><br><span class="line">  </span><br><span class="line">  setbuf(<span class="built_in">stdin</span>,local_70);</span><br><span class="line">  read(<span class="number">0</span>,local_70,<span class="number">0x100</span>); <span class="comment">// 过于显然的漏洞</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Linux中的延时绑定"><a href="#Linux中的延时绑定" class="headerlink" title="Linux中的延时绑定"></a>Linux中的延时绑定</h3><blockquote>
+<p>引自<a href="http://pwn4.fun/2016/11/09/Return-to-dl-resolve/" target="_blank" rel="noopener">http://pwn4.fun/2016/11/09/Return-to-dl-resolve/</a></p>
+</blockquote>
+<p>程序在执行的过程中，可能引入的有些C库函数到结束时都不会执行。所以ELF采用延迟绑定的技术，在第一次调用C库函数是时才会去寻找真正的位置进行绑定。<br>具体来说，在前一部分我们已经知道，当程序执行<code>call write@plt</code>时，实际会跳到0x0804a01c去执行。而0x0804a01c处的汇编代码仅仅三行。我们来看一下这三行代码做了什么。<br>第一行：前面提到过0x0804a01c是write的GOT表位置，当我们第一次调用write时，其对应的GOT表里并没有存放write的真实地址，而是<code>write@plt</code>的下一条指令地址。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_8261e4b572b6b984b631927f2a541c82.png" alt></p>
+<p>第二、三行：把<code>reloc_arg=0x20</code>作为参数推入栈中，跳到<code>0x08048380（PLT[0]）</code>继续执行。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_200066759c9a285eab14ed397de1bb0d.png" alt></p>
+<p><code>0x08048380（PLT[0]）</code>再把<code>link_map=*(GOT+4)</code>（即GOT[1]，链接器的标识信息）作为参数推入栈中，而<code>*(GOT+8)</code>（即GOT[2]，动态链接器中的入口点）中保存的是<code>_dl_runtime_resolve</code>函数的地址。因此以上指令相当于执行了<code>_dl_runtime_resolve(link_map, reloc_arg)</code>，该函数会完成符号的解析，即将真实的write函数地址写入其GOT条目中，随后把控制权交给write函数。</p>
+<p><code>_dl_runtime_resolve是在glibc-2.23/sysdeps/i386/dl-trampoline.S</code>中用汇编实现的。0xf7fededb处即调用<code>_dl_fixup</code>，并且通过寄存器传参。<br><img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_b59f7e3ec767df8fef0c0cc41ae17fa0.png" alt></p>
+<h3 id="dl-fixup"><a href="#dl-fixup" class="headerlink" title="_dl_fixup"></a>_dl_fixup</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">_dl_fixup(struct link_map *l, ElfW(Word) reloc_arg)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 首先通过参数reloc_arg计算重定位入口，这里的JMPREL即.rel.plt，reloc_offset即reloc_arg</span></span><br><span class="line">    <span class="keyword">const</span> PLTREL *<span class="keyword">const</span> reloc = (<span class="keyword">const</span> <span class="keyword">void</span> *) (D_PTR (l, l_info[DT_JMPREL]) + reloc_offset);</span><br><span class="line">    <span class="comment">// 然后通过reloc-&gt;r_info找到.dynsym中对应的条目</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="title">ElfW</span><span class="params">(Sym)</span> *sym </span>= &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br><span class="line">    <span class="comment">// 这里还会检查reloc-&gt;r_info的最低位是不是R_386_JUMP_SLOT=7</span></span><br><span class="line">    assert (ELFW(R_TYPE)(reloc-&gt;r_info) == ELF_MACHINE_JMP_SLOT);</span><br><span class="line">    <span class="comment">// 接着通过strtab+sym-&gt;st_name找到符号表字符串，result为libc基地址</span></span><br><span class="line">    result = _dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope, version, ELF_RTYPE_CLASS_PLT, flags, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">// value为libc基址加上要解析函数的偏移地址，也即实际地址</span></span><br><span class="line">    value = DL_FIXUP_MAKE_VALUE (result, sym ? (LOOKUP_VALUE_ADDRESS (result) + sym-&gt;st_value) : <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 最后把value写入相应的GOT表条目中</span></span><br><span class="line">    <span class="keyword">return</span> elf_machine_fixup_plt (l, result, reloc, rel_addr, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/15/暑假学习-Day2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/07/13/GeekPwn-Web复盘-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1367,7 +1441,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-A/">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week5-A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1381,7 +1455,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/08/Week-8-A/" class="post-title-link" itemprop="url">个人练习WP Week 8 A</a>
+            <a href="/2019/07/08/Week5-A/" class="post-title-link" itemprop="url">个人练习WP Week 5 A（模版注入）</a>
         </h1>
 
         <div class="post-meta">
@@ -1398,7 +1472,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:36" itemprop="dateModified" datetime="2019-07-09T14:02:36+08:00">2019-07-09</time>
+                <time title="修改时间：2019-07-09 14:04:17" itemprop="dateModified" datetime="2019-07-09T14:04:17+08:00">2019-07-09</time>
               </span>
 
           
@@ -1412,17 +1486,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
-<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
-<p>随便改改</p>
-<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
-<p>考虑任意文件读取</p>
-<p>构造payload </p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+          <h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
+<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
+<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
+<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
+<p>在flask我们可以从</p>
+<ul>
+<li><code>config</code>, the current configuration object</li>
+<li><code>request</code>, the current request object</li>
+<li><code>session</code>, the current session object</li>
+<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
+</ul>
+<p>这几个角度开始入手</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week-8-A/#more" rel="contents">
+              <a class="btn" href="/2019/07/08/Week5-A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1493,81 +1571,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/08/个人的笔记/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week-8-B/" class="post-title-link" itemprop="url">个人练习WP Week 8 B</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:08" itemprop="dateModified" datetime="2019-07-09T14:02:08+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
-<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week-8-B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1723,84 +1726,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/08/Week3-A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week3-B/" class="post-title-link" itemprop="url">个人练习WP Week 3 B</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:06:54" itemprop="dateModified" datetime="2019-07-09T14:06:54+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第三周-WriteUpB"><a href="#第三周-WriteUpB" class="headerlink" title="第三周 WriteUpB"></a>第三周 WriteUpB</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>SQLi “迎圣诞，拿大奖”活动赛题</code></p>
-<p>格式化字符串 绕过</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><img src="https://live.staticflickr.com/65535/48231786811_7beb92fa9f_o.png" alt></p>
-<p>先尝试</p>
-<p><img src="https://live.staticflickr.com/65535/48231787131_2dfd5f1832_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48231787321_d611276c21_o.png" alt></p>
-<p>考虑格式化字符串绕过</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week3-B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1980,6 +1905,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week3-B/" class="post-title-link" itemprop="url">个人练习WP Week 3 B</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:06:54" itemprop="dateModified" datetime="2019-07-09T14:06:54+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第三周-WriteUpB"><a href="#第三周-WriteUpB" class="headerlink" title="第三周 WriteUpB"></a>第三周 WriteUpB</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>SQLi “迎圣诞，拿大奖”活动赛题</code></p>
+<p>格式化字符串 绕过</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><img src="https://live.staticflickr.com/65535/48231786811_7beb92fa9f_o.png" alt></p>
+<p>先尝试</p>
+<p><img src="https://live.staticflickr.com/65535/48231787131_2dfd5f1832_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48231787321_d611276c21_o.png" alt></p>
+<p>考虑格式化字符串绕过</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week3-B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2034,6 +2037,85 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/08/Week4-A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week-8-A/" class="post-title-link" itemprop="url">个人练习WP Week 8 A</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:02:36" itemprop="dateModified" datetime="2019-07-09T14:02:36+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
+<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+<p>随便改改</p>
+<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
+<p>考虑任意文件读取</p>
+<p>构造payload </p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week-8-A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2136,245 +2218,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week4-C/" class="post-title-link" itemprop="url">个人练习WP Week 4 C</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:03:51" itemprop="dateModified" datetime="2019-07-09T14:03:51+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Week4-C"><a href="#Week4-C" class="headerlink" title="Week4 C"></a>Week4 C</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>NCTF 2018 <a href="http://ctfgame.acdxvfsvd.net:20007/" target="_blank" rel="noopener">easy_audit</a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>访问网站</p>
-<p><img src="https://live.staticflickr.com/65535/48232017527_e8c72896b1_o.png" alt></p>
-<h4 id="第一次绕过"><a href="#第一次绕过" class="headerlink" title="第一次绕过"></a>第一次绕过</h4><p>这里过滤了几个问题一个<code>$_REQUEST</code>不能有字母，一个<code>$_SERVER</code>不能有关键字。</p>
-<p>这是开始的两个绕过</p>
-<p>针对第一个问题，不妨考虑变量覆盖，我们知道$_REQUEST可以接受COOKIE，POST的消息，我们不妨使用POST覆盖GET消息。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week4-C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week5-A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week5-A/" class="post-title-link" itemprop="url">个人练习WP Week 5 A（模版注入）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:04:17" itemprop="dateModified" datetime="2019-07-09T14:04:17+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
-<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
-<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
-<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
-<p>在flask我们可以从</p>
-<ul>
-<li><code>config</code>, the current configuration object</li>
-<li><code>request</code>, the current request object</li>
-<li><code>session</code>, the current session object</li>
-<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
-</ul>
-<p>这几个角度开始入手</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week5-A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week5-B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week5-B/" class="post-title-link" itemprop="url">个人练习WP Week 5 B</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:04:26" itemprop="dateModified" datetime="2019-07-09T14:04:26+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="NU1L-2018-CTF"><a href="#NU1L-2018-CTF" class="headerlink" title="NU1L 2018 CTF"></a>NU1L 2018 CTF</h1><p>一个令我绝望的题 官方 writeup 23页</p>
-<p>这题涉及到，代码审计，sql注入，ssrf, php反序列化，文件包含，爆破技巧 等</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><img src="https://live.staticflickr.com/65535/48238067721_95021445fb_o.png" alt></p>
-<p>然后用dirsearch 扫目录</p>
-<p><img src="https://live.staticflickr.com/65535/48238155682_7812132e76_o.png" alt></p>
-<p>看到有备份文件,下载源码</p>
-<p><img src="https://live.staticflickr.com/65535/48238069091_4ec28f22c6_o.png" alt></p>
-<p>在index.php</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week5-B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week7-A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2453,7 +2296,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week7-B/">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2467,7 +2310,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/08/Week7-B/" class="post-title-link" itemprop="url">个人练习WP Week 7 B</a>
+            <a href="/2019/07/08/Week4-C/" class="post-title-link" itemprop="url">个人练习WP Week 4 C</a>
         </h1>
 
         <div class="post-meta">
@@ -2484,7 +2327,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:05:07" itemprop="dateModified" datetime="2019-07-09T14:05:07+08:00">2019-07-09</time>
+                <time title="修改时间：2019-07-09 14:03:51" itemprop="dateModified" datetime="2019-07-09T14:03:51+08:00">2019-07-09</time>
               </span>
 
           
@@ -2498,18 +2341,169 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Week-7-B-Training-Get-Resourced"><a href="#Week-7-B-Training-Get-Resourced" class="headerlink" title="Week 7 B Training-Get-Resourced"></a>Week 7 B Training-Get-Resourced</h1><p>下载代码</p>
-<p><img src="https://live.staticflickr.com/65535/48238109376_961ef10793_o.png" alt></p>
-<p>字节码,拿浏览器打开，解析一波</p>
-<p><img src="https://live.staticflickr.com/65535/48238110011_422fcce87a_o.png" alt="屏幕快照 2018-12-22 下午2.02.53"></p>
-<p>在代码上加入<code>console.log(_);</code></p>
-<p>我们在console有<img src="https://live.staticflickr.com/65535/48238110641_769be3299f_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238111086_5f911d8f60_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238199692_8c99fbd1d8_o.png" alt></p>
-<p>我们直接改if</p>
+          <h1 id="Week4-C"><a href="#Week4-C" class="headerlink" title="Week4 C"></a>Week4 C</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>NCTF 2018 <a href="http://ctfgame.acdxvfsvd.net:20007/" target="_blank" rel="noopener">easy_audit</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>访问网站</p>
+<p><img src="https://live.staticflickr.com/65535/48232017527_e8c72896b1_o.png" alt></p>
+<h4 id="第一次绕过"><a href="#第一次绕过" class="headerlink" title="第一次绕过"></a>第一次绕过</h4><p>这里过滤了几个问题一个<code>$_REQUEST</code>不能有字母，一个<code>$_SERVER</code>不能有关键字。</p>
+<p>这是开始的两个绕过</p>
+<p>针对第一个问题，不妨考虑变量覆盖，我们知道$_REQUEST可以接受COOKIE，POST的消息，我们不妨使用POST覆盖GET消息。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week7-B/#more" rel="contents">
+              <a class="btn" href="/2019/07/08/Week4-C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week-8-B/" class="post-title-link" itemprop="url">个人练习WP Week 8 B</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:02:08" itemprop="dateModified" datetime="2019-07-09T14:02:08+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
+<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week-8-B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week7-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week7-C/" class="post-title-link" itemprop="url">个人练习WP Week 7 C</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:05:03" itemprop="dateModified" datetime="2019-07-09T14:05:03+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Week7-C-Confusion1"><a href="#Week7-C-Confusion1" class="headerlink" title="Week7 C Confusion1"></a>Week7 C Confusion1</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><img src="https://live.staticflickr.com/65535/48238192917_93a85e2bd9_o.png" alt></p>
+<p>点一下</p>
+<p><img src="https://live.staticflickr.com/65535/48238105891_9861b311df_o.png" alt></p>
+<p>下面开始了</p>
+<p>看源码</p>
+<p><img src="https://live.staticflickr.com/65535/48238106431_d371f26f0e_o.png" alt></p>
+<p>url <code>http://111.198.29.45:30322/2</code></p>
+<p><img src="https://live.staticflickr.com/65535/48238106781_d1f7f1ee85_o.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week7-C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2599,7 +2593,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
