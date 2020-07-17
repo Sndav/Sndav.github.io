@@ -195,6 +195,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/07/17/暑假学习-Day3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/17/暑假学习-Day3/" class="post-title-link" itemprop="url">暑假学习-Day3</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-17 22:07:45 / 修改时间：22:08:08" itemprop="dateCreated datePublished" datetime="2020-07-17T22:07:45+08:00">2020-07-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>题目来源 0CTF-2015</p>
+</blockquote>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><h3 id="Main函数"><a href="#Main函数" class="headerlink" title="Main函数"></a>Main函数</h3><p><img src="https://md.byr.ac.cn/uploads/upload_0364789b7a3b4a7c2e6a6ee3c53be0fd.png" alt><br>其中initList用于初始化</p>
+<h3 id="结构体恢复"><a href="#结构体恢复" class="headerlink" title="结构体恢复"></a>结构体恢复</h3><p><img src="https://md.byr.ac.cn/uploads/upload_6b56a6c416854c7d39cae9a388884e88.png" alt></p>
+<h3 id="New函数"><a href="#New函数" class="headerlink" title="New函数"></a>New函数</h3><p><img src="https://md.byr.ac.cn/uploads/upload_251d5351cc4af029369224227f0abb86.png" alt><br>首先会搜索所有的Node找到第一个没有use的，然后读取长度并按照0x80(fastbin的最大值)对齐，最后分配空间，读取内容。</p>
+<h3 id="Delete函数"><a href="#Delete函数" class="headerlink" title="Delete函数"></a>Delete函数</h3><p><img src="https://md.byr.ac.cn/uploads/upload_0e31254dbbe07ed81cddf5ee6986b47f.png" alt><br>没有检测inuse位，导致了double free可以构造unlink</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/17/暑假学习-Day3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2020/07/15/暑假学习-Day2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1441,89 +1513,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week5-A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week5-A/" class="post-title-link" itemprop="url">个人练习WP Week 5 A（模版注入）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:04:17" itemprop="dateModified" datetime="2019-07-09T14:04:17+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
-<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
-<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
-<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
-<p>在flask我们可以从</p>
-<ul>
-<li><code>config</code>, the current configuration object</li>
-<li><code>request</code>, the current request object</li>
-<li><code>session</code>, the current session object</li>
-<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
-</ul>
-<p>这几个角度开始入手</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week5-A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/个人的笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1571,6 +1560,160 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/08/个人的笔记/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week-8-B/" class="post-title-link" itemprop="url">个人练习WP Week 8 B</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:02:08" itemprop="dateModified" datetime="2019-07-09T14:02:08+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
+<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week-8-B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week-8-A/" class="post-title-link" itemprop="url">个人练习WP Week 8 A</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:02:36" itemprop="dateModified" datetime="2019-07-09T14:02:36+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
+<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+<p>随便改改</p>
+<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
+<p>考虑任意文件读取</p>
+<p>构造payload </p>
+<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week-8-A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1672,7 +1815,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-A/">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1686,7 +1829,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/08/Week3-A/" class="post-title-link" itemprop="url">个人练习WP Week 3 A</a>
+            <a href="/2019/07/08/Week3-B/" class="post-title-link" itemprop="url">个人练习WP Week 3 B</a>
         </h1>
 
         <div class="post-meta">
@@ -1703,7 +1846,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:49" itemprop="dateModified" datetime="2019-07-09T14:02:49+08:00">2019-07-09</time>
+                <time title="修改时间：2019-07-09 14:06:54" itemprop="dateModified" datetime="2019-07-09T14:06:54+08:00">2019-07-09</time>
               </span>
 
           
@@ -1717,15 +1860,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第三周-WriteUpA"><a href="#第三周-WriteUpA" class="headerlink" title="第三周 WriteUpA"></a>第三周 WriteUpA</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>HITCON2017</code> <code>Web</code> <code>sql-so-hard</code> <code>nodejs</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/node</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  @HITCON CTF 2017</span></span><br><span class="line"><span class="comment"> *  @Author Orange Tsai</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> qs = <span class="built_in">require</span>(<span class="string">"qs"</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> pg = <span class="built_in">require</span>(<span class="string">"pg"</span>); <span class="comment">/*postgres 代码执行*/</span></span><br><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">"mysql"</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.createPool(&#123;</span><br><span class="line">    connectionLimit: <span class="number">100</span>, </span><br><span class="line">    host: <span class="string">"localhost"</span>,</span><br><span class="line">    user: <span class="string">"ban"</span>,</span><br><span class="line">    password: <span class="string">"ban"</span>,</span><br><span class="line">    database: <span class="string">"bandb"</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> pg.Client(&#123;</span><br><span class="line">    host: <span class="string">"localhost"</span>,</span><br><span class="line">    user: <span class="string">"userdb"</span>,</span><br><span class="line">    password: <span class="string">"userdb"</span>,</span><br><span class="line">    database: <span class="string">"userdb"</span>,</span><br><span class="line">&#125;);</span><br><span class="line">client.connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> KEYWORDS = [</span><br><span class="line">    <span class="string">"select"</span>, </span><br><span class="line">    <span class="string">"union"</span>, </span><br><span class="line">    <span class="string">"and"</span>, </span><br><span class="line">    <span class="string">"or"</span>, </span><br><span class="line">    <span class="string">"\\"</span>, </span><br><span class="line">    <span class="string">"/"</span>, </span><br><span class="line">    <span class="string">"*"</span>, </span><br><span class="line">    <span class="string">" "</span> </span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params">string</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> KEYWORDS) &#123;</span><br><span class="line">        <span class="keyword">var</span> key = KEYWORDS[i];</span><br><span class="line">        <span class="keyword">if</span> (string.toLowerCase().indexOf(key) !== <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line">app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> data = <span class="string">""</span>;</span><br><span class="line">   req.on(<span class="string">"data"</span>, (chunk) =&gt; &#123; data += chunk&#125;)</span><br><span class="line">   req.on(<span class="string">"end"</span>, () =&gt;&#123;</span><br><span class="line">       req.body = qs.parse(data);</span><br><span class="line">       next();</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.all(<span class="string">"/*"</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"show_source"</span> <span class="keyword">in</span> req.query) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.end(fs.readFileSync(__filename));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (req.path == <span class="string">"/"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> next();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ip = req.connection.remoteAddress;</span><br><span class="line">    <span class="keyword">var</span> payload = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> req.query) &#123;</span><br><span class="line">        <span class="keyword">if</span> (waf(req.query[k])) &#123;</span><br><span class="line">            payload = req.query[k];</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> req.body) &#123;</span><br><span class="line">        <span class="keyword">if</span> (waf(req.body[k])) &#123;</span><br><span class="line">            payload = req.body[k];</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (payload.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`INSERT INTO blacklists(ip, payload) VALUES(?, ?) ON DUPLICATE KEY UPDATE payload=?`</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`SELECT ?,?,?`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> pool.query(sql, [ip, payload, payload], (err, rows) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`SELECT * FROM blacklists WHERE ip=?`</span>;</span><br><span class="line">        <span class="keyword">return</span> pool.query(sql, [ip], (err,rows) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> ( rows.length == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> next();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> res.end(<span class="string">"Shame on you"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/"</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> sql = <span class="string">`SELECT * FROM blacklists GROUP BY ip`</span>;</span><br><span class="line">    <span class="keyword">return</span> pool.query(sql, [], (err,rows) =&gt; &#123;</span><br><span class="line">        res.header(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>);</span><br><span class="line">        <span class="keyword">var</span> html = <span class="string">"&lt;pre&gt;Here is the &lt;a href=/?show_source=1&gt;source&lt;/a&gt;, thanks to Orange\n\n&lt;h3&gt;Hall of Shame&lt;/h3&gt;(delete every 60s)\n"</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> r <span class="keyword">in</span> rows) &#123;</span><br><span class="line">            html += <span class="string">`<span class="subst">$&#123;<span class="built_in">parseInt</span>(r)+<span class="number">1</span>&#125;</span>. <span class="subst">$&#123;rows[r].ip&#125;</span>\n`</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.end(html);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/reg"</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> username = req.body.username;</span><br><span class="line">    <span class="keyword">var</span> password = req.body.password;</span><br><span class="line">    <span class="keyword">if</span> (!username || !password || username.length &lt; <span class="number">4</span> || password.length &lt; <span class="number">4</span>) 	  &#123;</span><br><span class="line">        <span class="keyword">return</span> res.end(<span class="string">"Bye"</span>);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    password = crypto.createHash(<span class="string">"md5"</span>).update(password).digest(<span class="string">"hex"</span>);</span><br><span class="line">    <span class="keyword">var</span> sql = <span class="string">`INSERT INTO users(username, password) VALUES('<span class="subst">$&#123;username&#125;</span>', '<span class="subst">$&#123;password&#125;</span>') ON CONFLICT (username) DO NOTHING`</span>;</span><br><span class="line">    <span class="keyword">return</span> client.query(sql.split(<span class="string">";"</span>)[<span class="number">0</span>], (err, rows) =&gt; &#123; <span class="comment">/*这里会出现漏洞*/</span></span><br><span class="line">        <span class="keyword">if</span> (rows &amp;&amp; rows.rowCount == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> res.end(<span class="string">"Reg OK"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> res.end(<span class="string">"User taken"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">31337</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Listen OK"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h3><p><a href="https://paper.seebug.org/438/" target="_blank" rel="noopener">node.js + postgres 从注入到Getshell</a>的具体步骤及其利用方法。</p>
-<p><code>版本：node-postgres7.1.0</code></p>
-<p>在 Postgres TCP交互，我们观察到，pg 的通信，其实就是一些预定的 message 交换的过程。比如，pg 返回给客户端的有一种报文叫“RowDescription”，作用是返回每一列(row)的所有字段名(field name)。客户端拿到这个 message，解析出其中的内容，即可确定字段名。</p>
-<p>考察这条语句<code>SELECT &#39;phithon&#39; AS &quot;name&quot;</code></p>
+          <h1 id="第三周-WriteUpB"><a href="#第三周-WriteUpB" class="headerlink" title="第三周 WriteUpB"></a>第三周 WriteUpB</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>SQLi “迎圣诞，拿大奖”活动赛题</code></p>
+<p>格式化字符串 绕过</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><img src="https://live.staticflickr.com/65535/48231786811_7beb92fa9f_o.png" alt></p>
+<p>先尝试</p>
+<p><img src="https://live.staticflickr.com/65535/48231787131_2dfd5f1832_o.png" alt></p>
+<p><img src="https://live.staticflickr.com/65535/48231787321_d611276c21_o.png" alt></p>
+<p>考虑格式化字符串绕过</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week3-A/#more" rel="contents">
+              <a class="btn" href="/2019/07/08/Week3-B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1826,163 +1970,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week4-0/" class="post-title-link" itemprop="url">个人练习WP Week 4 0</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:03:27" itemprop="dateModified" datetime="2019-07-09T14:03:27+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="0"><a href="#0" class="headerlink" title="0"></a>0</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>@hctf-2018-warmup</p>
-<p>这道题不算做这周，这只是我想讲讲几个方法，和误区。</p>
-<p><img src="https://live.staticflickr.com/65535/48231800071_0624c993da_o.png" alt></p>
-<p>然后看源码</p>
-<p><img src="https://live.staticflickr.com/65535/48231801711_4810b3c77c_o.png" alt></p>
-<p>发现<code>source.php</code> 以及一个文件包含。</p>
-<p>hint.php</p>
-<p><img src="https://live.staticflickr.com/65535/48231874581_5766eab8a8_o.png" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week4-0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week3-B/" class="post-title-link" itemprop="url">个人练习WP Week 3 B</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:06:54" itemprop="dateModified" datetime="2019-07-09T14:06:54+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第三周-WriteUpB"><a href="#第三周-WriteUpB" class="headerlink" title="第三周 WriteUpB"></a>第三周 WriteUpB</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>SQLi “迎圣诞，拿大奖”活动赛题</code></p>
-<p>格式化字符串 绕过</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><img src="https://live.staticflickr.com/65535/48231786811_7beb92fa9f_o.png" alt></p>
-<p>先尝试</p>
-<p><img src="https://live.staticflickr.com/65535/48231787131_2dfd5f1832_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48231787321_d611276c21_o.png" alt></p>
-<p>考虑格式化字符串绕过</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week3-B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2060,7 +2047,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-A/">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week3-A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2074,7 +2061,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/07/08/Week-8-A/" class="post-title-link" itemprop="url">个人练习WP Week 8 A</a>
+            <a href="/2019/07/08/Week3-A/" class="post-title-link" itemprop="url">个人练习WP Week 3 A</a>
         </h1>
 
         <div class="post-meta">
@@ -2091,7 +2078,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:36" itemprop="dateModified" datetime="2019-07-09T14:02:36+08:00">2019-07-09</time>
+                <time title="修改时间：2019-07-09 14:02:49" itemprop="dateModified" datetime="2019-07-09T14:02:49+08:00">2019-07-09</time>
               </span>
 
           
@@ -2105,17 +2092,177 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="MyWeek-8-A-Not-e-accessible"><a href="#MyWeek-8-A-Not-e-accessible" class="headerlink" title="MyWeek 8 A Not(e) accessible"></a>MyWeek 8 A <a href="http://35.207.132.47:90/" target="_blank" rel="noopener">Not(e) accessible</a></h1><h3 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h3><p>提交笔记</p>
-<p><img src="https://live.staticflickr.com/65535/48231935746_64d45ec976_o.png" alt></p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
-<p>随便改改</p>
-<p><img src="https://live.staticflickr.com/65535/48232010247_e9f2c9acf6_o.png" alt></p>
-<p>考虑任意文件读取</p>
-<p>构造payload </p>
-<p><code>http://35.207.132.47:90/view.php?id=-6242905976685918977/../../admin&amp;pw=47bce5c74f589f4867dbd57e9ca9f808</code></p>
+          <h1 id="第三周-WriteUpA"><a href="#第三周-WriteUpA" class="headerlink" title="第三周 WriteUpA"></a>第三周 WriteUpA</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><code>HITCON2017</code> <code>Web</code> <code>sql-so-hard</code> <code>nodejs</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/node</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  @HITCON CTF 2017</span></span><br><span class="line"><span class="comment"> *  @Author Orange Tsai</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> qs = <span class="built_in">require</span>(<span class="string">"qs"</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> pg = <span class="built_in">require</span>(<span class="string">"pg"</span>); <span class="comment">/*postgres 代码执行*/</span></span><br><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">"mysql"</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.createPool(&#123;</span><br><span class="line">    connectionLimit: <span class="number">100</span>, </span><br><span class="line">    host: <span class="string">"localhost"</span>,</span><br><span class="line">    user: <span class="string">"ban"</span>,</span><br><span class="line">    password: <span class="string">"ban"</span>,</span><br><span class="line">    database: <span class="string">"bandb"</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> pg.Client(&#123;</span><br><span class="line">    host: <span class="string">"localhost"</span>,</span><br><span class="line">    user: <span class="string">"userdb"</span>,</span><br><span class="line">    password: <span class="string">"userdb"</span>,</span><br><span class="line">    database: <span class="string">"userdb"</span>,</span><br><span class="line">&#125;);</span><br><span class="line">client.connect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> KEYWORDS = [</span><br><span class="line">    <span class="string">"select"</span>, </span><br><span class="line">    <span class="string">"union"</span>, </span><br><span class="line">    <span class="string">"and"</span>, </span><br><span class="line">    <span class="string">"or"</span>, </span><br><span class="line">    <span class="string">"\\"</span>, </span><br><span class="line">    <span class="string">"/"</span>, </span><br><span class="line">    <span class="string">"*"</span>, </span><br><span class="line">    <span class="string">" "</span> </span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params">string</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> KEYWORDS) &#123;</span><br><span class="line">        <span class="keyword">var</span> key = KEYWORDS[i];</span><br><span class="line">        <span class="keyword">if</span> (string.toLowerCase().indexOf(key) !== <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line">app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> data = <span class="string">""</span>;</span><br><span class="line">   req.on(<span class="string">"data"</span>, (chunk) =&gt; &#123; data += chunk&#125;)</span><br><span class="line">   req.on(<span class="string">"end"</span>, () =&gt;&#123;</span><br><span class="line">       req.body = qs.parse(data);</span><br><span class="line">       next();</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.all(<span class="string">"/*"</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"show_source"</span> <span class="keyword">in</span> req.query) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.end(fs.readFileSync(__filename));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (req.path == <span class="string">"/"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> next();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ip = req.connection.remoteAddress;</span><br><span class="line">    <span class="keyword">var</span> payload = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> req.query) &#123;</span><br><span class="line">        <span class="keyword">if</span> (waf(req.query[k])) &#123;</span><br><span class="line">            payload = req.query[k];</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> req.body) &#123;</span><br><span class="line">        <span class="keyword">if</span> (waf(req.body[k])) &#123;</span><br><span class="line">            payload = req.body[k];</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (payload.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`INSERT INTO blacklists(ip, payload) VALUES(?, ?) ON DUPLICATE KEY UPDATE payload=?`</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`SELECT ?,?,?`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> pool.query(sql, [ip, payload, payload], (err, rows) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`SELECT * FROM blacklists WHERE ip=?`</span>;</span><br><span class="line">        <span class="keyword">return</span> pool.query(sql, [ip], (err,rows) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> ( rows.length == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> next();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> res.end(<span class="string">"Shame on you"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/"</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> sql = <span class="string">`SELECT * FROM blacklists GROUP BY ip`</span>;</span><br><span class="line">    <span class="keyword">return</span> pool.query(sql, [], (err,rows) =&gt; &#123;</span><br><span class="line">        res.header(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>);</span><br><span class="line">        <span class="keyword">var</span> html = <span class="string">"&lt;pre&gt;Here is the &lt;a href=/?show_source=1&gt;source&lt;/a&gt;, thanks to Orange\n\n&lt;h3&gt;Hall of Shame&lt;/h3&gt;(delete every 60s)\n"</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> r <span class="keyword">in</span> rows) &#123;</span><br><span class="line">            html += <span class="string">`<span class="subst">$&#123;<span class="built_in">parseInt</span>(r)+<span class="number">1</span>&#125;</span>. <span class="subst">$&#123;rows[r].ip&#125;</span>\n`</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.end(html);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/reg"</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> username = req.body.username;</span><br><span class="line">    <span class="keyword">var</span> password = req.body.password;</span><br><span class="line">    <span class="keyword">if</span> (!username || !password || username.length &lt; <span class="number">4</span> || password.length &lt; <span class="number">4</span>) 	  &#123;</span><br><span class="line">        <span class="keyword">return</span> res.end(<span class="string">"Bye"</span>);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    password = crypto.createHash(<span class="string">"md5"</span>).update(password).digest(<span class="string">"hex"</span>);</span><br><span class="line">    <span class="keyword">var</span> sql = <span class="string">`INSERT INTO users(username, password) VALUES('<span class="subst">$&#123;username&#125;</span>', '<span class="subst">$&#123;password&#125;</span>') ON CONFLICT (username) DO NOTHING`</span>;</span><br><span class="line">    <span class="keyword">return</span> client.query(sql.split(<span class="string">";"</span>)[<span class="number">0</span>], (err, rows) =&gt; &#123; <span class="comment">/*这里会出现漏洞*/</span></span><br><span class="line">        <span class="keyword">if</span> (rows &amp;&amp; rows.rowCount == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> res.end(<span class="string">"Reg OK"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> res.end(<span class="string">"User taken"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">31337</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Listen OK"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h3><p><a href="https://paper.seebug.org/438/" target="_blank" rel="noopener">node.js + postgres 从注入到Getshell</a>的具体步骤及其利用方法。</p>
+<p><code>版本：node-postgres7.1.0</code></p>
+<p>在 Postgres TCP交互，我们观察到，pg 的通信，其实就是一些预定的 message 交换的过程。比如，pg 返回给客户端的有一种报文叫“RowDescription”，作用是返回每一列(row)的所有字段名(field name)。客户端拿到这个 message，解析出其中的内容，即可确定字段名。</p>
+<p>考察这条语句<code>SELECT &#39;phithon&#39; AS &quot;name&quot;</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week-8-A/#more" rel="contents">
+              <a class="btn" href="/2019/07/08/Week3-A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week5-A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week5-A/" class="post-title-link" itemprop="url">个人练习WP Week 5 A（模版注入）</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:04:17" itemprop="dateModified" datetime="2019-07-09T14:04:17+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="模版注入专题（沙箱绕过）Flask"><a href="#模版注入专题（沙箱绕过）Flask" class="headerlink" title="模版注入专题（沙箱绕过）Flask"></a>模版注入专题（沙箱绕过）Flask</h1><p>以NCTF flask 为例</p>
+<h2 id="先前说明"><a href="#先前说明" class="headerlink" title="先前说明"></a>先前说明</h2><p>我们在python的object类中集成了很多的基础函数，我们这里的最主要考虑就是想办法得到object。</p>
+<h3 id="获得object"><a href="#获得object" class="headerlink" title="获得object"></a>获得object</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;.__class__.__mro__[2]</span><br><span class="line">&#123;&#125;.__class__.__bases__[0]</span><br><span class="line">().__class__.__bases__[0]</span><br><span class="line">[].__class__.__bases__[0]</span><br><span class="line">request.__class__.__mro__[8]</span><br></pre></td></tr></table></figure>
+<p>之后通过<code>__subclasses__</code>里的相关类可以参考利用</p>
+<p>在flask我们可以从</p>
+<ul>
+<li><code>config</code>, the current configuration object</li>
+<li><code>request</code>, the current request object</li>
+<li><code>session</code>, the current session object</li>
+<li><code>g</code>, the request-bound object for global variables. This is usually used by the developer to store resources during a request.</li>
+</ul>
+<p>这几个角度开始入手</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week5-A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week4-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sndav@Dubhe">
+      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sndav's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/Week4-0/" class="post-title-link" itemprop="url">个人练习WP Week 4 0</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-09 14:03:27" itemprop="dateModified" datetime="2019-07-09T14:03:27+08:00">2019-07-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="0"><a href="#0" class="headerlink" title="0"></a>0</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>@hctf-2018-warmup</p>
+<p>这道题不算做这周，这只是我想讲讲几个方法，和误区。</p>
+<p><img src="https://live.staticflickr.com/65535/48231800071_0624c993da_o.png" alt></p>
+<p>然后看源码</p>
+<p><img src="https://live.staticflickr.com/65535/48231801711_4810b3c77c_o.png" alt></p>
+<p>发现<code>source.php</code> 以及一个文件包含。</p>
+<p>hint.php</p>
+<p><img src="https://live.staticflickr.com/65535/48231874581_5766eab8a8_o.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/Week4-0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2369,160 +2516,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week-8-B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week-8-B/" class="post-title-link" itemprop="url">个人练习WP Week 8 B</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:02:08" itemprop="dateModified" datetime="2019-07-09T14:02:08+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Week-8-B-Mc-Donald"><a href="#Week-8-B-Mc-Donald" class="headerlink" title="Week 8 B Mc Donald"></a>Week 8 B Mc Donald</h1><h3 id="触发原因-ds-store"><a href="#触发原因-ds-store" class="headerlink" title="触发原因 ds_store"></a>触发原因 ds_store</h3><p><img src="https://live.staticflickr.com/65535/48238119351_a5b86ce903_o.png" alt></p>
-<p><img src="https://live.staticflickr.com/65535/48238119681_1281bd95d3_o.png" alt></p>
-<p>Flag <code>35c3_Appl3s_H1dden_F1l3s</code></p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week-8-B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http:/blog.naive.codes/2019/07/08/Week7-C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sndav@Dubhe">
-      <meta itemprop="description" content="A Dubhe CTFer lives harder and harder">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sndav's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/Week7-C/" class="post-title-link" itemprop="url">个人练习WP Week 7 C</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 20:26:53" itemprop="dateCreated datePublished" datetime="2019-07-08T20:26:53+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-09 14:05:03" itemprop="dateModified" datetime="2019-07-09T14:05:03+08:00">2019-07-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Week7-C-Confusion1"><a href="#Week7-C-Confusion1" class="headerlink" title="Week7 C Confusion1"></a>Week7 C Confusion1</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><img src="https://live.staticflickr.com/65535/48238192917_93a85e2bd9_o.png" alt></p>
-<p>点一下</p>
-<p><img src="https://live.staticflickr.com/65535/48238105891_9861b311df_o.png" alt></p>
-<p>下面开始了</p>
-<p>看源码</p>
-<p><img src="https://live.staticflickr.com/65535/48238106431_d371f26f0e_o.png" alt></p>
-<p>url <code>http://111.198.29.45:30322/2</code></p>
-<p><img src="https://live.staticflickr.com/65535/48238106781_d1f7f1ee85_o.png" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/Week7-C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -2593,7 +2586,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
